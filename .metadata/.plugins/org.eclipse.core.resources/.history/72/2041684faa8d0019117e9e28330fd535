@@ -1,0 +1,12 @@
+package core;
+
+public interface IEnvironment {
+	
+	int CreatRobot(RobotSpec spec, int position);
+	
+	int SetRobotBase(int chargeValue, int position);
+	
+	void moveRobot(int id, int node);
+	
+	void changeEventProb()
+}
