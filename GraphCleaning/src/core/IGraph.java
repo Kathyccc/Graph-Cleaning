@@ -1,15 +1,18 @@
 package core;
 
-public interface IGraph{
+import java.util.List;
+
+public interface IGraph
+{
 	boolean IsDirected();
 	
-	int[] getNodes();
+	List<Integer> Nodes();
 	
-	int numOfNode();
+	int numOfNodes();
 	
 	void AddNode(int node);
 	
-	boolean ReomveNode(int node);
+	boolean RemoveNode(int node);
 	
 	boolean NodeContained(int node);
 	
@@ -19,11 +22,11 @@ public interface IGraph{
 	
 	boolean EdgeContained(int start, int end);
 	
-	int[] getNeighbors(int node);
+	List<Integer> getNeighbors(int node);
 	
-	int[] getParentNodes(int nodes);
+	List<Integer> getParentNodes(int nodes);
 	
-	int[] getChildNodes(int node);
+	List<Integer> getChildrenNodes(int node);
 	
 	void AddEdge(int start, int end, int weight);
 	

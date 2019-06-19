@@ -1,7 +1,18 @@
 package core;
 
 public class Coordinate{
-	public static class coordinate{
+	
+	int X, Y;
 		
+	public Coordinate(int _x, int _y) {
+		X = _x;
+		Y = _y;
 	}
+
+	//@Override
+	public String toString() {
+		return this.X + ", " + this.Y;
+	}
+	
 }
+
