@@ -1,5 +1,7 @@
 package agent;
 
+import agent.common.LitterExistingExpectation;
+
 public interface ITargetDecider {
 	
 	int NextTarget();

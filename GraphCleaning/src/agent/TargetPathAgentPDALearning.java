@@ -6,18 +6,19 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import agent.common.LitterExistingExpectation;
 import core.CommunicationDetails;
 import core.Coordinate;
 import core.GridGraph;
-import core.IAgent;
 import core.LitterSpawnPattern;
 import core.LitterSpawnProbability;
-import core.LogManager;
-import core.LogWriter;
 import core.ObservedData;
 import core.Pair;
 import core.RobotData;
 import core.Tuple;
+import core.agents.IAgent;
+import core.utilities.LogManager;
+import core.utilities.LogWriter;
 
 
 public class TargetPathAgentPDALearning implements IAgent

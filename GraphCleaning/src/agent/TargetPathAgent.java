@@ -3,12 +3,13 @@ package agent;
 import java.util.ArrayList;
 import java.util.List;
 
+import agent.common.LitterExistingExpectation;
 import core.CommunicationDetails;
 import core.Coordinate;
-import core.IAgent;
 import core.LitterSpawnPattern;
 import core.ObservedData;
 import core.RobotData;
+import core.agents.IAgent;
 
 public class TargetPathAgent implements IAgent
 {

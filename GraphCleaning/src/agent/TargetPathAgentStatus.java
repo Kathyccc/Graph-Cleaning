@@ -2,6 +2,7 @@ package agent;
 
 import java.util.ArrayList;
 import java.util.List;
+import agent.common.LitterExistingExpectation;
 import core.ObservedData;
 
 
@@ -13,13 +14,13 @@ public class TargetPathAgentStatus
 	int _target;
 	boolean _isChargeRequired;
 	LitterExistingExpectation _expectation;
-	AgentActions Action;
-	int TargetNode;
-	ObservedData ObservedData;
-	List<Integer> SearchNodes = new ArrayList<>();
+	public AgentActions Action;
+	public int TargetNode;
+	public ObservedData ObservedData;
+	public List<Integer> SearchNodes = new ArrayList<>();
 	int[] VisitCounter;
 	List<Integer> VisitHistory;
-	int MyCycle;
+	public int MyCycle;
 	
 	
 	
