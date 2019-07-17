@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class RobotDataCollection {
 	
-	Map<Integer, RobotData> _robots;
+	public Map<Integer, RobotData> _robots;
 	boolean ReadOnly;
 	
 	public RobotDataCollection() {

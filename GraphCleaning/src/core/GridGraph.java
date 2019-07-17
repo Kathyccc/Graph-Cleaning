@@ -18,6 +18,12 @@ public class GridGraph implements IPointMappedGraph{
 	
 	public Coordinate MinCoordinate;
 	
+	/*
+	 * List<Integer> Nodes = new ArrayList<>();
+	 * 
+	 * int NumOfNodes;
+	 */
+	
 	
 	public GridGraph() {
 		_graph = new DirectedGraph();
@@ -91,14 +97,20 @@ public class GridGraph implements IPointMappedGraph{
 		return _graph.IsDirected();
 	}
 	
+	/*
+	 * public void setNodes(List<Integer> nodes) { this.Nodes = nodes; }
+	 */
 	
-	public List<Integer> Nodes(){
-		return _graph.Nodes();
+	public List<Integer> getNodes(){
+		return _graph.getNodes();
 	}
 	
+	/*
+	 * public void setNumOfNodes(int num) { this.NumOfNodes = num; }
+	 */	
 	
-	public int numOfNodes() {
-		return _graph.numOfNodes();
+	public int getNumOfNodes() {
+		return _graph.getNumOfNodes();
 	}
 	
 	
@@ -112,8 +124,8 @@ public class GridGraph implements IPointMappedGraph{
 	}
 	
 	
-	public boolean NodeContained(int node) {
-		return _graph.NodeContained(node);
+	public boolean ContainsNode(int node) {
+		return _graph.ContainsNode(node);
 	}
 	
 	
@@ -135,8 +147,8 @@ public class GridGraph implements IPointMappedGraph{
 	}
 	
 	
-	public boolean EdgeContained(int start, int end) {
-		return _graph.EdgeContained(start, end);
+	public boolean ContainsEdge(int start, int end) {
+		return _graph.ContainsEdge(start, end);
 	}
 	
 	
@@ -161,7 +173,7 @@ public class GridGraph implements IPointMappedGraph{
 	
 	
 	public int getWeight(int start, int end) {
-		if(EdgeContained(start, end)) return 1;
+		if(ContainsEdge(start, end)) return 1;
 		else throw new IllegalArgumentException("The edge is not in the graph.");
 	}
 	
@@ -178,7 +190,7 @@ public class GridGraph implements IPointMappedGraph{
 	}
 	
 	
-	public Coordinate getCloseNode(Coordinate candidate) {
+	public Coordinate getClosestNode(Coordinate candidate) {
 		double  closestNodeDistance = Integer.MAX_VALUE;
 		int closestNode = -1;
 		
@@ -199,5 +211,6 @@ public class GridGraph implements IPointMappedGraph{
 	
 		return hypot;
 	}
+
 }
  

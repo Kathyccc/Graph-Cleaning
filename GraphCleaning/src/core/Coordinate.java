@@ -2,7 +2,8 @@ package core;
 
 public class Coordinate{
 	
-	int X, Y;
+	public int X;
+	public int Y;
 		
 	public Coordinate(int _x, int _y) {
 		X = _x;

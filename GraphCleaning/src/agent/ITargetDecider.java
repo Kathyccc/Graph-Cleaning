@@ -2,13 +2,14 @@ package agent;
 
 public interface ITargetDecider {
 	
-	int NextTarget;
+	int NextTarget();
 	
-	boolean ChargeRequired;
+	boolean IsChargeRequired();
 	
 	public void Update(TargetPathAgentStatus status);
 
-	public void SetExpectation(LitterExistingExpectation expectation);
+	public void setExpectation(LitterExistingExpectation expectation);
 
 	public void ResetState();
 }
+  

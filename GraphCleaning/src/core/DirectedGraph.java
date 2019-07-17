@@ -30,7 +30,7 @@ public class DirectedGraph implements IGraph
 	}
 	
 	
-	public List<Integer> Nodes() 
+	public List<Integer> getNodes() 
 	{
 		return _nodes;
 		// use iterator?
@@ -107,7 +107,7 @@ public class DirectedGraph implements IGraph
 	}
 	
 	
-	public boolean NodeContained(int node) 
+	public boolean ContainsNode(int node) 
 	{
 		if(_nodes.contains(node)) return true;
 		else return false;
@@ -115,7 +115,7 @@ public class DirectedGraph implements IGraph
 	
 	public List<Integer> getNeighbors(int node){
 		
-		if(NodeContained(node)==false) 
+		if(ContainsNode(node)==false) 
 		{
 			throw new IllegalArgumentException("The node is not in the graph.");
 		}
@@ -144,13 +144,13 @@ public class DirectedGraph implements IGraph
 	}
 	
 	
-	public int numOfNodes() 
+	public int getNumOfNodes() 
 	{
 		return _nodes.size();
 	}
 	
 	
-	public boolean EdgeContained(int start, int end) 
+	public boolean ContainsEdge(int start, int end) 
 	{
 		if(_children.get(start).contains(end)) return true;
 		else return false;
@@ -161,7 +161,7 @@ public class DirectedGraph implements IGraph
 	{
 		Tuple<Integer, Integer> set = new Tuple<>(start, end);
 		
-		if(EdgeContained(start, end) == false) throw new IllegalArgumentException("The edge is not in the graph.");
+		if(ContainsEdge(start, end) == false) throw new IllegalArgumentException("The edge is not in the graph.");
 		else
 		{
 			if(_weight.containsKey(set) == false) _weight.put(set, weight);
@@ -179,7 +179,7 @@ public class DirectedGraph implements IGraph
 	
 	public void AddEdge(int start, int end) 
 	{
-		if(EdgeContained(start, end) == true) 
+		if(ContainsEdge(start, end) == true) 
 		{
 			throw new IllegalArgumentException("The edge is already in the graph.");
 		}
@@ -195,7 +195,7 @@ public class DirectedGraph implements IGraph
 	public boolean RemoveEdge(int start, int end)
 	{
 		Tuple<Integer, Integer> set = new Tuple<>(start, end);
-		if(EdgeContained(start, end) == false)
+		if(ContainsEdge(start, end) == false)
 		{
 			throw new IllegalArgumentException("The edge is not in the graph.");
 		}
@@ -211,7 +211,7 @@ public class DirectedGraph implements IGraph
 	
 	public void AddEdge(int start, int end, int weight) 
 	{
-		if(EdgeContained(start, end) == false) 
+		if(ContainsEdge(start, end) == false) 
 		{
 			_children.get(start).add(end);
 			_parents.get(end).add(start);

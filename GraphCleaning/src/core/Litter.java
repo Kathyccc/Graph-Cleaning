@@ -7,6 +7,19 @@ public class Litter
 	boolean IsAccumulated;
 	int Position;
 	
+	
+	public Litter(String type, int position, boolean isAccumulated) {
+		Type = type;
+		Position = position;
+		IsAccumulated = isAccumulated;
+	}
+	
+	public Litter(String type, int position) {
+		Type = type;
+		Position = position;
+		IsAccumulated = true;
+	}
+	
 	public void setQuantity(int quantity) 
 	{
 		if(quantity < 0) Quantity = 0;

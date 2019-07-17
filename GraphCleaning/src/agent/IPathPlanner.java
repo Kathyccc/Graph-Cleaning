@@ -2,13 +2,13 @@ package agent;
 
 public interface IPathPlanner {
 	
-	int getNextNode;
+	int NextNode();
 	
-	boolean CanArrive;
+	boolean CanArrive();
 	
 	public void Update(TargetPathAgentStatus status);
 	
-	public void SetExpectation(LitterExistingExpectation expectation);
+	public void setExpectation(LitterExistingExpectation expectation);
 	
-	public void SetSubgoalsNull();
+	public void setSubgoalsNull();
 }

@@ -6,7 +6,7 @@ public class Field {
 	
 	IGraph SpacialStructure;
 	
-	RobotCollection Robots;
+	RobotCollection Robots = new RobotCollection();;
 	
 	LitterCollection Litter = new LitterCollection();
 	
@@ -18,7 +18,31 @@ public class Field {
 		Time = 0;
 		SpacialStructure = spacialStructure;
 		LitterSpawnPattern = pattern;
-		Robots = new RobotCollection();
-		
+	}
+	
+	
+	public void AddRobot(Robot robot) 
+	{
+		Robots.Add(robot);
+	}
+	
+	
+	public void AddLitter(Litter litter) {
+		this.Litter.Add(litter);
+	}
+	
+	
+	public void RemoveLitter(int position) {
+		Litter.Remove(Litter.getLitter(position));
+	}
+	
+	
+	public void AddRobotBase(RobotBase rb) {
+		RobotBases.Add(rb);
+	}
+	
+	
+	public void UpdateTime() {
+		Time++;
 	}
 }

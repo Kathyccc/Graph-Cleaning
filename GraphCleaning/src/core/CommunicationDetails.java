@@ -5,13 +5,13 @@ import java.util.List;
 
 public class CommunicationDetails {
 	
-	Coordinate _myCenterNode;
+	public Coordinate _myCenterNode;
 	
-	double _myExperienceWeight;
+	public double _myExperienceWeight;
 	
-	LitterSpawnPattern _mySpawnPattern;
+	public LitterSpawnPattern _mySpawnPattern;
 	
-	List<Integer> _searchNodes = new ArrayList<>();;
+	public List<Integer> _searchNodes = new ArrayList<>();;
 	
 	
 	public CommunicationDetails(Coordinate myCenter, double weight, LitterSpawnPattern myPattern, List<Integer> searchNodes) {

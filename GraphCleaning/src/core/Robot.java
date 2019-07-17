@@ -22,6 +22,19 @@ public class Robot
 	RobotSpec Spec;
 	RobotStates State;
 	
+	
+	
+	//constructors//////////////////////////////////////////////
+
+	public Robot(RobotSpec spec, int id) {
+		setID(id);
+		setBattery(spec);
+		setBatteryConsum(spec.BatteryConsumption);
+		setCleaner();
+		setRobotState();
+		setRobotSpec(spec);
+	}
+	
 
 	//properties//////////////////////////////////////////////
 
@@ -106,17 +119,6 @@ public class Robot
 	}
 	
 	
-	//constructors//////////////////////////////////////////////
-
-	public Robot(RobotSpec spec, int id) {
-		setID(id);
-		setBattery(spec);
-		setBatteryConsum(spec.BatteryConsumption);
-		setCleaner();
-		setRobotState();
-		setRobotSpec(spec);
-	}
-	
 	
 	//Methods for robot moving//////////////////////////////////////////////
 
@@ -135,7 +137,7 @@ public class Robot
 	
 	//Methods for robot states//////////////////////////////////////////////
 	
-	public void Activeate() {
+	public void Activate() {
 		if(State != RobotStates.Inactive) throw new IllegalStateException("Robot has already been avtivated.");
 		
 		if(_map == null) throw new IllegalStateException("FieldData is null.");
@@ -163,7 +165,7 @@ public class Robot
 	}
 	
 	
-	public void setFiedlStructure(IGraph map) {
+	public void setFieldStructure(IGraph map) {
 		if(State != RobotStates.Inactive) throw new IllegalStateException("Robot state is not Inactive.");
 		
 		_map = map;

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class LitterSpawnPattern 
 {
-	Map<Integer, LitterSpawnProbability> _patterns;
+	public Map<Integer, LitterSpawnProbability> _patterns = new HashMap<>();;
 	
 	public LitterSpawnProbability getLitterSpawnProb(int node) {
 		return _patterns.get(node); //is this[int index] necessary?
@@ -40,6 +40,11 @@ public class LitterSpawnPattern
 		double probAverage = sum / (double)_patterns.size();
 		
 		return probAverage;
+	}
+	
+	
+	public Map<Integer, LitterSpawnProbability> getLitterSpawnPatternMap(){
+		return _patterns;
 	}
 	
 }

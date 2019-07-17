@@ -25,4 +25,9 @@ public class LitterCollection
 	public Litter getLitter(int position) {
 		return _litter.get(position);
 	}	
+	
+	
+	public Map<Integer, Litter> getLitterCollection(){
+		return _litter;
+	}
 }

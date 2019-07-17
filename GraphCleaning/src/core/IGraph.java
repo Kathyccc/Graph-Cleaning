@@ -6,21 +6,21 @@ public interface IGraph
 {
 	boolean IsDirected();
 	
-	List<Integer> Nodes();
+	List<Integer> getNodes();
 	
-	int numOfNodes();
+	int getNumOfNodes();
 	
 	void AddNode(int node);
 	
 	boolean RemoveNode(int node);
 	
-	boolean NodeContained(int node);
+	boolean ContainsNode(int node);
 	
 	void AddEdge(int start, int end);
 	
 	boolean RemoveEdge(int start, int end);
 	
-	boolean EdgeContained(int start, int end);
+	boolean ContainsEdge(int start, int end);
 	
 	List<Integer> getNeighbors(int node);
 	
