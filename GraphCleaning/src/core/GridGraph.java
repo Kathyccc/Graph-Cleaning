@@ -8,9 +8,9 @@ import java.util.Map;
 public class GridGraph implements IPointMappedGraph{
 	
 	//fields of GridGraph
-	IGraph _graph;
+	IGraph _graph = new DirectedGraph();
 	
-	Map<Integer, Coordinate> _coordinate;
+	public Map<Integer, Coordinate> _coordinate = new HashMap<>();
 	
 	Coordinate _scale;
 	

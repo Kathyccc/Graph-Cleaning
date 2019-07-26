@@ -27,7 +27,7 @@ public class RandomTargetDecider implements ITargetDecider
 		
 		for(int node : excludeNodes) 
 		{
-			_nodes.remove(node);
+			_nodes.remove(new Integer(node));
 		}
 		
 		NextTarget = _nodes.get(_rand.nextInt(_nodes.size()));
@@ -51,7 +51,7 @@ public class RandomTargetDecider implements ITargetDecider
 		
 		RobotData mydata = status.ObservedData.RobotData._robots.get(_robotID);
 		
-		if(mydata.Position == status.TargetNode) 
+		if(mydata.Position == status.getTargetNode()) 
 		{
 			int target;
 			do 

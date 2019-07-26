@@ -5,7 +5,7 @@ import java.util.List;
 
 public class LitterDataCollection {
 	
-	List<LitterData> _litter;
+	public List<LitterData> _litter;
 	
 	public LitterDataCollection() {
 		_litter = new ArrayList<>();

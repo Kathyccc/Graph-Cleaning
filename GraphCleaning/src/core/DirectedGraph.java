@@ -16,12 +16,10 @@ public class DirectedGraph implements IGraph
 	
 	public DirectedGraph() 
 	{
-		_nodes = new ArrayList<Integer>();
 		_parents = new HashMap<>();
 		_children = new HashMap<>();
 		_weight = new HashMap<>();
 	}
-	
 	
 	
 	public boolean IsDirected()

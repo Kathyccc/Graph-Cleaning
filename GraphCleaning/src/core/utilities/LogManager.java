@@ -9,7 +9,7 @@ public class LogManager
 {
 	static String _logDirectory;
 	
-	static String LogDirectory;
+	public static String LogDirectory;
 	
 	static int defaultCapacity = 10500;
 	
@@ -46,13 +46,5 @@ public class LogManager
 		writers.put(key, writer);
 		return writer;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

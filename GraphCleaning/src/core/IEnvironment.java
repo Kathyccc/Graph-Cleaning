@@ -2,7 +2,7 @@ package core;
 
 public interface IEnvironment {
 	
-	int CreatRobot(RobotSpec spec, int position);
+	int CreateRobot(RobotSpec spec, int position);
 	
 	int SetRobotBase(int chargeValue, int position);
 	
@@ -20,7 +20,7 @@ public interface IEnvironment {
 	
 	int GetTime();
 	
-	IGraph GetSpacialStructure();
+	IGraph GetSpatialStructure();
 	
 	RobotData GetRobotData(int id);
 	

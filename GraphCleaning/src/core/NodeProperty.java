@@ -1,15 +1,15 @@
 package core;
 
 public class NodeProperty {
-	int _id;
-	String _probabilityType;
-	boolean _obstacle;
-	int _potential;
+	public int ID;
+	public String ProbabilityType;
+	public boolean Obstacle;
+	public int Potential;
 	
 	public NodeProperty(int id, String probabilityType, boolean obstacle) {
-		_id = id;
-		_probabilityType = probabilityType;
-		_obstacle = obstacle;
-		_potential = -1;
+		ID = id;
+		ProbabilityType = probabilityType;
+		Obstacle = obstacle;
+		Potential = -1;
 	}
 }

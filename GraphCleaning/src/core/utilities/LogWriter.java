@@ -1,6 +1,9 @@
 package core.utilities;
 
 import java.io.PrintWriter;
+import java.util.Map;
+
+import agent.AgentActions;
 
 
 public class LogWriter 
@@ -13,6 +16,7 @@ public class LogWriter
 	int counter;
 	int capacity;
 	String filePath;
+	
 	
 	public boolean isDisposed() 
 	{
@@ -41,5 +45,24 @@ public class LogWriter
 		buffer[counter] = log;
 		counter++;
 	}
+	
+	public void MapValueWriteLine(Map<Integer, AgentActions> MapLog, String initialString)
+    {
+        if (buffer.length <= counter)
+        {
+            saveBuffer = buffer;
+            buffer = new String[capacity];
+            counter = 0;
+        }
+
+        String log = initialString;
+        for(Map.Entry<Integer, AgentActions> element : MapLog.entrySet())
+        {
+            log += element.getValue().toString() + ",";
+        }
+
+        buffer[counter] = log;
+        counter++;
+    }
 	
 }

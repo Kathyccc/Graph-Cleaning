@@ -20,7 +20,7 @@ public class FieldSettingControl
 	public int CreateRobot(RobotSpec spec, int position) 
 	{
 		Robot robot = new Robot(spec, _robotIDs++);
-		robot.setFieldStructure(_field.SpacialStructure);
+		robot.setFieldStructure(_field.SpatialStructure);
 		robot.setPosition(position);
 		
 		_field.AddRobot(robot);

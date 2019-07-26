@@ -1,5 +1,8 @@
 package agent;
 
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,8 +52,8 @@ public class TargetPathAgentPDALearning implements IAgent
 	int startPhase = 0;
     int canMoveMaxCount = 900;
     int myCycle; 
-    double[] cycleValues = new double[] { 0,0,0}; //cycleの300,900,2700に対応
-    int cycleLearnTerm = 100000;//Cycleを学習するtick数。この期間はランダム行動
+    double[] cycleValues = new double[] { 0,0,0}; 
+    int cycleLearnTerm = 100000;
     Tuple<Integer, Double> ccAndAve = new Tuple<Integer, Double>(0, 0.0);//cycle count and average collected event (per 1 tick)
     double cycleLearnRatio = 0.1;
     double cycleLearnEpsilon = 0.05;
@@ -366,14 +369,17 @@ public class TargetPathAgentPDALearning implements IAgent
     		list.add(new Pair<Integer, Double>(node, _mySpawnPattern._patterns.get(node).Probability));
     	}
     	
-		//List<Pair<Integer, Double>> sort_list;
-		
-		Collections.sort(list, new Comparator<Pair<Integer, Double>>() {
-		    @Override
-		    public int compare(final Pair<Integer, Double> o1, final Pair<Integer, Double> o2) {
-		        return (int)(o1.getValue() - o2.getValue());
-		    }
-		});
+//		List<Pair<Integer, Double>> sort_list;
+//		
+//		Collections.sort(list, new Comparator<Pair<Integer, Double>>() {
+//		    @Override
+//		    public int compare(final Pair<Integer, Double> o1, final Pair<Integer, Double> o2) {
+//		        return (int)(o1.getValue() - o2.getValue());
+//		    }
+//		});
+    	
+		final Comparator<Pair<Integer, Double>> sortByValue = reverseOrder(comparing(Pair::getValue));
+		Collections.sort(list, sortByValue);
 
 		int count = 0;
 		

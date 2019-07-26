@@ -28,8 +28,8 @@ public class ObservationControl {
 		return _field.Time;
 	}
 	
-	public IGraph getSpacialStructure() {
-		return _field.SpacialStructure;
+	public IGraph getSpatialStructure() {
+		return _field.SpatialStructure;
 	}
 	
 	

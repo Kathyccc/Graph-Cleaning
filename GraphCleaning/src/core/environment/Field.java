@@ -7,7 +7,7 @@ public class Field {
 
 	public int Time;
 	
-	public IGraph SpacialStructure;
+	public IGraph SpatialStructure;
 	
 	public RobotCollection Robots = new RobotCollection();;
 	
@@ -17,9 +17,9 @@ public class Field {
 	
 	public LitterSpawnPattern LitterSpawnPattern;
 	
-	public Field(IGraph spacialStructure, LitterSpawnPattern pattern) {
+	public Field(IGraph spatialStructure, LitterSpawnPattern pattern) {
 		Time = 0;
-		SpacialStructure = spacialStructure;
+		SpatialStructure = spatialStructure;
 		LitterSpawnPattern = pattern;
 	}
 	

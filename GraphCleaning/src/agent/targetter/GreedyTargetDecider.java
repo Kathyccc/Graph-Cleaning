@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
 
 import agent.AgentActions;
 import agent.ITargetDecider;
@@ -35,7 +37,7 @@ public class GreedyTargetDecider implements ITargetDecider
 		
 		for(int node : excludeNodes) 
 		{
-			_nodes.remove(node);
+			_nodes.remove(new Integer(node));
 		}
 		
 		_isAccumulated = isAccumulated;
@@ -61,22 +63,22 @@ public class GreedyTargetDecider implements ITargetDecider
 	}
 
 	
-	class SortByValue implements Comparator<Pair<Integer, Double>>
-	{
-		public int compare(Pair<Integer, Double> o1, Pair<Integer, Double> o2) 
-		{
-			return (int) (o1.getValue() - o2.getValue());
-		}
-	}
-	
-	
-	class SortByKey implements Comparator<Pair<Integer, Double>>
-	{
-		public int compare(Pair<Integer, Double> o1, Pair<Integer, Double> o2) 
-		{
-			return (int) (o1.getKey() - o2.getKey());
-		}
-	}
+//	class SortByValue implements Comparator<Pair<Integer, Double>>
+//	{
+//		public int compare(Pair<Integer, Double> o1, Pair<Integer, Double> o2) 
+//		{
+//			return (int) (o1.getValue() - o2.getValue());
+//		}
+//	}
+//	
+//	
+//	class SortByKey implements Comparator<Pair<Integer, Double>>
+//	{
+//		public int compare(Pair<Integer, Double> o1, Pair<Integer, Double> o2) 
+//		{
+//			return (int) (o1.getKey() - o2.getKey());
+//		}
+//	}
 	
 	public void Update(TargetPathAgentStatus status) 
 	{
@@ -85,7 +87,7 @@ public class GreedyTargetDecider implements ITargetDecider
 		RobotData mydata = status.ObservedData.RobotData._robots.get(_robotID);
 		List<Integer> searchNodes = status.SearchNodes;
 		
-		if(mydata.Position == status.TargetNode) 
+		if(mydata.Position == status.getTargetNode()) 
 		{
 			//int time = status.ObservedData.Time;
 			List<Pair<Integer, Double>> list = new ArrayList<Pair<Integer, Double>>();
@@ -107,7 +109,13 @@ public class GreedyTargetDecider implements ITargetDecider
 			
 			_expectationSum = sum;
 			
-			Collections.sort(list, new SortByValue().thenComparing(new SortByKey()));
+//			Collections.sort(list, new SortByValue().thenComparing(new SortByKey()));
+			
+			final Comparator<Pair<Integer, Double>> sortByValue = reverseOrder(comparing(Pair::getValue));
+			final Comparator<Pair<Integer, Double>> sortByKey = reverseOrder(comparing(Pair::getKey));
+			
+			Collections.sort(list, sortByValue.thenComparing(sortByKey));
+			
 			boolean countchecker = list.size() > 5;
 			int count = countchecker ? 5 : list.size()-1;
 			
