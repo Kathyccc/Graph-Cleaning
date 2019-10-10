@@ -7,44 +7,46 @@ import java.io.File;
 
 public class LogManager 
 {
-	static String _logDirectory;
+	static String logDirectory;
 	
-	public static String LogDirectory;
+	static String absolutePath = "/Users/kathy/Graph-Cleaning/";
 	
-	static int defaultCapacity = 10500;
+	static int defaultCapacity = 1;
 	
-	static Map<String, LogWriter> writers = new HashMap<>();
+	static Map<String, LogWriter> writers = new HashMap<String, LogWriter>();
 	
 	
-	public static String getLogDirectory() 
+	
+	public static void setLogDirectory(String path) 
 	{
-		return LogDirectory;
-	}
-	
-	public void setLogDirectory() 
-	{
-		File directory = new File(_logDirectory);
-		if(!directory.exists()) {
+		File directory = new File(absolutePath + path);
+		if(!directory.exists()) 
 			directory.mkdir();
-		}
+		//System.out.println(path);
 		
-		LogDirectory = _logDirectory + "\"";
+		
+		logDirectory = absolutePath + path + "/";
 		writers.clear();
 	}
 	
+	//Create LogWriter
 	public static LogWriter CreateWriter(String key) 
 	{
 		if(writers.containsKey(key)) 
 		{
-			if(writers.get(key).isDisposed == false) 
-			{
+			if(writers.get(key).isDisposed() == false) 
 				return writers.get(key);
-			}
 			writers.remove(key);
 		}
-		LogWriter writer = new LogWriter(LogDirectory + key + ".csv", defaultCapacity);
+		LogWriter writer = new LogWriter(logDirectory + key + ".csv", defaultCapacity);
 		writers.put(key, writer);
 		return writer;
+	}
+	
+	public static void closeWriters() 
+	{
+		for(LogWriter writer : writers.values())
+			writer.close();
 	}
 		
 }

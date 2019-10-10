@@ -11,8 +11,8 @@ import core.RobotDataCollection;
 public class LitterExistingExpectation 
 {
 	int _time;
-	LitterSpawnPattern _pattern;
-	Map<Integer, Integer> _visitedTime;
+	LitterSpawnPattern _pattern = new LitterSpawnPattern();
+	Map<Integer, Integer> _visitedTime = new HashMap<>();;
 	boolean _isAccumulated;
 	boolean IncrementEnabled;
 	
@@ -23,10 +23,11 @@ public class LitterExistingExpectation
 		_pattern = pattern;
 		_visitedTime = new HashMap<>();
 		
-		for(Map.Entry<Integer, LitterSpawnProbability> pr : _pattern._patterns.entrySet()) 
+		for(Integer node : _pattern._patterns.keySet()) 
 		{
-			_visitedTime.put(pr.getKey(), 0);
+			_visitedTime.put(node, 0);
 		}
+		
 		
 		_isAccumulated = isAccumulated;
 		IncrementEnabled = false;
@@ -96,7 +97,7 @@ public class LitterExistingExpectation
 	public int getInterval(int node, int time) 
 	{
 		int interval = time - _visitedTime.get(node);
-		
+
 		return interval;
 	}
 	

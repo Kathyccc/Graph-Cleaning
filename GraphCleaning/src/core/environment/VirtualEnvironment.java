@@ -39,7 +39,7 @@ public class VirtualEnvironment implements IEnvironment
 	List<Integer> _high;
 	List<Integer> _middle;
 	List<Integer> _low;
-	ArrayList<Integer>[][] _eachNodeQuantity = new ArrayList[10201][2];
+	List<Integer>[][] _eachNodeQuantity = new ArrayList[10201][2];
 	int[][] _eachNodeLitterAmount = new int[10201][2];
 	
 	int Initializing;
@@ -68,6 +68,8 @@ public class VirtualEnvironment implements IEnvironment
 		_middle = middle;
 		_low = low;
 		
+		
+		LogManager.setLogDirectory("/Average Remaining Litter");
 		_AverageRemainingLitterLogger = LogManager.CreateWriter("AverageRemainingLitter");
 		_AverageRemainingLitterLogger.WriteLine("" + "," + "AverageRL*T" + "," + "AverageRTime" + "," + "WorstRL*T-Node" + "," + "WorstRT-Node");
 		
@@ -75,6 +77,7 @@ public class VirtualEnvironment implements IEnvironment
 		{
 			_fieldSettingControl.CreateLitter("non", node, isLitterAccumulated);
 		}
+		
 		
 		for(int i = 0; i<10201; i++) 
 		{
@@ -110,7 +113,6 @@ public class VirtualEnvironment implements IEnvironment
 	public void ConnectRobotBase(int id) 
 	{
 		_batteryChargeControl.Connect(id);
-		
 	}
 
 	public void DisconnectRobotBase(int id) 
@@ -132,10 +134,13 @@ public class VirtualEnvironment implements IEnvironment
 			break;
 		
 		case 1:
+			_litterSpawnControl.Update();
 			_state = 2;
 			break;
 			
 		case 2:
+			_batteryChargeControl.Update();
+			_robotMoveControl.Update();
 			_state = 3;
 			break;
 			
@@ -151,6 +156,7 @@ public class VirtualEnvironment implements IEnvironment
 			break;
 		
 		case 4:
+			_fieldSettingControl.Update();
 			_state = 1;
 			break;
 		}
@@ -160,9 +166,8 @@ public class VirtualEnvironment implements IEnvironment
 	public void MemorizedLitter(List<Integer> task) 
 	{
 		LitterCollection litterColl = _field.Litter;
-		for(Map.Entry<Integer, Litter> litterset : litterColl._litter.entrySet()) 
+		for(Litter litter : litterColl._litter.values()) 
 		{
-			Litter litter = litterset.getValue();
 			List<Integer> _task = task;
 			int position = litter.getPosition();
 			int quantity = litter.getQuantity();

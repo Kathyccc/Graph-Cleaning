@@ -125,8 +125,8 @@ public class AgentSimulationFactory extends SimulationFactory
 		nodeProperty = new NodeProperty[_graph.getNumOfNodes()];
 		
 		// trash generation pattern
-		CreateLitterSpawnPattern();
 		setNodesProperty();
+		CreateLitterSpawnPattern();
 		
 		// environment
 		_environment = new VirtualEnvironment(
@@ -141,10 +141,10 @@ public class AgentSimulationFactory extends SimulationFactory
 		CreateAgent();
 		
 		_environment.Update();
-		
+
 		CreateEvaluator();
 		
-		
+		LogManager.setLogDirectory("/Nodes Property");
 		NodesProperty = LogManager.CreateWriter("NodesProperty");
 		NodesProperty.WriteLine("id" + "," + "Probability Type" + "," + "Obstacle"+ "," + "Potential" + "," + "X" + "," + "Y");
 		
@@ -153,6 +153,7 @@ public class AgentSimulationFactory extends SimulationFactory
 			NodesProperty.WriteLine(node.ID + "," + node.ProbabilityType + "," + node.Obstacle + "," + node.Potential + "," + _graph.getCoordinate(node.ID).X + "," + _graph.getCoordinate(node.ID).Y);
 		}
 		
+		LogManager.setLogDirectory("/Nodes Connection");
 		NodesConnection = LogManager.CreateWriter("NodesConnection");
 		for(int node : _graph.getNodes()) 
 		{
@@ -243,13 +244,14 @@ public class AgentSimulationFactory extends SimulationFactory
             	nodeProperty[node] = new NodeProperty(node, "Uniform", false);
             }
 			
-			DijkstraAlgorithm tmpDijk = new DijkstraAlgorithm(_graph);
-            PotentialCollection potentialmMap = tmpDijk.Execute(0);
-            for(int _node : _graph.getNodes())
-            {
-            	nodeProperty[_node].Potential = potentialmMap._potentials.get(_node);
-            }	
 		}
+		
+		DijkstraAlgorithm tmpDijk = new DijkstraAlgorithm(_graph);
+        PotentialCollection potentialmMap = tmpDijk.Execute(0);
+        for(int _node : _graph.getNodes())
+        {
+        	nodeProperty[_node].Potential = potentialmMap._potentials.get(_node);
+        }	
 	}
 	
 	

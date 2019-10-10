@@ -47,12 +47,13 @@ public class GridGraph implements IPointMappedGraph{
 		MinCoordinate = min;
 		
 		_scale = new Coordinate(max.X - min.X, max.Y - min.Y);
+
 		
 		int n = 0;
 		
 		//generate nodes in the graph
 		for(int i = min.X; i <= max.X; i++) {
-			for(int j = min.Y; i <= max.Y; j++) {
+			for(int j = min.Y; j <= max.Y; j++) {
 				_graph.AddNode(n);
 				_coordinate.put(n, new Coordinate(i,j));
 				n++;

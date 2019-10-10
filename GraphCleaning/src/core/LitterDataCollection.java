@@ -7,6 +7,11 @@ public class LitterDataCollection {
 	
 	public List<LitterData> _litter;
 	
+	public List<LitterData> getLitterDataCollection()
+	{
+		return _litter;
+	}
+	
 	public LitterDataCollection() {
 		_litter = new ArrayList<>();
 	}

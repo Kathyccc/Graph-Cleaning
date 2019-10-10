@@ -15,9 +15,4 @@ public class PotentialCollection
 	public PotentialCollection(Map<Integer, Integer> potentials){
 		_potentials = potentials;
 	}
-	
-	
-	public int getPotential(int node) {
-		return _potentials.get(node);
-	}
 }

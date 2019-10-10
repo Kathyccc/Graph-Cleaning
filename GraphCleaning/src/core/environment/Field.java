@@ -13,9 +13,9 @@ public class Field {
 	
 	public LitterCollection Litter = new LitterCollection();
 	
-	public RobotBaseCollection RobotBases;
+	public RobotBaseCollection RobotBases = new RobotBaseCollection();
 	
-	public LitterSpawnPattern LitterSpawnPattern;
+	public LitterSpawnPattern LitterSpawnPattern = new LitterSpawnPattern();
 	
 	public Field(IGraph spatialStructure, LitterSpawnPattern pattern) {
 		Time = 0;
@@ -39,6 +39,10 @@ public class Field {
 		Litter.Remove(Litter.getLitter(position));
 	}
 	
+	
+	public LitterCollection getLitter() {
+		return Litter;
+	}
 	
 	public void AddRobotBase(RobotBase rb) {
 		RobotBases.Add(rb);

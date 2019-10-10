@@ -28,7 +28,7 @@ public class TargetPathAgentPDALearning implements IAgent
 {
 	ITargetDecider _targetter;
 	IPathPlanner _pather;
-	LitterSpawnPattern _mySpawnPattern;
+	LitterSpawnPattern _mySpawnPattern = new LitterSpawnPattern();
 	LitterSpawnPattern _spawnPattern;
 	GridGraph _graph;
 	List<Integer> _nodes;
@@ -36,7 +36,7 @@ public class TargetPathAgentPDALearning implements IAgent
 	int _target;
 	Random forOrderbyRnd;
 	boolean _isChargeRequired = false;
-	LitterExistingExpectation _expectation;
+	LitterExistingExpectation _expectation = new LitterExistingExpectation (_mySpawnPattern, true);
 	int _maxNodeNum;
 	List<Integer> _searchNodes;
 	int _searchNodeNum;
@@ -100,6 +100,7 @@ public class TargetPathAgentPDALearning implements IAgent
         _excludeNodes = excludeNodes;
         _graph = graph;
         _nodes = new ArrayList<Integer>(_graph.getNodes());
+        _visitCounter = new int[_graph.getNumOfNodes()];
 
         for(int node : excludeNodes) { 
         	_nodes.remove(new Integer(node)); 
@@ -121,7 +122,9 @@ public class TargetPathAgentPDALearning implements IAgent
         
         _expectation = new LitterExistingExpectation (_mySpawnPattern, true);
         _communicationDetail = new CommunicationDetails(_myCenterNode, _myCenterNodeWeight, _mySpawnPattern, _searchNodes);
+        LogManager.setLogDirectory("/Search Node List");
         _SearchNodeListup = LogManager.CreateWriter("SearchNodeList-" + RobotID);
+        LogManager.setLogDirectory("/Cycle Values");
         _cycleValues = LogManager.CreateWriter("CycleValues-" + RobotID);
         _cycleValues.WriteLine("" + "," + "c300" + "," + "c900" + "," + "c2700");
         cycleIndex = forOrderbyRnd.nextInt(3);
@@ -181,21 +184,18 @@ public class TargetPathAgentPDALearning implements IAgent
     public LitterSpawnPattern getMySpawnPattern() {return _mySpawnPattern; }
     
     
+    // Update the status
     public void Update(ObservedData data) 
     {
 
-    }
-    
-    
-    // Update the status
-    public void Update(ObservedData data, int targetPhase) 
-    {
     	RobotData mydata = data.RobotData.getRobotData(RobotID);
     	int position = mydata.Position;
+
     	int interval = _expectation.getInterval(position, data.Time);
+
     	int litter = mydata.Litter;
     	collectedCycleLitter += litter;
-    	
+
     	
     	_visitCounter[position]++;
     	_visitHistory.add(position);
@@ -204,7 +204,8 @@ public class TargetPathAgentPDALearning implements IAgent
     	
     	_expectation.Update(data.RobotData, data.Time); // other agents' positions available
         //_expectation.Update(position, data.Time);  //other agents' positions unavailable
-
+    	
+    	//System.out.println("print the time: " + data.Time);
     	if(data.Time % 10000 == 0) 
     	{ 
     		_cycleValues.WriteLine(data.Time + "," + cycleValues[0] + "," + cycleValues[1] + "," + cycleValues[2]);

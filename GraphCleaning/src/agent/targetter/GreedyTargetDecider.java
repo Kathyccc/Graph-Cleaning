@@ -21,7 +21,7 @@ import core.RobotData;
 public class GreedyTargetDecider implements ITargetDecider
 {
 	Random _rand;
-	List<Integer> _nodes = new ArrayList<Integer>();
+	List<Integer> _nodes; 
 	int _robotID;
 	boolean _isAccumulated;
 	double _rate;
@@ -35,6 +35,7 @@ public class GreedyTargetDecider implements ITargetDecider
 	{
 		_robotID = robotID;
 		
+		_nodes = new ArrayList<>(map.getNodes());
 		for(int node : excludeNodes) 
 		{
 			_nodes.remove(new Integer(node));

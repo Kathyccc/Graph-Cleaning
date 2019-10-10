@@ -64,7 +64,7 @@ public class Robot
 	}
 	
 	public Cleaner getCleaner() {
-		return this.Cleaner;
+		return Cleaner;
 	}
 	
 	public void setBatteryConsum(int consumption) {

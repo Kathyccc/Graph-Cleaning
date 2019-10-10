@@ -21,8 +21,9 @@ public class RobotDataCollection {
 	
 	
 	public void Add(RobotData robot) {
-		if(ReadOnly==false) _robots.put(robot.ID, robot);
-		else throw new IllegalStateException("The collection is Read-Only.");
+		//if(ReadOnly==false) 
+			_robots.put(robot.ID, robot);
+		//else throw new IllegalStateException("The collection is Read-Only.");
 	}
 	
 	

@@ -27,6 +27,7 @@ public class Evaluator
 	public Evaluator(IEnvironment environ, List<Integer> high, List<Integer> middle, List<Integer> low)
 	{
 		_environment = environ;
+		LogManager.setLogDirectory("/Evaluation");
 		_logger = LogManager.CreateWriter("evaluation-s3600");
         _loggerEachMax = LogManager.CreateWriter("EachNodesMaxQuantity");
         _loggerEachMax.WriteLine("" + "0" + "," + "100000" + "," + "200000" + "," + "300000" + "," + "400000" + "," + "500000" + "," + "600000" + "," + "700000" + "," + "800000" + "," + "900000" + "," + "1000000"
@@ -46,7 +47,7 @@ public class Evaluator
 		int litterQuantity = _environment.GetLitterQuantity();
 		int currentMaxLitter = _environment.GetMaxLitterQuantity();
 		LitterDataCollection litterData = _environment.GetLitterDataCollection();
-		
+				
 		if(maxLitterQuantity < currentMaxLitter) maxLitterQuantity = currentMaxLitter;
 		
 		int[] eachQuantity = _environment.GetEachLitterQuantity();
@@ -56,8 +57,11 @@ public class Evaluator
 			_eachNodeMaxQuantity[i] = Math.max(_eachNodeMaxQuantity[i], eachQuantity[i]);
 		}
 		
+		//System.out.println(litterData._litter.isEmpty());
+
 		for(LitterData litter : litterData._litter) 
 		{
+			
 			if(_high.contains(litter.Position)) 
 			{
 				_evaluationSumDetails[0] += litter.Quantity;
@@ -73,22 +77,23 @@ public class Evaluator
 				_evaluationSumDetails[2] += litter.Quantity;
 			}
 		}
-		
+				
 		_evaluationSum += litterQuantity;
 		
-		if(time%100000 == 0) 
-		{
-			for(int k = 0; k <10201 ; k++) 
-			{
-				_eachMaxMemory[k][_eachMaxCounter] = _eachNodeMaxQuantity[k];
-				_eachNodeMaxQuantity[k] = 0;
-			}
-			_eachMaxCounter++;
-		}
+//		if(time%100000 == 0) 
+//		{
+//			for(int k = 0; k <10201 ; k++) 
+//			{
+//				_eachMaxMemory[k][_eachMaxCounter] = _eachNodeMaxQuantity[k];
+//				_eachNodeMaxQuantity[k] = 0;
+//			}
+//			_eachMaxCounter++;
+//		}
 		
 		if (time % 3600 == 0)
         {
             _logger.WriteLine(time + "," + _evaluationSum + "," + maxLitterQuantity + "," + _evaluationSumDetails[0] + "," + _evaluationSumDetails[1] + "," + _evaluationSumDetails[2]);
+            //System.out.println(time + "," + _evaluationSum + "," + maxLitterQuantity + "," + _evaluationSumDetails[0] + "," + _evaluationSumDetails[1] + "," + _evaluationSumDetails[2]);
             _evaluationSum = 0;
             maxLitterQuantity = 0;
             _evaluationSumDetails[0] = 0;

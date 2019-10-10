@@ -14,9 +14,11 @@ import core.RobotData;
 import core.RobotDataCollection;
 import core.environment.Field;
 import core.environment.Litter;
+import core.environment.LitterCollection;
 import core.environment.Robot;
 
 public class ObservationControl {
+	
 	Field _field;
 	
 	public ObservationControl(Field field) {
@@ -27,6 +29,7 @@ public class ObservationControl {
 	public int getTime() {
 		return _field.Time;
 	}
+	
 	
 	public IGraph getSpatialStructure() {
 		return _field.SpatialStructure;
@@ -54,8 +57,7 @@ public class ObservationControl {
 		Map<Integer, Robot> robots = new HashMap<>();
 		robots = _field.Robots._robots;
 		
-		for(Map.Entry<Integer, Robot> robotSet : robots.entrySet()) {
-			Robot robot = robotSet.getValue();
+		for(Robot robot : robots.values()) {
 			RobotData data = new RobotData(robot.ID, robot.BatteryLevel, robot.Position, robot.AccumulatedLitter, robot.Litter, robot.Spec);
 			rDataCollection.Add(data);
 		}
@@ -66,20 +68,20 @@ public class ObservationControl {
 	
 	public LitterDataCollection getLitterDataCollection() 
 	{
-		LitterDataCollection collection = new LitterDataCollection();
-		List<Integer> tmp = new ArrayList<Integer>();
+		LitterDataCollection LitterDC = new LitterDataCollection();
 		
-		for(Map.Entry<Integer, Litter> litterSet : _field.Litter._litter.entrySet()) 
-		{
-			Litter litter = litterSet.getValue();
+		LitterCollection litterCollection = _field.getLitter();
+		
+		for(Litter litter : litterCollection._litter.values()) 
+		{			
+			//System.out.println("testing..." + litter.Quantity);
 			if(litter.Quantity != 0) {
 				LitterData data = new LitterData(litter.Position, litter.Type, litter.Quantity);
-				collection.AddLitterData(data);
-				tmp.add(litter.Position);
+				LitterDC.AddLitterData(data);
 			}
 		}
-		
-		return collection;
+		//System.out.println(LitterDC._litter);
+		return LitterDC;
 	}
 	
 	
@@ -99,7 +101,7 @@ public class ObservationControl {
 	
 	public int getMaxLitterQuantity() 
 	{
-		int[] tmp = new int[Integer.MAX_VALUE];
+		int[] tmp = new int[_field.Litter._litter.size()];
 		
 		for(Map.Entry<Integer, Litter> litterSet : _field.Litter._litter.entrySet()) 
 		{
@@ -113,7 +115,7 @@ public class ObservationControl {
 	
 	public int[] getEachLitterQuantity() 
 	{
-		int[] tmp = new int[Integer.MAX_VALUE];
+		int[] tmp = new int[_field.Litter._litter.size()];
 		for(Map.Entry<Integer, Litter> litterSet : _field.Litter._litter.entrySet()) 
 		{
 			Litter litter = litterSet.getValue();
@@ -128,16 +130,6 @@ public class ObservationControl {
 	{
 		return _field.LitterSpawnPattern;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

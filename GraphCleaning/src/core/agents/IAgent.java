@@ -14,9 +14,7 @@ public interface IAgent
 	int NextNode();
 	
 	void Update(ObservedData data);
-	
-	void Update(ObservedData data, int startPhase);
-		
+			
 	LitterSpawnPattern getMySpawnPattern();
 	
 	CommunicationDetails getCommunicateDetails();

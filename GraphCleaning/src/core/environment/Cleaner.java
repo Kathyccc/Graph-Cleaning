@@ -5,15 +5,15 @@ public class Cleaner {
 	int Litter;
 	
 	public void setAccumulatedLitter(int litter) {
-		this.AccumulatedLitter = litter;
+		AccumulatedLitter = litter;
 	}
 	
 	public int getAccumulatedLitter() {
-		return this.AccumulatedLitter;
+		return AccumulatedLitter;
 	}
 	
 	public void setLitter(int litter) {
-		this.AccumulatedLitter = litter;
+		AccumulatedLitter = litter;
 	}
 	
 	public int getLitter() {

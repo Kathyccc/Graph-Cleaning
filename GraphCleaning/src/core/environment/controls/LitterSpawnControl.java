@@ -34,17 +34,20 @@ public class LitterSpawnControl
 	{
 		Map<Integer, LitterSpawnProbability> patterns = new HashMap<>(); 
 		patterns = _patterns.getLitterSpawnPatternMap();
-		
+
 		
 		for(Map.Entry<Integer, LitterSpawnProbability> pattern : patterns.entrySet()) 
 		{
 			LitterSpawnProbability prob = pattern.getValue();
+			
+			
 			if(_field.Time % prob.Interval == 0) 
 			{
 				double n = _rand.nextDouble();
 				if(n < prob.Probability) 
 				{
 					_litter.getLitter(pattern.getKey()).Increase(prob.Increment);
+					//System.out.println("it does increase: " + _litter.getLitter(pattern.getKey()).Quantity);
 				}
 			}
 		}

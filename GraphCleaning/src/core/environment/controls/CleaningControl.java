@@ -34,7 +34,7 @@ public class CleaningControl
 	
 	public void Clean(int id) {
 		Robot robot = _robots.getRobot(id);
-		_tasks.add(_rand.nextInt(_tasks.size())+1, new Pair<Cleaner, Litter>(
+		_tasks.add(_rand.nextInt(_tasks.size()+1), new Pair<Cleaner, Litter>(
 				robot.Cleaner, _litter.getLitter(robot.Position)));
 	}
 	

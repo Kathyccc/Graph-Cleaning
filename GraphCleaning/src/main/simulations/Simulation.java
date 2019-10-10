@@ -1,8 +1,5 @@
 package main.simulations;
 
-import java.util.Date;
-import java.time.Instant;
-
 import core.IAgentManager;
 import core.IEnvironment;
 import core.ISimulation;
@@ -42,25 +39,26 @@ public class Simulation implements ISimulation
 	
 	public void Run(int steps) 
 	{
-		long startTime = Instant.now().toEpochMilli();
+//		long startTime = Instant.now().toEpochMilli();
 		
 		for(int i = 0; i < steps ; i++) 
 		{
 			Step();
+			//System.out.println("Step: " + i);
 			if(i % 10000 == 0) 
 			{
-				long endTime = Instant.now().toEpochMilli();
-				long time_elapsed = endTime - startTime;
-				System.out.println(i + "It takes " + time_elapsed);
-				
-				Date time = new Date(0);
-				long t = 0;
-
-				for(int j = 0; j < (steps-i)/10000; j++)
-				{
-					t += time_elapsed;
-				}
-				System.out.println("This trial will finish at" + time + t + "ms");
+//				long endTime = Instant.now().toEpochMilli();
+//				long time_elapsed = endTime - startTime;
+//				System.out.println(i + "It takes " + time_elapsed);
+//				
+//				Date time = new Date(0);
+//				long t = 0;
+//
+//				for(int j = 0; j < (steps-i)/10000; j++)
+//				{
+//					t += time_elapsed;
+//				}
+//				System.out.println("This trial will finish at" + time + t + "ms");
 			}
 		}
 		
@@ -86,11 +84,12 @@ public class Simulation implements ISimulation
 	public void Reset() 
 	{
 		SimulationFactory factory = _factory;
+
 		factory.Make();
 		_environment = factory.Environment();
 		_agentManager = factory.AgentManager();
         _evaluator = factory.Evaluator();
-
+        
         EvaluationValue = _evaluator.getEvaluation();
 	}
 

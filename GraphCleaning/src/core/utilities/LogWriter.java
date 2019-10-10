@@ -1,68 +1,43 @@
 package core.utilities;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Map;
-
-import agent.AgentActions;
 
 
 public class LogWriter 
 {
 	Object locker = new Object();
-	boolean isDisposed = false;
+	boolean disposed = false;
+	
 	PrintWriter writer;
-	String[] buffer;
-	String[] saveBuffer;
-	int counter;
-	int capacity;
-	String filePath;
 	
-	
-	public boolean isDisposed() 
+	LogWriter(String path, int c)
 	{
-		return isDisposed;
-	}
-	
-	
-	public LogWriter(String _filePath, int _capacity) 
-	{
-		buffer = new String[_capacity];
-		counter = 0;
-		this.capacity = _capacity;
-		
-		filePath = _filePath;
+		try {
+			writer = new PrintWriter(path);
+		} 
+		catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
 	public void WriteLine(String log) 
 	{
-		if(buffer.length <= counter) {
-			saveBuffer = buffer;
-			buffer = new String[capacity];
-			counter = 0;
-		}
-		
-		buffer[counter] = log;
-		counter++;
+		writer.println(log);
 	}
 	
-	public void MapValueWriteLine(Map<Integer, AgentActions> MapLog, String initialString)
-    {
-        if (buffer.length <= counter)
-        {
-            saveBuffer = buffer;
-            buffer = new String[capacity];
-            counter = 0;
-        }
-
-        String log = initialString;
-        for(Map.Entry<Integer, AgentActions> element : MapLog.entrySet())
-        {
-            log += element.getValue().toString() + ",";
-        }
-
-        buffer[counter] = log;
-        counter++;
-    }
 	
+	public void close() 
+	{
+		writer.close();
+	}
+	
+	public boolean isDisposed() 
+	{
+		synchronized(locker) {
+			return disposed;
+		}
+	}
 }
+

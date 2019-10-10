@@ -45,7 +45,7 @@ public class AgentManager implements IAgentManager
 //    LogWriter[] _NodesImportanceManager = new LogWriter[30];
 //    double[][] probabilityAve = new double[20][7];
 //    int[][] visitCounter = new int[20][7];
-//    //int[][] DvisitCounter;
+//    int[][] DvisitCounter;
 //    int[][] visitCounterRoom = new int[20][6];
 //    int k = 100;
 //    double regionAve = 81.0;
@@ -68,14 +68,17 @@ public class AgentManager implements IAgentManager
 		_agentActions = new HashMap<>();
 		_agents = new ArrayList<Pair<IAgent, Integer>>();
 		_graph = graph;
-		_rand = new Random(seed);		
+		_rand = new Random(seed);	
+		InitializeLogWriter();
 	}
+	
 	
 	public void AddAgent(IAgent agent) 
 	{
 		_agents.add(new Pair<IAgent, Integer>(agent, agent.getRobotID()));
 		_agentActions.put(agent.getRobotID(), AgentActions.Wait);
 	}
+	
 	
 	public void Move() 
 	{
@@ -84,12 +87,20 @@ public class AgentManager implements IAgentManager
 		
 		ObservedData data = new ObservedData(time, robots);
 		
-		_logWriters.get("AgentActions").MapValueWriteLine(_agentActions, Integer.toString(data.getTime()) + ",");
-		
+		String log = Integer.toString(data.Time) + ",";
+
+		for(AgentActions agentAction : _agentActions.values()) 
+		{
+			log += agentAction.name() + ",";
+		}
+				
+		_logWriters.get("AgentActions").WriteLine(log);
+				
 		for(Pair<IAgent, Integer> p : _agents) 
 		{
 			IAgent agent = p.getKey();
 			int id = p.getValue();
+			
 			agent.Update(data);
 			
 			if(agent.getAction() == AgentActions.Move) 
@@ -141,10 +152,10 @@ public class AgentManager implements IAgentManager
 			agentNumList.add(i);
 		}
 		
-		AddLogWriterMap("ProbabilityCheck");
-		AddLogWriterMap("ProbabilityCheck2");
-		AddLogWriterMap("ProbabilityCheck3");
-		AddLogWriterMap("ProbabilityCheck4");
+//		AddLogWriterMap("ProbabilityCheck");
+//		AddLogWriterMap("ProbabilityCheck2");
+//		AddLogWriterMap("ProbabilityCheck3");
+//		AddLogWriterMap("ProbabilityCheck4");
 
 		AddLogWriterMap("CenterNodeChanges");
         _logWriters.get("CenterNodeChanges").WriteLine("" + "," + "0" + "," + "1" + "," + "2" + "," + "3" + "," + "4" + "," + "5" + "," + "6" + "," + "7" + "," + "8" + "," + "9" + "," + "10"

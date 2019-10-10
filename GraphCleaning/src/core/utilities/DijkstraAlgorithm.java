@@ -12,7 +12,7 @@ public class DijkstraAlgorithm
 	IGraph _graph;
 	Map<Integer, Integer> _distance = new HashMap<>();
 	List<Integer> _excludeNodes = new ArrayList<>();
-	PotentialCollection Potentials = new PotentialCollection(_distance);
+	PotentialCollection Potentials;
 	
 	//Map<Integer, Integer> PotentialMap = Potentials._potentials;
 	
@@ -46,7 +46,10 @@ public class DijkstraAlgorithm
 			int node = calcs.get(0);
 			int potential = _distance.get(node);
 			
-			if(node == source && node!= destination) return this.Potentials;
+			if(node == source && node!= destination) {
+				Potentials = new PotentialCollection(_distance);
+				return Potentials;
+			}
 			
 			for(int child : _graph.getParentNodes(node)) 
 			{
@@ -68,7 +71,9 @@ public class DijkstraAlgorithm
 			}
 			calcs.remove(0);
 		}
-		return this.Potentials;
+		Potentials = new PotentialCollection(_distance);
+		
+		return Potentials;
 	}
 	
 	
