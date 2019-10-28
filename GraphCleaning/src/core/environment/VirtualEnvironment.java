@@ -69,7 +69,7 @@ public class VirtualEnvironment implements IEnvironment
 		_low = low;
 		
 		
-		LogManager.setLogDirectory("/Average Remaining Litter");
+//		LogManager.setLogDirectory("/Average Remaining Litter");
 		_AverageRemainingLitterLogger = LogManager.CreateWriter("AverageRemainingLitter");
 		_AverageRemainingLitterLogger.WriteLine("" + "," + "AverageRL*T" + "," + "AverageRTime" + "," + "WorstRL*T-Node" + "," + "WorstRT-Node");
 		

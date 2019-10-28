@@ -122,9 +122,7 @@ public class TargetPathAgentPDALearning implements IAgent
         
         _expectation = new LitterExistingExpectation (_mySpawnPattern, true);
         _communicationDetail = new CommunicationDetails(_myCenterNode, _myCenterNodeWeight, _mySpawnPattern, _searchNodes);
-        LogManager.setLogDirectory("/Search Node List");
         _SearchNodeListup = LogManager.CreateWriter("SearchNodeList-" + RobotID);
-        LogManager.setLogDirectory("/Cycle Values");
         _cycleValues = LogManager.CreateWriter("CycleValues-" + RobotID);
         _cycleValues.WriteLine("" + "," + "c300" + "," + "c900" + "," + "c2700");
         cycleIndex = forOrderbyRnd.nextInt(3);

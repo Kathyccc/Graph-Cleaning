@@ -144,7 +144,7 @@ public class AgentSimulationFactory extends SimulationFactory
 
 		CreateEvaluator();
 		
-		LogManager.setLogDirectory("/Nodes Property");
+//		LogManager.setLogDirectory("/NodesProperty");
 		NodesProperty = LogManager.CreateWriter("NodesProperty");
 		NodesProperty.WriteLine("id" + "," + "Probability Type" + "," + "Obstacle"+ "," + "Potential" + "," + "X" + "," + "Y");
 		
@@ -153,8 +153,9 @@ public class AgentSimulationFactory extends SimulationFactory
 			NodesProperty.WriteLine(node.ID + "," + node.ProbabilityType + "," + node.Obstacle + "," + node.Potential + "," + _graph.getCoordinate(node.ID).X + "," + _graph.getCoordinate(node.ID).Y);
 		}
 		
-		LogManager.setLogDirectory("/Nodes Connection");
+//		LogManager.setLogDirectory("/NodesConnection");
 		NodesConnection = LogManager.CreateWriter("NodesConnection");
+		
 		for(int node : _graph.getNodes()) 
 		{
 			for(int child : _graph.getChildrenNodes(node)) 
@@ -243,7 +244,6 @@ public class AgentSimulationFactory extends SimulationFactory
             {
             	nodeProperty[node] = new NodeProperty(node, "Uniform", false);
             }
-			
 		}
 		
 		DijkstraAlgorithm tmpDijk = new DijkstraAlgorithm(_graph);
@@ -408,7 +408,7 @@ public class AgentSimulationFactory extends SimulationFactory
             // path planning
             switch (_patherNumber)
             {
-                case 1:
+                case 0:
                     pather = new ShortestGreedyPathPlanner(
                         robot.getKey(), _graph, _spawnPattern, basePosition[robot.getKey()], _isAccumulated, path_rand.nextInt(), _excludeNodes);
                     break;

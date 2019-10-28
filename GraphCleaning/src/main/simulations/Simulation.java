@@ -38,13 +38,11 @@ public class Simulation implements ISimulation
 
 	
 	public void Run(int steps) 
-	{
-//		long startTime = Instant.now().toEpochMilli();
-		
+	{		
 		for(int i = 0; i < steps ; i++) 
 		{
 			Step();
-			//System.out.println("Step: " + i);
+			System.out.println("Step: " + i);
 			if(i % 10000 == 0) 
 			{
 //				long endTime = Instant.now().toEpochMilli();

@@ -25,6 +25,7 @@ public class LogWriter
 	public void WriteLine(String log) 
 	{
 		writer.println(log);
+		writer.flush();
 	}
 	
 	

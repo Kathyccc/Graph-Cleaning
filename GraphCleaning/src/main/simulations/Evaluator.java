@@ -27,8 +27,7 @@ public class Evaluator
 	public Evaluator(IEnvironment environ, List<Integer> high, List<Integer> middle, List<Integer> low)
 	{
 		_environment = environ;
-		LogManager.setLogDirectory("/Evaluation");
-		_logger = LogManager.CreateWriter("evaluation-s3600");
+		_logger = LogManager.CreateWriter("evaluation-s3600");		
         _loggerEachMax = LogManager.CreateWriter("EachNodesMaxQuantity");
         _loggerEachMax.WriteLine("" + "0" + "," + "100000" + "," + "200000" + "," + "300000" + "," + "400000" + "," + "500000" + "," + "600000" + "," + "700000" + "," + "800000" + "," + "900000" + "," + "1000000"
                 + "," + "1100000" + "," + "1200000" + "," + "1300000" + "," + "1400000" + "," + "1500000" + "," + "1600000" + "," + "1700000" + "," + "1800000" + "," + "1900000" + "," + "2000000"
@@ -47,6 +46,7 @@ public class Evaluator
 		int litterQuantity = _environment.GetLitterQuantity();
 		int currentMaxLitter = _environment.GetMaxLitterQuantity();
 		LitterDataCollection litterData = _environment.GetLitterDataCollection();
+		
 				
 		if(maxLitterQuantity < currentMaxLitter) maxLitterQuantity = currentMaxLitter;
 		
@@ -55,6 +55,8 @@ public class Evaluator
 		for(int i =0; i < 10201; i++) 
 		{
 			_eachNodeMaxQuantity[i] = Math.max(_eachNodeMaxQuantity[i], eachQuantity[i]);
+			
+			//System.out.println("testing... " + _eachNodeMaxQuantity[i]);
 		}
 		
 		//System.out.println(litterData._litter.isEmpty());

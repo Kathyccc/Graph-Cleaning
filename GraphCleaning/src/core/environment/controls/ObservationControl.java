@@ -89,10 +89,10 @@ public class ObservationControl {
 	{
 		int quantity = 0;
 		
-		for(Map.Entry<Integer, Litter> litterSet : _field.Litter._litter.entrySet()) 
+		for(Litter litter : _field.Litter._litter.values()) 
 		{
-			Litter litter = litterSet.getValue();
 			quantity += litter.Quantity;
+//			System.out.println("In ObservationControl..." + litter.Quantity);
 		}
 		
 		return quantity;

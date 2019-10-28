@@ -12,14 +12,14 @@ import core.environment.LitterCollection;
 public class LitterSpawnControl 
 {
 	Field _field;
-	LitterCollection _litter;
+	LitterCollection litterCollection;
 	LitterSpawnPattern _patterns;
 	
 	Random _rand;
 	
 	public LitterSpawnControl(Field field, int seed) {
 		_field = field ;
-		_litter = field.Litter;
+		litterCollection = field.Litter;
 		_patterns = field.LitterSpawnPattern;
 		
 		_rand = new Random(seed);
@@ -46,8 +46,7 @@ public class LitterSpawnControl
 				double n = _rand.nextDouble();
 				if(n < prob.Probability) 
 				{
-					_litter.getLitter(pattern.getKey()).Increase(prob.Increment);
-					//System.out.println("it does increase: " + _litter.getLitter(pattern.getKey()).Quantity);
+					litterCollection.getLitter(pattern.getKey()).Increase(prob.Increment);
 				}
 			}
 		}

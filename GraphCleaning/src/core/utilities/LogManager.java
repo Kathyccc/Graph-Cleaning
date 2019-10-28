@@ -11,7 +11,7 @@ public class LogManager
 	
 	static String absolutePath = "/Users/kathy/Graph-Cleaning/";
 	
-	static int defaultCapacity = 1;
+	static int defaultCapacity = 5;
 	
 	static Map<String, LogWriter> writers = new HashMap<String, LogWriter>();
 	
@@ -21,8 +21,8 @@ public class LogManager
 	{
 		File directory = new File(absolutePath + path);
 		if(!directory.exists()) 
-			directory.mkdir();
-		//System.out.println(path);
+			directory.mkdirs();
+		System.out.println(path);
 		
 		
 		logDirectory = absolutePath + path + "/";
