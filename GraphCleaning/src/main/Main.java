@@ -31,8 +31,8 @@ public class Main
 					for (int s = 0; s < 1; s++) // s -> random seed
 					{
 						System.out.println(counter);
-						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-						Date time = new Date();
+//						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//						Date time = new Date();
 						//System.out.println(formatter.format(time));
 						LogManager.setLogDirectory("/Block/" + t + "/" + robots + "/" + "[" + s + "]");
 //						+ formatter.format(time)
@@ -47,7 +47,6 @@ public class Main
 			}
 		}
 
-		System.exit(1);
 
 		
 		counter = 0;
@@ -60,9 +59,9 @@ public class Main
 					for (int s = 0; s < 1; s++)
 					{
 						System.out.println(counter);
-						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-						Date time = new Date();
-						LogManager.setLogDirectory("/Uniform/" + t + "/" + robots + "/" + "[" + s + "]" + formatter.format(time));
+//						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//						Date time = new Date();
+						LogManager.setLogDirectory("/Uniform/" + t + "/" + robots + "/" + "[" + s + "]");
 						AgentSimulationFactory factory = new AgentSimulationFactory();
 						factory.setLocalNumbers(s, s + 1, p, s + 2, t, robots, scale, isAccumulated, "Uniform");
 						Simulation simulation = new Simulation(factory, "Uniform");
@@ -86,9 +85,9 @@ public class Main
 					for (int s = 0; s < 1; s++)
 					{
 						System.out.println(counter);	
-						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-						Date time = new Date();
-						LogManager.setLogDirectory("/Round/" + t + "/" + robots + "/" + "[" + s + "]" + formatter.format(time));
+//						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//						Date time = new Date();
+						LogManager.setLogDirectory("/Round/" + t + "/" + robots + "/" + "[" + s + "]");
 						AgentSimulationFactory factory = new AgentSimulationFactory();
 						factory.setLocalNumbers(s, s + 1, p, s + 2, t, robots, scale, isAccumulated, "Round");
 						Simulation simulation = new Simulation(factory, "Round");
@@ -111,9 +110,9 @@ public class Main
 					for (int s = 0; s < 1; s++)
 					{
 						System.out.println(counter);
-						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-						Date time = new Date();
-						LogManager.setLogDirectory("/Complex/" + t + "/" + robots + "/" + "[" + s + "]" + formatter.format(time));
+//						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//						Date time = new Date();
+						LogManager.setLogDirectory("/Complex/" + t + "/" + robots + "/" + "[" + s + "]");
 						AgentSimulationFactory factory = new AgentSimulationFactory();
 						factory.setLocalNumbers(s, s + 1, p, s + 2, t, robots, scale, isAccumulated, "Complex");
 						Simulation simulation = new Simulation(factory, "Complex");

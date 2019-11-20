@@ -8,7 +8,7 @@ public interface IEnvironment {
 	
 	void moveRobot(int id, int node);
 	
-	void changPattern(LitterSpawnPattern pattern);
+//	void changPattern(LitterSpawnPattern pattern);
 	
 	void ConnectRobotBase(int id);
 	

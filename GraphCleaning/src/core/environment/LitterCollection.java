@@ -14,6 +14,7 @@ public class LitterCollection
 
 	public void Add(Litter litter) {
 		_litter.put(litter.Position, litter);
+//		System.out.println("LitterCollection   " + litter.Position);
 	}
 	
 	public boolean Remove(Litter litter) {

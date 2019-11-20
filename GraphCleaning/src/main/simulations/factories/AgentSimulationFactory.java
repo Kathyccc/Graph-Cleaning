@@ -54,11 +54,12 @@ public class AgentSimulationFactory extends SimulationFactory
     NodeProperty[] nodeProperty;
     int robotCount = 20;
     int scale = 50;
-    int[] basePosition = new int[20];
+//    int[] basePosition = new int[20];
+    int basePosition;
     boolean spawnChange = false;
     LogWriter NodesProperty;
     LogWriter NodesConnection;
-    List<Integer> ChargingbaseList = new ArrayList<>();
+//    List<Integer> ChargingbaseList = new ArrayList<>();
     
     String patternName;
     
@@ -124,6 +125,7 @@ public class AgentSimulationFactory extends SimulationFactory
 		CreateSpatialStructure();
 		nodeProperty = new NodeProperty[_graph.getNumOfNodes()];
 		
+		
 		// trash generation pattern
 		setNodesProperty();
 		CreateLitterSpawnPattern();
@@ -144,7 +146,6 @@ public class AgentSimulationFactory extends SimulationFactory
 
 		CreateEvaluator();
 		
-//		LogManager.setLogDirectory("/NodesProperty");
 		NodesProperty = LogManager.CreateWriter("NodesProperty");
 		NodesProperty.WriteLine("id" + "," + "Probability Type" + "," + "Obstacle"+ "," + "Potential" + "," + "X" + "," + "Y");
 		
@@ -153,7 +154,6 @@ public class AgentSimulationFactory extends SimulationFactory
 			NodesProperty.WriteLine(node.ID + "," + node.ProbabilityType + "," + node.Obstacle + "," + node.Potential + "," + _graph.getCoordinate(node.ID).X + "," + _graph.getCoordinate(node.ID).Y);
 		}
 		
-//		LogManager.setLogDirectory("/NodesConnection");
 		NodesConnection = LogManager.CreateWriter("NodesConnection");
 		
 		for(int node : _graph.getNodes()) 
@@ -197,7 +197,7 @@ public class AgentSimulationFactory extends SimulationFactory
 				{
 					nodeProperty[node] = new NodeProperty(node, "Middle", false);
 				}
-				else if(-15 < coor.X && coor.X < -5 && 5 < coor.Y && coor.Y < 15) 
+				else if((coor.X > -15) && (-5 > coor.X) && 5 < coor.Y && coor.Y < 15) 
 				{
 					nodeProperty[node] = new NodeProperty(node, "High", false);
 				}
@@ -263,32 +263,31 @@ public class AgentSimulationFactory extends SimulationFactory
 		
 		for(int node : _graph.getNodes()) 
 		{
-//			Coordinate coor = _graph.getCoordinate(node);
 			double prob;
 			
 			NodeProperty property = nodeProperty[node];
 			
 			if(property.ProbabilityType == "High") 
 			{
-				prob = SpawnHigh + (rand.nextDouble() - 0.5) * SpawnHigh * 0.01;
+				prob = SpawnHigh /*+ (rand.nextDouble() - 0.5) * SpawnHigh * 0.01*/;
 				HighNodeList.add(node);
 			}
 			
 			else if(property.ProbabilityType == "Middle") 
 			{
-				prob = SpawnMiddle + (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01;
+				prob = SpawnMiddle /*+ (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01*/;
 				MiddleNodeList.add(node);
 			}
 			
 			else if(property.ProbabilityType == "Low") 
 			{
-				prob = SpawnLow + (rand.nextDouble() - 0.5) * SpawnLow * 0.01;
+				prob = SpawnLow /*+ (rand.nextDouble() - 0.5) * SpawnLow * 0.01*/;
 			LowNodeList.add(node);
 			}
 			
 			else if(property.ProbabilityType == "Uniform") 
 			{
-				prob = SpawnUniform * rand.nextDouble();
+				prob = SpawnUniform  * rand.nextDouble();
 			}
 			
 			else 
@@ -300,94 +299,51 @@ public class AgentSimulationFactory extends SimulationFactory
 			
 		}
 		
-		RemoveExcludeEdge();
-
-//			if(patternName == "Block") 
-//			{
-//				if ((35 < coor.X && coor.X < 45 && 35 < coor.Y && coor.Y < 45) ||
-//                        (20 < coor.X && coor.X < 30 && -30 < coor.Y && coor.Y < -20) ||
-//                        (-50 < coor.X && coor.X < -40 && -35 < coor.Y && coor.Y < -25) ||
-//                        (-35 < coor.X && coor.X < -25 && -50 < coor.Y && coor.Y < -40))
-//				{
-//					prob = SpawnMiddle + (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01;
-//				}
-//				else if (-15 < coor.X && coor.X < -5 && 5 < coor.Y && coor.Y < 15)
-//                {
-//                    prob = SpawnHigh + (rand.nextDouble() - 0.5) * SpawnHigh * 0.01;
-//                }
-//                else
-//                {
-//                    prob = SpawnLow + (rand.nextDouble() - 0.5) * SpawnLow * 0.01;
-//                }
-//			}
-//			
-//			else if (patternName == "Round")
-//            {
-//                if (coor.X < -40 || 40 < coor.X || coor.Y < -40 || 40 < coor.Y)
-//                    prob = SpawnMiddle + (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01;
-//                else
-//                    prob = SpawnLow;
-//            }
-//			
-//            else if (patternName == "Complex")
-//            {
-//                if (coor.X < -43 || 43 < coor.X || coor.Y < -43 || 43 < coor.Y)
-//                    prob = SpawnMiddle + (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01;
-//                else if (20 < coor.X && coor.X < 30 && -30 < coor.Y && coor.Y < -20)
-//                    prob = SpawnMiddle + (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01;
-//                else if (-30 < coor.X && coor.X < -20 && 20 < coor.Y && coor.Y < 30)
-//                    prob = SpawnHigh + (rand.nextDouble() - 0.5) * SpawnHigh * 0.01;
-//                else
-//                    prob = SpawnLow + (rand.nextDouble() - 0.5) * SpawnLow * 0.01;
-//            }
-//			
-//            else
-//            {
-//                prob = SpawnUniform * rand.nextDouble();
-//            }
+//		RemoveExcludeEdge();
 	}
-
 	
-	public void RemoveExcludeEdge() 
-	{
-		for(int node : _excludeNodes) 
-		{
-			List<Integer> tmp = new ArrayList<>();
-			
-			for(int endpoint : _graph.getChildrenNodes(node)) 
-			{
-				tmp.add(endpoint);
-			}
-			for(int end : tmp) 
-			{
-				_graph.RemoveEdge(node, end);
-				_graph.RemoveEdge(end, node);
-			}
-		}
-	}
+	
+	
+//	public void RemoveExcludeEdge() 
+//	{
+//		for(int node : _excludeNodes) 
+//		{
+//			List<Integer> tmp = new ArrayList<>();
+//			
+//			for(int endpoint : _graph.getChildrenNodes(node)) 
+//			{
+//				tmp.add(endpoint);
+//			}
+//			for(int end : tmp) 
+//			{
+//				_graph.RemoveEdge(node, end);
+//				_graph.RemoveEdge(end, node);
+//			}
+//		}
+//	}
 	
 	public void CreateRobotBases() 
 	{
-		ChargingbaseList.add(_graph.GetNode(0, 0));
+//		for(int i=0; i<robotCount; i++) 
+//		{
+//			basePosition[i] = _graph.GetNode(0,0);
+//		}
 		
-		for(int i=0; i<robotCount; i++) 
-		{
-			basePosition[i] = ChargingbaseList.get(0);
-		}
+		basePosition = _graph.GetNode(0, 0);
 		
-		_environment.SetRobotBase(1, ChargingbaseList.get(0));
-		_spawnPattern._patterns.get(ChargingbaseList.get(0)).Probability = 0.0;
+		_environment.SetRobotBase(1, basePosition);
+		_spawnPattern._patterns.get(basePosition).Probability = 0.0;
 	}
 	
 	
 	public void CreateRobots(int num) 
 	{
 		_robots = new HashMap<>();
-		RobotSpec spec = new RobotSpec(8100,3);
+		RobotSpec spec = new RobotSpec(2700,3);
 		
 		for(int i =0; i<num; i++) 
 		{
-			int robot = _environment.CreateRobot(spec, basePosition[i]);
+			int robot = _environment.CreateRobot(spec, basePosition);
 			_robots.put(robot, spec);
 		}
 	}
@@ -399,7 +355,7 @@ public class AgentSimulationFactory extends SimulationFactory
 		Random target_rand = new Random(_seeds[_targetterSeed]); 
 		
 		for(Map.Entry<Integer, RobotSpec> robot : _robots.entrySet()) 
-		{
+		{			
 			TargetPathAgentPDALearning agent = new TargetPathAgentPDALearning(robot.getKey(), _graph, _spawnPattern, _excludeNodes);
 			
 			ITargetDecider targetter = null;
@@ -410,10 +366,10 @@ public class AgentSimulationFactory extends SimulationFactory
             {
                 case 0:
                     pather = new ShortestGreedyPathPlanner(
-                        robot.getKey(), _graph, _spawnPattern, basePosition[robot.getKey()], _isAccumulated, path_rand.nextInt(), _excludeNodes);
+                        robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt(), _excludeNodes);
                     break;
                 default:
-                    pather = new SubgoalPathPlanner(robot.getKey(), _graph, _spawnPattern, basePosition[robot.getKey()], _isAccumulated, path_rand.nextInt(), _excludeNodes);
+                    pather = new SubgoalPathPlanner(robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt(), _excludeNodes);
                     break;
             }
 			
@@ -436,12 +392,12 @@ public class AgentSimulationFactory extends SimulationFactory
                     break;
             }
 			
-			agent.setBaseNode(basePosition[robot.getKey()]);
+			agent.setBaseNode(basePosition);
 			agent.setPathPlanner(pather);
 			agent.setTargtDecider(targetter);
 			agent.setExpectation();
 			_agentManager.AddAgent(agent);
-			_agentManager.setExcludedNodes(_excludeNodes);
+//			_agentManager.setExcludedNodes(_excludeNodes);
 		}
 	}	
 }

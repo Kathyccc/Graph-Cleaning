@@ -1,6 +1,7 @@
 package core;
 
 public class LitterSpawnProbability {
+	private double alphaInitial = 0.00001;
 	double alpha = 0.1;
 	double tmpalpha;
 	double _litter = 0.0;
@@ -17,6 +18,8 @@ public class LitterSpawnProbability {
 	
 	
 	public double UpdateProbability(int litter, int stepInterval) {
+		
+		// convert to double type
 		_litter = litter;
 		_stepInterval = stepInterval;
 		
@@ -24,18 +27,16 @@ public class LitterSpawnProbability {
 		
 		if(stepInterval != 0)
 		{
-			Probability = (1-alpha)*Probability + alpha*(_litter/_stepInterval);
+			tmpalpha = alphaInitial * stepInterval;
+			
+			if(tmpalpha > 0.1)
+				tmpalpha = 0.1; // alphaInitial<tmpalpha<alphaMax
+			
+			Probability = (1 - tmpalpha) * Probability + tmpalpha * (_litter/stepInterval);
 		}
 		
+//		System.out.println("LitterSpawnProbability38   " + Probability);
+
 		return Probability;
-	}
-	
-	
-	public void ForgetProbability(double difference, double normalData) {
-		double parameter = 1- (difference/normalData * 0.15);
-		
-		if(parameter < 0.1) parameter = 0.1;
-		
-		Probability = Probability * parameter;
 	}
 }

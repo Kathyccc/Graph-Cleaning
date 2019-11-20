@@ -113,18 +113,18 @@ public class TargetPathAgent implements IAgent
 			_target = position;
 		}
 		
-		TargetPathAgentStatus status = new TargetPathAgentStatus(Action, _target, data);
+//		TargetPathAgentStatus status = new TargetPathAgentStatus(Action, _target, data);
 		
 		//update status
-		_targetter.Update(status);
+//		_targetter.Update(status);
 		
 		
 		if(_target != _targetter.NextTarget() && !_isChargeRequired) 
 		{
 			_target = _targetter.NextTarget();
 			
-			status = new TargetPathAgentStatus(Action, _target, data);
-			_pather.Update(status);
+//			status = new TargetPathAgentStatus(Action, _target, data);
+//			_pather.Update(status);
 			
 			if(_pather.CanArrive()) {
 				return;
@@ -140,7 +140,7 @@ public class TargetPathAgent implements IAgent
 				Action = AgentActions.Charge;
 				return;
 			}
-			status = new TargetPathAgentStatus(Action, _target, data);
+//			status = new TargetPathAgentStatus(Action, _target, data);
 		}
 		
 		if(position == _baseNode && _targetter.IsChargeRequired()) 
@@ -149,7 +149,7 @@ public class TargetPathAgent implements IAgent
 			return;
 		}
 		
-		_pather.Update(status);
+//		_pather.Update(status);
 	}
 	
 	

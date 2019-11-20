@@ -17,6 +17,8 @@ public class Field {
 	
 	public LitterSpawnPattern LitterSpawnPattern = new LitterSpawnPattern();
 	
+	
+	
 	public Field(IGraph spatialStructure, LitterSpawnPattern pattern) {
 		Time = 0;
 		SpatialStructure = spatialStructure;

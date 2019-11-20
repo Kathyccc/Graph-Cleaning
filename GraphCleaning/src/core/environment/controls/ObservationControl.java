@@ -1,9 +1,7 @@
 package core.environment.controls;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import core.IGraph;
@@ -60,7 +58,8 @@ public class ObservationControl {
 		for(Robot robot : robots.values()) {
 			RobotData data = new RobotData(robot.ID, robot.BatteryLevel, robot.Position, robot.AccumulatedLitter, robot.Litter, robot.Spec);
 			rDataCollection.Add(data);
-		}
+//			System.out.println("ObservationControl60   " + robot.Litter);
+		} 
 		
 		return new RobotDataCollection(rDataCollection, true);
 	}
@@ -80,7 +79,6 @@ public class ObservationControl {
 				LitterDC.AddLitterData(data);
 			}
 		}
-		//System.out.println(LitterDC._litter);
 		return LitterDC;
 	}
 	
@@ -92,7 +90,7 @@ public class ObservationControl {
 		for(Litter litter : _field.Litter._litter.values()) 
 		{
 			quantity += litter.Quantity;
-//			System.out.println("In ObservationControl..." + litter.Quantity);
+//			System.out.println("ObservationControl..." + litter.Quantity);
 		}
 		
 		return quantity;

@@ -22,6 +22,18 @@ public class TargetPathAgentStatus
 	List<Integer> VisitHistory;
 	public int MyCycle;
 	
+
+	
+	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data, List<Integer> searchNodes, int[] visitCounter, List<Integer> visitHistory, int myCycle) 
+	{
+		Action = action;
+		TargetNode = target;
+		ObservedData = data;
+		SearchNodes = searchNodes;
+		VisitCounter = visitCounter;
+		VisitHistory = visitHistory;
+		MyCycle = myCycle;
+	}
 	
 	
 	public void setAction(AgentActions action) {
@@ -81,32 +93,20 @@ public class TargetPathAgentStatus
 	}
 	
 	
-	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data) 
-	{
-		Action = action;
-		TargetNode = target;
-		ObservedData = data;
-	}
+//	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data) 
+//	{
+//		Action = action;
+//		TargetNode = target;
+//		ObservedData = data;
+//	}
 	
 	
-	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data, int mycycle) 
-	{
-		Action = action;
-		TargetNode = target;
-		ObservedData = data;
-		MyCycle = mycycle;
-	}
-	
-	
-	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data, List<Integer> searchNodes, int[] visitCounter, List<Integer> visitHistory, int myCycle) 
-	{
-		Action = action;
-		TargetNode = target;
-		ObservedData = data;
-		SearchNodes = searchNodes;
-		VisitCounter = visitCounter;
-		VisitHistory = visitHistory;
-		MyCycle = myCycle;
-	}
+//	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data, int mycycle) 
+//	{
+//		Action = action;
+//		TargetNode = target;
+//		ObservedData = data;
+//		MyCycle = mycycle;
+//	}
 	
 }

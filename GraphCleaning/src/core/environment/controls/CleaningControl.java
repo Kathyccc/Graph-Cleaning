@@ -29,13 +29,23 @@ public class CleaningControl
 		_litter = field.Litter;
 		_robots = field.Robots;
 		_rand = new Random(seed);
+		
 	}
 	
 	
 	public void Clean(int id) {
+		
 		Robot robot = _robots.getRobot(id);
-		_tasks.add(_rand.nextInt(_tasks.size()+1), new Pair<Cleaner, Litter>(
-				robot.Cleaner, _litter.getLitter(robot.Position)));
+	
+		if(_tasks.size()!=0){
+			_tasks.add(_rand.nextInt(_tasks.size()+1), new Pair<Cleaner, Litter>(
+					robot.Cleaner,
+					_litter.getLitter(robot.Position)));
+		}
+		else{
+			_tasks.add(_rand.nextInt(1), new Pair<Cleaner, Litter>(
+					robot.Cleaner, _litter.getLitter(robot.Position)));
+		}
 	}
 	
 	
@@ -45,7 +55,9 @@ public class CleaningControl
 		for(Pair<Cleaner, Litter> task : _tasks) {
 			Cleaner cleaner = task.getKey();
 			Litter litter = task.getValue();
-			if(litter.Quantity != 0) _tasksLog.add(litter.Position);
+			
+			if(litter.Quantity != 0) 
+				_tasksLog.add(litter.Position);
 			cleaner.Clean(litter);
 		}
 		_tasks.clear();

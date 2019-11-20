@@ -9,7 +9,7 @@ public class NodeProperty {
 	public NodeProperty(int id, String probabilityType, boolean obstacle) {
 		ID = id;
 		ProbabilityType = probabilityType;
-		Obstacle = obstacle;
+//		Obstacle = obstacle;
 		Potential = -1;
 	}
 }

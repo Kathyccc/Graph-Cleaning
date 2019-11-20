@@ -3,7 +3,6 @@ package core.environment;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import core.IEnvironment;
@@ -57,7 +56,7 @@ public class VirtualEnvironment implements IEnvironment
 	{
 		_rand = new Random(seed);
 		_field = new Field(spatialStructure, spawnPattern);
-		
+//		System.out.println("virtualEnvironment     " + _field.Litter._litter.isEmpty());
 		_fieldSettingControl = new FieldSettingControl(_field);
 		_batteryChargeControl = new BatteryChargeControl(_field);
 		_cleaningControl = new CleaningControl(_field, _rand.nextInt());
@@ -69,7 +68,6 @@ public class VirtualEnvironment implements IEnvironment
 		_low = low;
 		
 		
-//		LogManager.setLogDirectory("/Average Remaining Litter");
 		_AverageRemainingLitterLogger = LogManager.CreateWriter("AverageRemainingLitter");
 		_AverageRemainingLitterLogger.WriteLine("" + "," + "AverageRL*T" + "," + "AverageRTime" + "," + "WorstRL*T-Node" + "," + "WorstRT-Node");
 		
@@ -104,11 +102,11 @@ public class VirtualEnvironment implements IEnvironment
 		_robotMoveControl.Move(id, node);
 	}
 
-	public void changPattern(LitterSpawnPattern pattern) 
-	{
-		_field.LitterSpawnPattern = pattern;
-		_litterSpawnControl.setSpawnPattern(pattern);
-	}
+//	public void changPattern(LitterSpawnPattern pattern) 
+//	{
+//		_field.LitterSpawnPattern = pattern;
+//		_litterSpawnControl.setSpawnPattern(pattern);
+//	}
 
 	public void ConnectRobotBase(int id) 
 	{

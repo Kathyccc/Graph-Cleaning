@@ -96,12 +96,13 @@ public class SubgoalPathPlanner implements IPathPlanner
 	public void Update(TargetPathAgentStatus status) 
 	{
 		RobotData mydata = status.ObservedData.RobotData._robots.get(robotID);
+		
 		int position = mydata.Position;
 		int cycle = status.MyCycle;
 		int battery = mydata.BatteryLevel;
 		int consumption = mydata.Spec.BatteryConsumption;
 		
-		int remainingBattery = cycle * consumption - (mydata.Spec.BatteryCapacity - battery);
+		int remainingBattery = (cycle * consumption) - (mydata.Spec.BatteryCapacity - battery);
 		
 		if(target != status.TargetNode || subgoals == null) 
 		{
@@ -112,7 +113,7 @@ public class SubgoalPathPlanner implements IPathPlanner
 			targetPotential = new DijkstraAlgorithm(map).Execute(target, position);
 			
 			// evaluate if it's possible to reach target
-			if((basePotential._potentials.get(target) + targetPotential._potentials.get(position)) * consumption > remainingBattery) 
+			if((basePotential._potentials.get(target) + targetPotential._potentials.get(position)) * consumption > mydata.BatteryLevel) 
 			{
 				CanArrive = false;
 				return;
@@ -145,7 +146,7 @@ public class SubgoalPathPlanner implements IPathPlanner
 		}
 		
 		pathPlanner.Update(new TargetPathAgentStatus(
-				status.Action, subgoal, status.ObservedData, cycle));
+				status.Action, subgoal, status.ObservedData, status.SearchNodes, status.getVisitCounter(), status.getVisitHistory() , cycle));
 	}
 	
 	

@@ -1,7 +1,7 @@
 package core.agents;
 
 import agent.AgentActions;
-import core.CommunicationDetails;
+//import core.CommunicationDetails;
 import core.LitterSpawnPattern;
 import core.ObservedData;
 
@@ -17,7 +17,7 @@ public interface IAgent
 			
 	LitterSpawnPattern getMySpawnPattern();
 	
-	CommunicationDetails getCommunicateDetails();
+//	CommunicationDetails getCommunicateDetails();
 	
 	void SearchNumberDecrease(int decrease);
 	

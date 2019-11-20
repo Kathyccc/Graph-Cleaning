@@ -56,7 +56,6 @@ public class Evaluator
 		{
 			_eachNodeMaxQuantity[i] = Math.max(_eachNodeMaxQuantity[i], eachQuantity[i]);
 			
-			//System.out.println("testing... " + _eachNodeMaxQuantity[i]);
 		}
 		
 		//System.out.println(litterData._litter.isEmpty());
@@ -95,7 +94,7 @@ public class Evaluator
 		if (time % 3600 == 0)
         {
             _logger.WriteLine(time + "," + _evaluationSum + "," + maxLitterQuantity + "," + _evaluationSumDetails[0] + "," + _evaluationSumDetails[1] + "," + _evaluationSumDetails[2]);
-            //System.out.println(time + "," + _evaluationSum + "," + maxLitterQuantity + "," + _evaluationSumDetails[0] + "," + _evaluationSumDetails[1] + "," + _evaluationSumDetails[2]);
+//            System.out.println("Evaluator     " + time + "," + _evaluationSum + "," + maxLitterQuantity + "," + _evaluationSumDetails[0] + "," + _evaluationSumDetails[1] + "," + _evaluationSumDetails[2]);
             _evaluationSum = 0;
             maxLitterQuantity = 0;
             _evaluationSumDetails[0] = 0;

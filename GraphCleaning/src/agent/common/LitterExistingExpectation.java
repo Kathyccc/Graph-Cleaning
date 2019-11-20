@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import core.LitterSpawnPattern;
-import core.LitterSpawnProbability;
 import core.RobotData;
 import core.RobotDataCollection;
 
@@ -33,20 +32,6 @@ public class LitterExistingExpectation
 		IncrementEnabled = false;
 	}
 	
-	
-	public void setIncrementEnabled(boolean ToF) {
-		IncrementEnabled = ToF;
-	}
-	
-	public boolean getIncrementEnabled() {
-		return IncrementEnabled;
-	}
-	
-	
-//	public double GetExpectation(int node) {
-//		return getExpectation(node);
-//	}
-	
 	public double getExpectation(int node, int time) 
 	{
 		double expectation = 0.0;
@@ -55,9 +40,12 @@ public class LitterExistingExpectation
 		
 		if(interval > 0) 
 		{
-			if(_isAccumulated) expectation = prob * interval;
-			else expectation = 1.0 - Math.pow(1.0 - prob, interval);
+			if(_isAccumulated) 
+				expectation = prob * interval;
+			else 
+				expectation = 1.0 - Math.pow(1.0 - prob, interval);
 		}
+		
 		
 		return IncrementEnabled ? expectation * _pattern._patterns.get(node).Increment : expectation;
 	}
@@ -70,7 +58,8 @@ public class LitterExistingExpectation
 	
 	public void Update(int time) 
 	{
-		if(_time > time) throw new IllegalArgumentException("The set time is invalid.");
+		if(_time > time) 
+			throw new IllegalArgumentException("The set time is invalid.");
 		_time = time;
 	}
 	
@@ -79,18 +68,10 @@ public class LitterExistingExpectation
 	{
 		Update(time);
 		
-		for(Map.Entry<Integer, RobotData> robotset : data._robots.entrySet()) 
+		for(RobotData robot : data._robots.values()) 
 		{
-			_visitedTime.put(robotset.getValue().Position, time);
+			_visitedTime.put(robot.Position, time);
 		}
-	}
-	
-	
-	public void Update(int position,int time)
-	{
-		Update(time);
-		
-		_visitedTime.put(position, time);
 	}
 	
 	

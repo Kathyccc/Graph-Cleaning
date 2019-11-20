@@ -44,23 +44,23 @@ public class Robot
 	}
 	
 	public void setPosition(int value) {
-		this.Position = value;
+		Position = value;
 	}
 	
 	public int getPosition() {
-		return this.Position;
+		return Position;
 	}
 	
 	public void setBattery(RobotSpec spec) {
-		this.Battery = new Battery(spec.BatteryCapacity);
+		Battery = new Battery(spec.BatteryCapacity);
 	}
 	
 	public Battery getBattery() {
-		return this.Battery;
+		return Battery;
 	}
 	
 	public void setCleaner() {
-		this.Cleaner = new Cleaner();
+		Cleaner = new Cleaner();
 	}
 	
 	public Cleaner getCleaner() {
@@ -68,31 +68,31 @@ public class Robot
 	}
 	
 	public void setBatteryConsum(int consumption) {
-		this.BatteryConsum = consumption;
+		BatteryConsum = consumption;
 	}
 	
 	public int getBatteryConsum() {
-		return this.BatteryConsum;
+		return BatteryConsum;
 	}
 	
 	public void setBatteryLevel() {
-		this.BatteryLevel = getBattery().getLevel();
+		BatteryLevel = getBattery().getLevel();
 	}
 	
 	public int getBatteryLevel() {
-		return this.BatteryLevel;
+		return BatteryLevel;
 	}
 	
 	public void setAccumulatedLitter() {
-		this.AccumulatedLitter = getCleaner().getAccumulatedLitter();
+		AccumulatedLitter = getCleaner().getAccumulatedLitter();
 	}
 	
 	public int getAccumulatedLitter() {
-		return this.AccumulatedLitter;
+		return AccumulatedLitter;
 	}
 	
 	public void setLitter() {
-		this.AccumulatedLitter = getCleaner().getLitter();
+		AccumulatedLitter = getCleaner().getLitter();
 	}
 	
 	public int getLitter() {
@@ -100,19 +100,19 @@ public class Robot
 	}
 	
 	public void setRobotSpec(RobotSpec spec) {
-		this.Spec = spec;
+		Spec = spec;
 	}
 	
 	public RobotSpec getSpec() {
-		return this.Spec;
+		return Spec;
 	}
 	
 	public void setRobotState() {
-		this.State = RobotStates.Inactive;
+		State = RobotStates.Inactive;
 	}
 	
 	public RobotStates getRobotState() {
-		return this.State;
+		return State;
 	}
 	
 	

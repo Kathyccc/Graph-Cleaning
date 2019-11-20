@@ -50,17 +50,7 @@ public class AgentManager implements IAgentManager
 //    int k = 100;
 //    double regionAve = 81.0;
 //    double[] _tmpEntropyMemory = new double[20];
-    
-    
-//    public void setPatternName(String name) 
-//    {
-//    	PatternName = name;
-//    }
-//    
-//    public String getPatternName() 
-//    {
-//    	return PatternName;
-//    }
+
 	
 	public AgentManager(IEnvironment environment, GridGraph graph, int seed) 
 	{
@@ -87,6 +77,7 @@ public class AgentManager implements IAgentManager
 		
 		ObservedData data = new ObservedData(time, robots);
 		
+		
 		String log = Integer.toString(data.Time) + ",";
 
 		for(AgentActions agentAction : _agentActions.values()) 
@@ -100,7 +91,7 @@ public class AgentManager implements IAgentManager
 		{
 			IAgent agent = p.getKey();
 			int id = p.getValue();
-			
+									
 			agent.Update(data);
 			
 			if(agent.getAction() == AgentActions.Move) 
@@ -119,15 +110,16 @@ public class AgentManager implements IAgentManager
 					_environment.ConnectRobotBase(id);
 				}
 			}
+
 			_agentActions.put(id,agent.getAction());
 		}
 	}
 	
 	
-	public void setExcludedNodes(List<Integer> exclude) 
-	{
-		_excludedNodes = exclude;
-	}
+//	public void setExcludedNodes(List<Integer> exclude) 
+//	{
+//		_excludedNodes = exclude;
+//	}
 	
 	
 	public void Clean() 
@@ -147,31 +139,8 @@ public class AgentManager implements IAgentManager
 	
 	private void InitializeLogWriter() 
 	{
-		for(int i = 0; i < _agents.size(); i++) 
-		{
-			agentNumList.add(i);
-		}
-		
-//		AddLogWriterMap("ProbabilityCheck");
-//		AddLogWriterMap("ProbabilityCheck2");
-//		AddLogWriterMap("ProbabilityCheck3");
-//		AddLogWriterMap("ProbabilityCheck4");
-
-		AddLogWriterMap("CenterNodeChanges");
-        _logWriters.get("CenterNodeChanges").WriteLine("" + "," + "0" + "," + "1" + "," + "2" + "," + "3" + "," + "4" + "," + "5" + "," + "6" + "," + "7" + "," + "8" + "," + "9" + "," + "10"
-            + "," + "11" + "," + "12" + "," + "13" + "," + "14" + "," + "15" + "," + "16" + "," + "17" + "," + "18" + "," + "19");
-
         AddLogWriterMap("AgentActions");
         _logWriters.get("AgentActions").WriteLine("" + "," + "0" + "," + "1" + "," + "2" + "," + "3" + "," + "4" + "," + "5" + "," + "6" + "," + "7" + "," + "8" + "," + "9" + "," + "10"
             + "," + "11" + "," + "12" + "," + "13" + "," + "14" + "," + "15" + "," + "16" + "," + "17" + "," + "18" + "," + "19");
-        
-//        AddLogWriterMap("SearchNodesChecker");
-//        _logWriters.get("SearchNodesChecker").ListWriteLine(agentNumList, "" + ",");
-//        
-//        AddLogWriterMap("AccumulatedLitter");
-//        _logWriters.get("AccumulatedLitter").ListWriteLine(agentNumList, "" + ",");
-//        
-//        AddLogWriterMap("ExperienceWeight");
-//        _logWriters.get("ExperienceWeight").ListWriteLine(agentNumList, "" + ",");
 	}
 }

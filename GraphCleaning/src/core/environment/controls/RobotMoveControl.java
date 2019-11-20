@@ -33,6 +33,7 @@ public class RobotMoveControl
 		{
 			_robots.getRobot(pp.getKey()).Move(pp.getValue());
 		}
+		
 		_destinations.clear();
 	}
 }

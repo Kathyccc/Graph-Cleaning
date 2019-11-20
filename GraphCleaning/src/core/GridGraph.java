@@ -18,12 +18,6 @@ public class GridGraph implements IPointMappedGraph{
 	
 	public Coordinate MinCoordinate;
 	
-	/*
-	 * List<Integer> Nodes = new ArrayList<>();
-	 * 
-	 * int NumOfNodes;
-	 */
-	
 	
 	public GridGraph() {
 		_graph = new DirectedGraph();
@@ -98,17 +92,13 @@ public class GridGraph implements IPointMappedGraph{
 		return _graph.IsDirected();
 	}
 	
-	/*
-	 * public void setNodes(List<Integer> nodes) { this.Nodes = nodes; }
-	 */
+
 	
 	public List<Integer> getNodes(){
 		return _graph.getNodes();
 	}
 	
-	/*
-	 * public void setNumOfNodes(int num) { this.NumOfNodes = num; }
-	 */	
+
 	
 	public int getNumOfNodes() {
 		return _graph.getNumOfNodes();

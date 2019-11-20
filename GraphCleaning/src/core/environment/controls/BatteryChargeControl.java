@@ -42,9 +42,9 @@ public class BatteryChargeControl
     	Map<Integer, RobotBase> bases = new HashMap<>();
     	bases = rbc.getBasesMap();
     	
-    	for(Map.Entry<Integer, RobotBase> rb: bases.entrySet()) 
+    	for(RobotBase robotbase: bases.values()) 
     	{
-    		rb.getValue().Charge();
+    		robotbase.Charge();
     	}		
     }
 }

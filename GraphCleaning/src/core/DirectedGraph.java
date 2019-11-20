@@ -31,7 +31,6 @@ public class DirectedGraph implements IGraph
 	public List<Integer> getNodes() 
 	{
 		return _nodes;
-		//use iterator?
 	}
 	
 	

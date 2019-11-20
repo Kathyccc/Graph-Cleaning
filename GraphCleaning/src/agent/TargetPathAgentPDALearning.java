@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 
 import agent.common.LitterExistingExpectation;
-import core.CommunicationDetails;
 import core.Coordinate;
 import core.GridGraph;
 import core.LitterSpawnPattern;
@@ -43,14 +42,10 @@ public class TargetPathAgentPDALearning implements IAgent
 	List<Integer> _excludeNodes = new ArrayList<>();
 	Coordinate _myCenterNode = new Coordinate(0,0);
 	double _myCenterNodeWeight = 0.0;
-	CommunicationDetails _communicationDetail;
 	LogWriter _SearchNodeListup;
 	int[] _visitCounter;
 	public int[][] _visitCountMemory;
 	List<Integer> _visitHistory;
-	int vHSize = 36867;
-	int startPhase = 0;
-    int canMoveMaxCount = 900;
     int myCycle; 
     double[] cycleValues = new double[] { 0,0,0}; 
     int cycleLearnTerm = 100000;
@@ -101,13 +96,9 @@ public class TargetPathAgentPDALearning implements IAgent
         _graph = graph;
         _nodes = new ArrayList<Integer>(_graph.getNodes());
         _visitCounter = new int[_graph.getNumOfNodes()];
-
-        for(int node : excludeNodes) { 
-        	_nodes.remove(new Integer(node)); 
-        }
         
         _searchNodes = new ArrayList<>(_nodes);
-        
+                
         for(int i = 0; i < _graph.getNumOfNodes(); i++) {
         	_visitCounter[i] = 1;
         }
@@ -121,7 +112,6 @@ public class TargetPathAgentPDALearning implements IAgent
         InitializeMySpawnPattern();
         
         _expectation = new LitterExistingExpectation (_mySpawnPattern, true);
-        _communicationDetail = new CommunicationDetails(_myCenterNode, _myCenterNodeWeight, _mySpawnPattern, _searchNodes);
         _SearchNodeListup = LogManager.CreateWriter("SearchNodeList-" + RobotID);
         _cycleValues = LogManager.CreateWriter("CycleValues-" + RobotID);
         _cycleValues.WriteLine("" + "," + "c300" + "," + "c900" + "," + "c2700");
@@ -145,20 +135,19 @@ public class TargetPathAgentPDALearning implements IAgent
     	for(int node : _graph.getNodes()) 
     	{
     		_mySpawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1, 0.00, 1));
-    		
     	}
     }
     
     
     // Initialize the info of event occurrence probability (With initial value )
-    public void InitializeMySpawnPattern(LitterSpawnPattern initialPattern) 
-    {
-    	_mySpawnPattern = new LitterSpawnPattern();
-    	for(int node : _graph.getNodes()) 
-    	{
-    		_mySpawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1, (initialPattern._patterns.get(node).Probability), 1));
-    	}
-    }
+//    public void InitializeMySpawnPattern(LitterSpawnPattern initialPattern) 
+//    {
+//    	_mySpawnPattern = new LitterSpawnPattern();
+//    	for(int node : _graph.getNodes()) 
+//    	{
+//    		_mySpawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1, (initialPattern._patterns.get(node).Probability), 1));
+//    	}
+//    }
     
     
     // set the base node of robot
@@ -185,33 +174,29 @@ public class TargetPathAgentPDALearning implements IAgent
     // Update the status
     public void Update(ObservedData data) 
     {
-
-    	RobotData mydata = data.RobotData.getRobotData(RobotID);
+    	RobotData mydata = data.RobotData._robots.get(RobotID);
     	int position = mydata.Position;
 
     	int interval = _expectation.getInterval(position, data.Time);
+    	
 
-    	int litter = mydata.Litter;
+    	int litter = mydata.AccumulatedLitter;
     	collectedCycleLitter += litter;
-
+    	    	
     	
-    	_visitCounter[position]++;
+    	_visitCounter[position] += 1;
     	_visitHistory.add(position);
-    	
-    	if(_visitHistory.size() > vHSize) { _visitHistory.remove(0);}
-    	
+    	    	
     	_expectation.Update(data.RobotData, data.Time); // other agents' positions available
-        //_expectation.Update(position, data.Time);  //other agents' positions unavailable
     	
-    	//System.out.println("print the time: " + data.Time);
     	if(data.Time % 10000 == 0) 
     	{ 
     		_cycleValues.WriteLine(data.Time + "," + cycleValues[0] + "," + cycleValues[1] + "," + cycleValues[2]);
     	}
     	
-        if(data.Time == 1000000 || data.Time == 2000000 || data.Time == 2999999)
-        {
-        	for(int node : _searchNodes) 
+       if(data.Time == 1000000 || data.Time == 2000000 || data.Time == 2999999)
+       {
+    	   for(int node : _searchNodes) 
         	{
         		_SearchNodeListup.WriteLine(node + "," + _mySpawnPattern._patterns.get(node).Probability);
         	}
@@ -226,7 +211,6 @@ public class TargetPathAgentPDALearning implements IAgent
         	}
         }
         
-        
         if(Action == AgentActions.Move) 
         {
         	if(position == _target) 
@@ -236,7 +220,7 @@ public class TargetPathAgentPDALearning implements IAgent
         			Action = AgentActions.Charge;
         			_isChargeRequired = false;
         			CalculateSearchNode();
-        			CalculateCenterNode();
+//        			CalculateCenterNode();
         			ccAndAve = new Tuple<Integer, Double>(ccAndAve.a + 1, ccAndAve.b + ((double)collectedCycleLitter / (double)(data.Time - startTime)));
         			currentCycle = data.Time - startTime;
                     collectedCycleLitter = 0;
@@ -294,10 +278,13 @@ public class TargetPathAgentPDALearning implements IAgent
         
         _targetter.Update(status);
         
+        
         if(_target != _targetter.NextTarget() && !_isChargeRequired) 
         {
+//            System.out.println("TargetPathAgentPDALearning 303:  " + _targetter.NextTarget());
+
         	_target = _targetter.NextTarget();
-        	status = new TargetPathAgentStatus(Action, _target, data, myCycle);
+        	status = new TargetPathAgentStatus(Action, _target, data, _searchNodes, _visitCounter, _visitHistory, myCycle);
         	_pather.Update(status);
         	
         	if(_pather.CanArrive()) 
@@ -317,7 +304,7 @@ public class TargetPathAgentPDALearning implements IAgent
         		return;
         	}
         	
-        	status = new TargetPathAgentStatus(Action, _target, data, myCycle);
+        	status = new TargetPathAgentStatus(Action, _target, data, _searchNodes, _visitCounter, _visitHistory, myCycle);
         }
         
         if(position == _baseNode && _targetter.IsChargeRequired()) 
@@ -329,35 +316,33 @@ public class TargetPathAgentPDALearning implements IAgent
         _pather.Update(status); 
     }
     
-    public void CalculateCenterNode() 
-    {
-    	double sumPDA = 0.0;
-    	for(int node : _searchNodes) 
-    	{
-    		sumPDA += _mySpawnPattern._patterns.get(node).Probability;
-    	}
-    	_communicationDetail._myExperienceWeight = sumPDA;
-    	
-    	double sumX = 0.0;
-    	double sumY = 0.0;
-    	
-    	for(int node : _searchNodes) 
-    	{
-    		double n = (sumPDA==0) ? 0.0 : (_mySpawnPattern._patterns.get(node).Probability/sumPDA);
-    		sumX += n * _graph.getCoordinate(node).X;
-    		sumY += n * _graph.getCoordinate(node).Y;
-    	}
-    	
-    	Coordinate centerCandidate = new Coordinate((int)Math.round(sumX), (int)Math.round(sumY));
-    	Coordinate centerNode = _graph.getClosestNode(centerCandidate);
-    	_myCenterNode.X = centerNode.X;
-    	_myCenterNode.Y = centerNode.Y;
-    	
-    	_communicationDetail._myCenterNode = _myCenterNode;
-    }
+//    public void CalculateCenterNode() 
+//    {
+//    	double sumPDA = 0.0;
+//    	for(int node : _searchNodes) 
+//    	{
+//    		sumPDA += _mySpawnPattern._patterns.get(node).Probability;
+//    	}
+//    	_communicationDetail._myExperienceWeight = sumPDA;
+//    	
+//    	double sumX = 0.0;
+//    	double sumY = 0.0;
+//    	
+//    	for(int node : _searchNodes) 
+//    	{
+//    		double n = (sumPDA==0) ? 0.0 : (_mySpawnPattern._patterns.get(node).Probability/sumPDA);
+//    		sumX += n * _graph.getCoordinate(node).X;
+//    		sumY += n * _graph.getCoordinate(node).Y;
+//    	}
+//    	
+//    	Coordinate centerCandidate = new Coordinate((int)Math.round(sumX), (int)Math.round(sumY));
+//    	Coordinate centerNode = _graph.getClosestNode(centerCandidate);
+//    	_myCenterNode.X = centerNode.X;
+//    	_myCenterNode.Y = centerNode.Y;
+//    	
+//    }
     
    
-    
     public void CalculateSearchNode() 
     {
     	_searchNodes.clear();
@@ -367,15 +352,7 @@ public class TargetPathAgentPDALearning implements IAgent
     	{
     		list.add(new Pair<Integer, Double>(node, _mySpawnPattern._patterns.get(node).Probability));
     	}
-    	
-//		List<Pair<Integer, Double>> sort_list;
-//		
-//		Collections.sort(list, new Comparator<Pair<Integer, Double>>() {
-//		    @Override
-//		    public int compare(final Pair<Integer, Double> o1, final Pair<Integer, Double> o2) {
-//		        return (int)(o1.getValue() - o2.getValue());
-//		    }
-//		});
+
     	
 		final Comparator<Pair<Integer, Double>> sortByValue = reverseOrder(comparing(Pair::getValue));
 		Collections.sort(list, sortByValue);
@@ -388,30 +365,13 @@ public class TargetPathAgentPDALearning implements IAgent
 			count++;
 			if(count == _searchNodeNum) break;
 		}
-		 
-		 
-
     }
     
-
-//	public class SortByValue implements Comparator<Pair<Integer, Double>>
-//    {
-//    	@Override
-//    	public int compare(Pair<Integer, Double> o1, Pair<Integer, Double> o2) 
-//    	{
-//    		return (int) (o1.getValue() - o2.getValue());
-//    	}
-//    }
     
     public void SearchNumberDecrease(int decrease) 
     {
     	_searchNodeNum -= decrease;
     	if(_searchNodeNum > _maxNodeNum) _searchNodeNum = _maxNodeNum;
-    }
-    
-    public CommunicationDetails getCommunicateDetails() 
-    {
-    	return _communicationDetail;
     }
 
     
