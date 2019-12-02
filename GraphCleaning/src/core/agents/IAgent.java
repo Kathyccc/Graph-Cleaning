@@ -19,7 +19,7 @@ public interface IAgent
 	
 //	CommunicationDetails getCommunicateDetails();
 	
-	void SearchNumberDecrease(int decrease);
+//	void SearchNumberDecrease(int decrease);
 	
 	int[][] getVisitCountMemory();
 }

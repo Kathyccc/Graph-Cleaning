@@ -27,7 +27,6 @@ public class LitterExistingExpectation
 			_visitedTime.put(node, 0);
 		}
 		
-		
 		_isAccumulated = isAccumulated;
 		IncrementEnabled = false;
 	}

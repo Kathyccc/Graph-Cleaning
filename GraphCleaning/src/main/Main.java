@@ -28,7 +28,7 @@ public class Main
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 1; s++) // s -> random seed
+					for (int s = 0; s < 10; s++) // s -> random seed
 					{
 						System.out.println(counter);
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -56,7 +56,7 @@ public class Main
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 1; s++)
+					for (int s = 0; s < 10; s++)
 					{
 						System.out.println(counter);
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -82,7 +82,7 @@ public class Main
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 1; s++)
+					for (int s = 0; s < 10; s++)
 					{
 						System.out.println(counter);	
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -107,7 +107,7 @@ public class Main
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 1; s++)
+					for (int s = 0; s < 10; s++)
 					{
 						System.out.println(counter);
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

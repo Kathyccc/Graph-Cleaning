@@ -102,12 +102,7 @@ public class VirtualEnvironment implements IEnvironment
 		_robotMoveControl.Move(id, node);
 	}
 
-//	public void changPattern(LitterSpawnPattern pattern) 
-//	{
-//		_field.LitterSpawnPattern = pattern;
-//		_litterSpawnControl.setSpawnPattern(pattern);
-//	}
-
+	
 	public void ConnectRobotBase(int id) 
 	{
 		_batteryChargeControl.Connect(id);

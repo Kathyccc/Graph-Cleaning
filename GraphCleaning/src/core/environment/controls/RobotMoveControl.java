@@ -29,9 +29,9 @@ public class RobotMoveControl
 	
 	
 	public void Update() {
-		for(Pair<Integer, Integer> pp : _destinations) 
+		for(Pair<Integer, Integer> pair : _destinations) 
 		{
-			_robots.getRobot(pp.getKey()).Move(pp.getValue());
+			_robots.getRobot(pair.getKey()).Move(pair.getValue());
 		}
 		
 		_destinations.clear();

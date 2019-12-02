@@ -24,11 +24,7 @@ public class Simulation implements ISimulation
 	{
 		return EvaluationValue;
 	}
-	
-	public Simulation(SimulationFactory factory) 
-	{
-		_factory = factory;
-	}
+
 	
 	public Simulation(SimulationFactory factory, String patternName) 
 	{
@@ -44,20 +40,23 @@ public class Simulation implements ISimulation
 			Step();
 //			System.out.println("Step: " + i);
 		}
-		
 	}
 
 
 	public void Step() 
 	{
+		//ごみ発生
 		_environment.Update();
 		
+        //移動・充電
 		_agentManager.Move();
 		_environment.Update();
 		
+		//ごみ回収
 		_agentManager.Clean();
         _environment.Update();
-
+        
+        //時間更新
         _environment.Update();
 
 		EvaluationValue = _evaluator.getEvaluation();

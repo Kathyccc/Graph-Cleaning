@@ -7,7 +7,7 @@ public class PotentialCollection
 {
 	public Map<Integer, Integer> _potentials = new HashMap<>();
 	
-	public int getPotentail(int node) {
+	public int getPotential(int node) {
 		return _potentials.get(node);
 	}
 	

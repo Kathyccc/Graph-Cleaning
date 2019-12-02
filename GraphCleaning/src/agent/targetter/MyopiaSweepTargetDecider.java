@@ -22,7 +22,7 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 	int _robotID;
 	int _myopia;
 	IGraph _map;
-	ForMyopiaGreedy _decider;
+	GreedyTargetDecider _decider;
 	List<Integer> _possibleNodes;
 	double _threshold;
 	int _state;
@@ -33,20 +33,14 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 	List<Integer> _excludeNodes;
 	int NextTarget;
 	
-	public MyopiaSweepTargetDecider(int ID, IGraph map, LitterSpawnPattern pattern, boolean isAccumulated, int seed, List<Integer> exclude)
+	public MyopiaSweepTargetDecider(int ID, IGraph map, LitterSpawnPattern pattern, boolean isAccumulated, int seed)
 	{
 		_robotID = ID;
 		_map = map;
-		_decider = new ForMyopiaGreedy(ID, map, pattern, isAccumulated, seed, exclude);
+		_decider = new GreedyTargetDecider(ID, map, pattern, isAccumulated, seed);
 		_possibleNodes = new ArrayList<>(map.getNodes());
-		
-		for(int node : exclude) 
-		{
-			_possibleNodes.remove(new Integer(node));
-		}
-		
+	
 		_myopia = 15;
-		_excludeNodes = exclude;
 		_rand = new Random(seed);
 	}
 

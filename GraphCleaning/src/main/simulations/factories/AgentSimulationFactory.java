@@ -13,6 +13,7 @@ import agent.pather.ShortestGreedyPathPlanner;
 import agent.pather.SubgoalPathPlanner;
 import agent.targetter.GreedyTargetDecider;
 import agent.targetter.MyopiaSweepTargetDecider;
+import agent.targetter.NonStateLearningTargetDecider;
 import agent.targetter.RandomTargetDecider;
 import agent.targetter.RepulsionTargetDecider;
 import core.Coordinate;
@@ -47,21 +48,18 @@ public class AgentSimulationFactory extends SimulationFactory
     GridGraph _graph;
     LitterSpawnPattern _spawnPattern;
     Map<Integer, RobotSpec> _robots;
-    List<Integer> _excludeNodes = new ArrayList<>();
     List<Integer> HighNodeList = new ArrayList<>();
     List<Integer> MiddleNodeList = new ArrayList<>();
     List<Integer> LowNodeList = new ArrayList<>();
     NodeProperty[] nodeProperty;
     int robotCount = 20;
     int scale = 50;
-//    int[] basePosition = new int[20];
     int basePosition;
     boolean spawnChange = false;
     LogWriter NodesProperty;
     LogWriter NodesConnection;
-//    List<Integer> ChargingbaseList = new ArrayList<>();
-    
-    String patternName;
+   
+    String patternName = "Block";
     
     final double SpawnLow = 1e-6;
     final double SpawnMiddle = 1e-4;
@@ -77,7 +75,7 @@ public class AgentSimulationFactory extends SimulationFactory
     int _targetterSeed = 5;
     int _targetterNumber = 6;
     
-    
+
     public void setLocalNumbers(int eseed, int pseed, int pnumber, int tseed, int tnumber, int robotcount, int _scale, boolean Accumulated, String spawnPattern) 
     {
     	_environmentSeed = eseed;
@@ -99,32 +97,35 @@ public class AgentSimulationFactory extends SimulationFactory
     	return nodeProperty;
     }
 
-    
 	public IEnvironment Environment() 
 	{
 		return _environment;
 	}
 
-	@Override
 	public IAgentManager AgentManager() 
 	{
 		return _agentManager;
 	}
 
-	@Override
 	public Evaluator Evaluator() 
 	{
 		return _evaluator;
 	}
 
 	
-	@Override
+	// create the components for simulation
 	public void Make() 
 	{
 		//spatial structure
 		CreateSpatialStructure();
+		
 		nodeProperty = new NodeProperty[_graph.getNumOfNodes()];
 		
+		for(int i=0; i < _graph.getNumOfNodes(); i++) 
+		{
+			NodeProperty node = new NodeProperty(0, null, false);
+			nodeProperty[i] = node;
+		}
 		
 		// trash generation pattern
 		setNodesProperty();
@@ -145,7 +146,7 @@ public class AgentSimulationFactory extends SimulationFactory
 		_environment.Update();
 
 		CreateEvaluator();
-		
+				
 		NodesProperty = LogManager.CreateWriter("NodesProperty");
 		NodesProperty.WriteLine("id" + "," + "Probability Type" + "," + "Obstacle"+ "," + "Potential" + "," + "X" + "," + "Y");
 		
@@ -153,17 +154,7 @@ public class AgentSimulationFactory extends SimulationFactory
 		{
 			NodesProperty.WriteLine(node.ID + "," + node.ProbabilityType + "," + node.Obstacle + "," + node.Potential + "," + _graph.getCoordinate(node.ID).X + "," + _graph.getCoordinate(node.ID).Y);
 		}
-		
-		NodesConnection = LogManager.CreateWriter("NodesConnection");
-		
-		for(int node : _graph.getNodes()) 
-		{
-			for(int child : _graph.getChildrenNodes(node)) 
-			{
-				int toConnect = child;
-				NodesConnection.WriteLine(node + "," + toConnect + "," + "pp");
-			}
-		}
+
 	}
 
 
@@ -248,6 +239,7 @@ public class AgentSimulationFactory extends SimulationFactory
 		
 		DijkstraAlgorithm tmpDijk = new DijkstraAlgorithm(_graph);
         PotentialCollection potentialmMap = tmpDijk.Execute(0);
+        
         for(int _node : _graph.getNodes())
         {
         	nodeProperty[_node].Potential = potentialmMap._potentials.get(_node);
@@ -257,7 +249,7 @@ public class AgentSimulationFactory extends SimulationFactory
 	
 	public void CreateLitterSpawnPattern() 
 	{
-		Random rand = new Random(_seeds[_environmentSeed+1]);
+		Random rand = new Random(_seeds[5]);
 		
 		_spawnPattern = new LitterSpawnPattern();
 		
@@ -269,25 +261,25 @@ public class AgentSimulationFactory extends SimulationFactory
 			
 			if(property.ProbabilityType == "High") 
 			{
-				prob = SpawnHigh /*+ (rand.nextDouble() - 0.5) * SpawnHigh * 0.01*/;
+				prob = SpawnHigh + (rand.nextDouble() - 0.5) * SpawnHigh * 0.01;
 				HighNodeList.add(node);
 			}
 			
 			else if(property.ProbabilityType == "Middle") 
 			{
-				prob = SpawnMiddle /*+ (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01*/;
+				prob = SpawnMiddle + (rand.nextDouble() - 0.5) * SpawnMiddle * 0.01;
 				MiddleNodeList.add(node);
 			}
 			
 			else if(property.ProbabilityType == "Low") 
 			{
-				prob = SpawnLow /*+ (rand.nextDouble() - 0.5) * SpawnLow * 0.01*/;
+				prob = SpawnLow + (rand.nextDouble() - 0.5) * SpawnLow * 0.01;
 			LowNodeList.add(node);
 			}
 			
 			else if(property.ProbabilityType == "Uniform") 
 			{
-				prob = SpawnUniform  * rand.nextDouble();
+				prob = SpawnUniform * rand.nextDouble();
 			}
 			
 			else 
@@ -298,37 +290,11 @@ public class AgentSimulationFactory extends SimulationFactory
 			_spawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1, prob, 1));
 			
 		}
-		
-//		RemoveExcludeEdge();
 	}
-	
-	
-	
-//	public void RemoveExcludeEdge() 
-//	{
-//		for(int node : _excludeNodes) 
-//		{
-//			List<Integer> tmp = new ArrayList<>();
-//			
-//			for(int endpoint : _graph.getChildrenNodes(node)) 
-//			{
-//				tmp.add(endpoint);
-//			}
-//			for(int end : tmp) 
-//			{
-//				_graph.RemoveEdge(node, end);
-//				_graph.RemoveEdge(end, node);
-//			}
-//		}
-//	}
+
 	
 	public void CreateRobotBases() 
-	{
-//		for(int i=0; i<robotCount; i++) 
-//		{
-//			basePosition[i] = _graph.GetNode(0,0);
-//		}
-		
+	{		
 		basePosition = _graph.GetNode(0, 0);
 		
 		_environment.SetRobotBase(1, basePosition);
@@ -356,8 +322,9 @@ public class AgentSimulationFactory extends SimulationFactory
 		
 		for(Map.Entry<Integer, RobotSpec> robot : _robots.entrySet()) 
 		{			
-			TargetPathAgentPDALearning agent = new TargetPathAgentPDALearning(robot.getKey(), _graph, _spawnPattern, _excludeNodes);
-			
+			TargetPathAgentPDALearning agent = new TargetPathAgentPDALearning(robot.getKey(), _graph, _spawnPattern);
+			agent.setBaseNode(basePosition);
+
 			ITargetDecider targetter = null;
             IPathPlanner pather;
 			
@@ -366,38 +333,46 @@ public class AgentSimulationFactory extends SimulationFactory
             {
                 case 0:
                     pather = new ShortestGreedyPathPlanner(
-                        robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt(), _excludeNodes);
+                        robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt());
                     break;
                 default:
-                    pather = new SubgoalPathPlanner(robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt(), _excludeNodes);
+                    pather = new SubgoalPathPlanner(robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt());
                     break;
             }
 			
 			// target decision
-            
             switch (_targetterNumber)
             {
                 case 0:
                     targetter = new RandomTargetDecider(
-                        robot.getKey(), _graph, target_rand.nextInt(), _excludeNodes);
+                        robot.getKey(), _graph, target_rand.nextInt());
                     break;
                 case 1:
-                    targetter = new GreedyTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt(), _excludeNodes);
+                    targetter = new GreedyTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt());
                     break;
                 case 2:
-                    targetter = new RepulsionTargetDecider(robot.getKey(), _graph, target_rand.nextInt(), _excludeNodes);
+                    targetter = new RepulsionTargetDecider(robot.getKey(), _graph, target_rand.nextInt());
                     break;
                 case 3:
-                    targetter = new MyopiaSweepTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt(), _excludeNodes);
+                    targetter = new MyopiaSweepTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt());
                     break;
+                case 4:
+                	NonStateLearningTargetDecider decider = new NonStateLearningTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt());
+                	decider.AddTargetDecider(
+                			new RandomTargetDecider(robot.getKey(), _graph, target_rand.nextInt()));
+                	decider.AddTargetDecider(
+                			new GreedyTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt()));;
+                	decider.AddTargetDecider(
+                			new RepulsionTargetDecider(robot.getKey(), _graph, target_rand.nextInt()));
+                	decider.AddTargetDecider(
+                			new MyopiaSweepTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt()));
             }
 			
-			agent.setBaseNode(basePosition);
 			agent.setPathPlanner(pather);
-			agent.setTargtDecider(targetter);
+			agent.setTargetDecider(targetter);
 			agent.setExpectation();
 			_agentManager.AddAgent(agent);
-//			_agentManager.setExcludedNodes(_excludeNodes);
 		}
 	}	
 }
+

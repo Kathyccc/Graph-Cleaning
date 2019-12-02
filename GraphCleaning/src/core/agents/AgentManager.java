@@ -26,30 +26,9 @@ public class AgentManager implements IAgentManager
 	Map<String, LogWriter> _logWriters = new HashMap<>();
 	List<Integer> _excludedNodes = new ArrayList<>();
 	PotentialCollection[] _agentPotential = new PotentialCollection[20];
-	int[] _potentialCenterNode = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-	int[] _centerNodes = new int[20];
-	int[] _preLitter = new int[20];
-	double[] _experienceWeight = new double[20];
-	int[] searchNodeNum = new int[20];
-	Random _rand;
 	
+	String PatternName;
 	List<Integer> agentNumList = new ArrayList<>();
-
-//	List<Integer> _stopAgents = new ArrayList<>(Arrays.asList(Integer.MAX_VALUE)); 
-//	double[][] _agentImpManager = new double[10201][20];
-//	int allNodesImpCounter = 0;
-//	int similarNodeNum = 10;
-//	double similarNodeRatio = 10.0;
-//	String PatternName;
-	
-//    LogWriter[] _NodesImportanceManager = new LogWriter[30];
-//    double[][] probabilityAve = new double[20][7];
-//    int[][] visitCounter = new int[20][7];
-//    int[][] DvisitCounter;
-//    int[][] visitCounterRoom = new int[20][6];
-//    int k = 100;
-//    double regionAve = 81.0;
-//    double[] _tmpEntropyMemory = new double[20];
 
 	
 	public AgentManager(IEnvironment environment, GridGraph graph, int seed) 
@@ -57,8 +36,7 @@ public class AgentManager implements IAgentManager
 		_environment = environment;
 		_agentActions = new HashMap<>();
 		_agents = new ArrayList<Pair<IAgent, Integer>>();
-		_graph = graph;
-		_rand = new Random(seed);	
+
 		InitializeLogWriter();
 	}
 	
@@ -77,9 +55,8 @@ public class AgentManager implements IAgentManager
 		
 		ObservedData data = new ObservedData(time, robots);
 		
-		
 		String log = Integer.toString(data.Time) + ",";
-
+		
 		for(AgentActions agentAction : _agentActions.values()) 
 		{
 			log += agentAction.name() + ",";
@@ -114,12 +91,6 @@ public class AgentManager implements IAgentManager
 			_agentActions.put(id,agent.getAction());
 		}
 	}
-	
-	
-//	public void setExcludedNodes(List<Integer> exclude) 
-//	{
-//		_excludedNodes = exclude;
-//	}
 	
 	
 	public void Clean() 

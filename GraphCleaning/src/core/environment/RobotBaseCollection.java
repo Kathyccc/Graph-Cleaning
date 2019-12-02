@@ -7,6 +7,12 @@ public class RobotBaseCollection
 {
 	Map<Integer, RobotBase> _bases = new HashMap<>();
 	
+	public RobotBaseCollection() 
+	{
+		_bases = new HashMap<>();
+	}
+	
+	
 	public void Add(RobotBase base) {
 		_bases.put(base.Position, base);
 	}

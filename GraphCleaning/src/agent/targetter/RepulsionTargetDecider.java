@@ -24,17 +24,11 @@ public class RepulsionTargetDecider implements ITargetDecider
 	int NextTarget;
 	
 	
-	public RepulsionTargetDecider(int ID, IPointMappedGraph map, int seed, List<Integer> excludeNodes) 
+	public RepulsionTargetDecider(int ID, IPointMappedGraph map, int seed) 
 	{
 		_robotID = ID;
 		_map = map;
 		_nodes = new ArrayList<Integer>(_map.getNodes());
-		
-		for(int node : excludeNodes) 
-		{
-			_nodes.remove(new Integer(node));
-		}
-		
 		_rate = 0.01;
 		_rand = new Random(seed);
 		
@@ -91,18 +85,19 @@ public class RepulsionTargetDecider implements ITargetDecider
 			{
 				int node;
 				
+				//repeat do& while in order to get the node that is not at its position
 				do 
 				{
 					node = _nodes.get(_rand.nextInt(_nodes.size()));
 				} while(node == mydata.Position);
 				
+				
 				double sum = 0.0;
 				Point destination = _map.getPoint(node);
 				
-				for(Map.Entry<Integer, RobotData> robot : data.RobotData._robots.entrySet()) 
+				for(RobotData robot : data.RobotData._robots.values()) 
 				{
-					RobotData rdata = robot.getValue();
-					Point vector = subtract(destination, _map.getPoint(rdata.Position));
+					Point vector = subtract(destination, _map.getPoint(robot.Position));
 					sum += Math.hypot(vector.getX(), vector.getY());
 				}
 				
@@ -112,6 +107,7 @@ public class RepulsionTargetDecider implements ITargetDecider
 					maxNode = node;
 				}
 			}
+			
 			NextTarget = maxNode;
 		}
 	}

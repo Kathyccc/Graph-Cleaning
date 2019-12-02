@@ -121,10 +121,13 @@ public class Robot
 
 	public void Move(int position) 
 	{
+//		System.out.println("rfdwekldmwlkd");
+
 		if(State != RobotStates.Active) throw new IllegalStateException("Robot is not in Active state.");
 		
-		if(_map.getChildrenNodes(Position).contains(position)) 
+		if(_map.getChildrenNodes(Position).contains(Integer.valueOf(position))) 
 		{
+//			System.out.println("gkvjbnekjfv");
 			if(BatteryLevel == 0) return;
 			Position = position;
 			Battery.Discharge(BatteryConsum);

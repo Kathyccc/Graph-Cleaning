@@ -1,20 +1,20 @@
 package agent.pather;
 
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
-
 import agent.AgentActions;
 import agent.IPathPlanner;
 import agent.TargetPathAgentStatus;
 import agent.common.LitterExistingExpectation;
 import core.IGraph;
 import core.LitterSpawnPattern;
+import core.Pair;
 import core.RobotData;
 import core.utilities.DijkstraAlgorithm;
 import core.utilities.PotentialCollection;
@@ -27,26 +27,23 @@ public class ShortestGreedyPathPlanner implements IPathPlanner
     Random _rand;
     LitterExistingExpectation _expectation;
     PotentialCollection _potentialMap;
-    int _target = -1;
     PotentialCollection _pathMap;
-    List<Integer> _excludeNodes = new ArrayList<>();
+    int _target = -1;
     int NextNode;
     boolean CanArrive;
     
     
     
-    public void setSubgoalsNull() {
+    public void setSubgoalsNull() {}
     
-    }
-    
-    public ShortestGreedyPathPlanner(int robotID, IGraph map, LitterSpawnPattern pattern, int baseNode, boolean isAccumulated, int seed, List<Integer> excludeNodes)
+    public ShortestGreedyPathPlanner(int robotID, IGraph map, LitterSpawnPattern pattern, int baseNode, boolean isAccumulated, int seed)
     {
         _robotID = robotID;
         _map = map;
         _base = baseNode;
         _rand = new Random(seed);
-        _excludeNodes = excludeNodes;
         _potentialMap = new DijkstraAlgorithm(_map).Execute(_base);
+        _expectation = new LitterExistingExpectation(pattern, isAccumulated);
     }
     
     
@@ -81,7 +78,9 @@ public class ShortestGreedyPathPlanner implements IPathPlanner
     {
     	RobotData mydata = status.ObservedData.RobotData._robots.get(_robotID);
     	int position = mydata.Position;
-    	int cycle = status.MyCycle;
+    	
+    	// update the observed time
+    	_expectation.Update(status.ObservedData.RobotData, status.ObservedData.Time);
     	
     	// Exit if agent is not moving
     	if(status.Action != AgentActions.Move) return;
@@ -92,12 +91,11 @@ public class ShortestGreedyPathPlanner implements IPathPlanner
     		
     		_pathMap = new DijkstraAlgorithm(_map).Execute(_target, position);
     		
-    		// calculate battery consumption
     		int consumption = mydata.Spec.BatteryConsumption;
-    		int remainingBattery = cycle * consumption - (mydata.Spec.BatteryCapacity - mydata.BatteryLevel);
+    		int remainingBattery = mydata.BatteryLevel;
     		
     		// determine if agent can arrive the target
-    		if((_potentialMap._potentials.get(_target) + _pathMap._potentials.get(position)) * consumption > remainingBattery) 
+    		if((_potentialMap.getPotential(_target) + _pathMap.getPotential(position)) * consumption > remainingBattery) 
     		{
     			CanArrive = false;
     			return;
@@ -106,31 +104,40 @@ public class ShortestGreedyPathPlanner implements IPathPlanner
     		CanArrive = true;
     	}
     	
-    	//int time = status.ObservedData.Time;
+		List<Pair<Integer, Double>> candidates = new ArrayList<Pair<Integer, Double>>();
     	
-    	List<Integer> candidates = new ArrayList<>();
-		Map<Integer, Double> expec = new HashMap<>();
-
     	
     	for(int node : _map.getChildrenNodes(position)) 
     	{
     		if(_pathMap._potentials.get(node) < _pathMap._potentials.get(position)) 
     		{
-        		expec.put(node, _expectation.getExpectation(node));
+    			candidates.add(new Pair<Integer, Double>(node, _expectation.getExpectation(node)));
     		}
     	}
     	
-    	Map<Integer, Double> sortedexpec = expec.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-    	        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
     	
-    	for(Map.Entry<Integer, Double> nodeAndexpec : sortedexpec.entrySet()) 
-    	{
-    		candidates.add(nodeAndexpec.getKey());
-    	}
+		final Comparator<Pair<Integer, Double>> sortByValue = reverseOrder(comparing(Pair::getValue));
+
+		Collections.sort(candidates, sortByValue);
     	
     	if(candidates.size() == 0) return;
     	
-    	NextNode = candidates.get(0);
+    	NextNode = candidates.get(0).getKey();
 
     }
 }
+
+
+
+
+////calculate battery consumption
+//int consumption = mydata.Spec.BatteryConsumption;
+//int remainingBattery = cycle * consumption - (mydata.Spec.BatteryCapacity - mydata.BatteryLevel);
+
+//Map<Integer, Double> sortedexpec = expec.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+//.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+//
+//for(Map.Entry<Integer, Double> nodeAndexpec : sortedexpec.entrySet()) 
+//{
+//candidates.add(nodeAndexpec.getKey());
+//}

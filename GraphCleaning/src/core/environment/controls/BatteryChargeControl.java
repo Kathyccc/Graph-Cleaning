@@ -1,7 +1,6 @@
 package core.environment.controls;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 import core.environment.Field;
 import core.environment.Robot;
@@ -37,12 +36,8 @@ public class BatteryChargeControl
     }
     
     public void Update() 
-    {
-    	RobotBaseCollection rbc = new RobotBaseCollection();
-    	Map<Integer, RobotBase> bases = new HashMap<>();
-    	bases = rbc.getBasesMap();
-    	
-    	for(RobotBase robotbase: bases.values()) 
+    { 	
+    	for(RobotBase robotbase: bases.getBasesMap().values()) 
     	{
     		robotbase.Charge();
     	}		

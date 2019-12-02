@@ -19,16 +19,11 @@ public class RandomTargetDecider implements ITargetDecider
 	int NextTarget;
 	
 	
-	public RandomTargetDecider(int robotID, IGraph map, int seed, List<Integer> excludeNodes) 
+	public RandomTargetDecider(int robotID, IGraph map, int seed) 
 	{
 		_rand = new Random(seed);
 		_nodes = new ArrayList<>(map.getNodes());
 		_robotID = robotID;
-		
-		for(int node : excludeNodes) 
-		{
-			_nodes.remove(new Integer(node));
-		}
 		
 		NextTarget = _nodes.get(_rand.nextInt(_nodes.size()));
 	}
@@ -46,7 +41,8 @@ public class RandomTargetDecider implements ITargetDecider
 		return false;
 	}
 
-	public void Update(TargetPathAgentStatus status) {
+	public void Update(TargetPathAgentStatus status) 
+	{
 		if(status.Action != AgentActions.Move) return;
 		
 		RobotData mydata = status.ObservedData.RobotData._robots.get(_robotID);

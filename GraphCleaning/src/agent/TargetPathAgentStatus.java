@@ -17,22 +17,21 @@ public class TargetPathAgentStatus
 	public AgentActions Action;
 	public int TargetNode;
 	public ObservedData ObservedData;
-	public List<Integer> SearchNodes = new ArrayList<>();
+//	public List<Integer> SearchNodes = new ArrayList<>();
 	int[] VisitCounter;
 	List<Integer> VisitHistory;
-	public int MyCycle;
 	
 
 	
-	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data, List<Integer> searchNodes, int[] visitCounter, List<Integer> visitHistory, int myCycle) 
+	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data, int[] visitCounter, List<Integer> visitHistory) 
 	{
 		Action = action;
 		TargetNode = target;
 		ObservedData = data;
-		SearchNodes = searchNodes;
 		VisitCounter = visitCounter;
 		VisitHistory = visitHistory;
-		MyCycle = myCycle;
+		
+//		SearchNodes = searchNodes;
 	}
 	
 	
@@ -60,13 +59,13 @@ public class TargetPathAgentStatus
 		return ObservedData;
 	}
 	
-	public void setSearchNodes(List<Integer> nodes) {
-		SearchNodes = nodes;
-	}
-	
-	public List<Integer> getSearchNodes(){
-		return SearchNodes;
-	}
+//	public void setSearchNodes(List<Integer> nodes) {
+//		SearchNodes = nodes;
+//	}
+//	
+//	public List<Integer> getSearchNodes(){
+//		return SearchNodes;
+//	}
 	
 	public void setVisitCounter(int[] counter) {
 		VisitCounter = counter;
@@ -83,15 +82,7 @@ public class TargetPathAgentStatus
 	public List<Integer> getVisitHistory(){
 		return VisitHistory;
 	}
-	
-	public void setMyCycle(int mycycle) {
-		MyCycle = mycycle;
-	}
-	
-	public int getMyCycle() {
-		return MyCycle;
-	}
-	
+
 	
 //	public TargetPathAgentStatus(AgentActions action, int target, ObservedData data) 
 //	{
