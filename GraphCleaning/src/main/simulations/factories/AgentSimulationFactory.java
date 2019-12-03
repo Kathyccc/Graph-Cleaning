@@ -71,7 +71,7 @@ public class AgentSimulationFactory extends SimulationFactory
 
     int _environmentSeed = 0;
     int _patherSeed = 1;
-    int _patherNumber = 2;
+    int _patherNumber = 0;
     int _targetterSeed = 5;
     int _targetterNumber = 6;
     
@@ -327,6 +327,9 @@ public class AgentSimulationFactory extends SimulationFactory
 
 			ITargetDecider targetter = null;
             IPathPlanner pather;
+            
+//          pather = new SubgoalPathPlanner(robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt());
+
 			
             // path planning
             switch (_patherNumber)
@@ -366,6 +369,7 @@ public class AgentSimulationFactory extends SimulationFactory
                 			new RepulsionTargetDecider(robot.getKey(), _graph, target_rand.nextInt()));
                 	decider.AddTargetDecider(
                 			new MyopiaSweepTargetDecider(robot.getKey(), _graph, _spawnPattern, _isAccumulated, target_rand.nextInt()));
+                	targetter = decider;
             }
 			
 			agent.setPathPlanner(pather);

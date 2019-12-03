@@ -1,9 +1,7 @@
 package core.environment.controls;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
 import core.LitterSpawnPattern;
 import core.LitterSpawnProbability;
 import core.environment.Field;
@@ -32,18 +30,15 @@ public class LitterSpawnControl
 	
 	public void Update() 
 	{
-		Map<Integer, LitterSpawnProbability> patterns = new HashMap<>(); 
-		patterns = _patterns.getLitterSpawnPatternMap();
-
-		
-		for(Map.Entry<Integer, LitterSpawnProbability> pattern : patterns.entrySet()) 
+		for(Map.Entry<Integer, LitterSpawnProbability> pattern : _patterns._patterns.entrySet()) 
 		{
 			LitterSpawnProbability prob = pattern.getValue();
 			
-			
 			if(_field.Time % prob.Interval == 0) 
 			{
-				double n = _rand.nextDouble();
+				double n = _rand.nextFloat();
+//				System.out.println("n = " + n + "      prob = " + prob.Probability);
+
 				if(n < prob.Probability) 
 				{
 					litterCollection.getLitter(pattern.getKey()).Increase(prob.Increment);

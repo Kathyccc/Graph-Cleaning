@@ -1,6 +1,7 @@
 package core;
 
-public class RobotSpec {
+public class RobotSpec 
+{
 	public int BatteryCapacity;
 	public int BatteryConsumption;
 	

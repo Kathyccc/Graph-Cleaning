@@ -39,9 +39,9 @@ public class ObservationControl {
 		
 		return new RobotData(
 				robot.ID, 
-				robot.BatteryLevel,
+				robot.getBatteryLevel(),
 				robot.Position,
-				robot.AccumulatedLitter,
+				robot.getAccumulatedLitter(),
 				robot.Litter,
 				robot.Spec);
 	}
@@ -56,9 +56,8 @@ public class ObservationControl {
 		robots = _field.Robots._robots;
 		
 		for(Robot robot : robots.values()) {
-			RobotData data = new RobotData(robot.ID, robot.BatteryLevel, robot.Position, robot.AccumulatedLitter, robot.Litter, robot.Spec);
+			RobotData data = new RobotData(robot.ID, robot.getBatteryLevel(), robot.Position, robot.getAccumulatedLitter(), robot.Litter, robot.Spec);
 			rDataCollection.Add(data);
-//			System.out.println("ObservationControl60   " + robot.Litter);
 		} 
 		
 		return new RobotDataCollection(rDataCollection, true);

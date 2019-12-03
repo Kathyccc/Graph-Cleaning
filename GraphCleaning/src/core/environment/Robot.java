@@ -23,32 +23,35 @@ public class Robot
 	
 	//constructors//////////////////////////////////////////////
 
-	public Robot(RobotSpec spec, int id) {
+	public Robot(RobotSpec spec, int id) 
+	{
 		setID(id);
 		setBattery(spec);
 		setBatteryConsum(spec.BatteryConsumption);
 		setCleaner();
 		setRobotState();
 		setRobotSpec(spec);
+		BatteryLevel = Battery.Level;
 	}
 	
 
 	//properties//////////////////////////////////////////////
 
+	public int getBatteryLevel() 
+	{
+		return Battery.Level;
+	}
+	
+	public int getAccumulatedLitter() {
+		return Cleaner.AccumulatedLitter;
+	}
+	
 	public void setID(int id) {
 		this.ID = id;
 	}
 	
-	public int getID() {
-		return this.ID;
-	}
-	
 	public void setPosition(int value) {
 		Position = value;
-	}
-	
-	public int getPosition() {
-		return Position;
 	}
 	
 	public void setBattery(RobotSpec spec) {
@@ -63,10 +66,6 @@ public class Robot
 		Cleaner = new Cleaner();
 	}
 	
-	public Cleaner getCleaner() {
-		return Cleaner;
-	}
-	
 	public void setBatteryConsum(int consumption) {
 		BatteryConsum = consumption;
 	}
@@ -75,60 +74,24 @@ public class Robot
 		return BatteryConsum;
 	}
 	
-	public void setBatteryLevel() {
-		BatteryLevel = getBattery().getLevel();
-	}
-	
-	public int getBatteryLevel() {
-		return BatteryLevel;
-	}
-	
-	public void setAccumulatedLitter() {
-		AccumulatedLitter = getCleaner().getAccumulatedLitter();
-	}
-	
-	public int getAccumulatedLitter() {
-		return AccumulatedLitter;
-	}
-	
-	public void setLitter() {
-		AccumulatedLitter = getCleaner().getLitter();
-	}
-	
-	public int getLitter() {
-		return this.Litter;
-	}
-	
 	public void setRobotSpec(RobotSpec spec) {
 		Spec = spec;
-	}
-	
-	public RobotSpec getSpec() {
-		return Spec;
 	}
 	
 	public void setRobotState() {
 		State = RobotStates.Inactive;
 	}
 	
-	public RobotStates getRobotState() {
-		return State;
-	}
-	
-	
-	
+
 	//Methods for robot moving//////////////////////////////////////////////
 
 	public void Move(int position) 
 	{
-//		System.out.println("rfdwekldmwlkd");
-
 		if(State != RobotStates.Active) throw new IllegalStateException("Robot is not in Active state.");
 		
 		if(_map.getChildrenNodes(Position).contains(Integer.valueOf(position))) 
 		{
-//			System.out.println("gkvjbnekjfv");
-			if(BatteryLevel == 0) return;
+			if(getBatteryLevel() == 0) return;
 			Position = position;
 			Battery.Discharge(BatteryConsum);
 		}

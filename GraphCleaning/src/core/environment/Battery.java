@@ -6,6 +6,12 @@ public class Battery
 	int Capacity;
 	
 	
+	public Battery(int capacity) {
+		Capacity = capacity;
+		setLevel(Capacity);
+	}
+	
+	
 	public int getLevel() {
 		return this.Level;
 	}
@@ -15,12 +21,6 @@ public class Battery
 		if(value > Capacity) Level = Capacity;
 		else if(value < 0) Level = 0;
 		else Level = value;
-	}
-	
-	
-	public Battery(int capacity) {
-		Capacity = capacity;
-		Level = Capacity;
 	}
 	
 	

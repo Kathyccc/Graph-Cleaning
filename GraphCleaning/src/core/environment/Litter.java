@@ -20,11 +20,11 @@ public class Litter
 		IsAccumulated = true;
 	}
 	
-	public void setQuantity(int quantity) 
-	{
-		if(quantity < 0) Quantity = 0;
-		else Quantity = quantity;
-	}
+//	public void setQuantity(int quantity) 
+//	{
+//		if(quantity < 0) Quantity = 0;
+//		else Quantity = quantity;
+//	}
 	
 	public int getQuantity() 
 	{
@@ -62,7 +62,11 @@ public class Litter
 	
 	public void Increase(int quantity) 
 	{
-		if(IsAccumulated) Quantity += quantity;
+		if(IsAccumulated) 
+		{
+			Quantity =  Quantity + quantity;
+//			System.out.println("it does increase.");
+		}
 		else Quantity = quantity;
 	}
 

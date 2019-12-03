@@ -60,6 +60,7 @@ public class AgentManager implements IAgentManager
 		for(AgentActions agentAction : _agentActions.values()) 
 		{
 			log += agentAction.name() + ",";
+//			System.out.println("agent action:  " + agentAction.name());
 		}
 				
 		_logWriters.get("AgentActions").WriteLine(log);

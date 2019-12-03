@@ -94,6 +94,8 @@ public class ShortestGreedyPathPlanner implements IPathPlanner
     		int consumption = mydata.Spec.BatteryConsumption;
     		int remainingBattery = mydata.BatteryLevel;
     		
+//    		System.out.println("hfercerferf     " + remainingBattery);
+
     		// determine if agent can arrive the target
     		if((_potentialMap.getPotential(_target) + _pathMap.getPotential(position)) * consumption > remainingBattery) 
     		{

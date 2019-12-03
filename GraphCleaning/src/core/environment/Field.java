@@ -9,11 +9,11 @@ public class Field {
 	
 	public IGraph SpatialStructure;
 	
-	public RobotCollection Robots = new RobotCollection();;
+	public RobotCollection Robots;
 	
-	public LitterCollection Litter = new LitterCollection();
+	public LitterCollection Litter;
 	
-	public RobotBaseCollection RobotBases = new RobotBaseCollection();
+	public RobotBaseCollection RobotBases;
 	
 	public LitterSpawnPattern LitterSpawnPattern = new LitterSpawnPattern();
 	
@@ -23,6 +23,10 @@ public class Field {
 		Time = 0;
 		SpatialStructure = spatialStructure;
 		LitterSpawnPattern = pattern;
+		Robots = new RobotCollection();
+		Litter = new LitterCollection();
+		RobotBases = new RobotBaseCollection();
+		
 	}
 	
 	

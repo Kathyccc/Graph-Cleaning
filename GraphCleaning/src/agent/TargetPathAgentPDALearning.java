@@ -156,7 +156,7 @@ public class TargetPathAgentPDALearning implements IAgent
        
        _targetter.Update(status);
        
-	   System.out.println("agent's next target:  " + RobotID + "    " + _targetter.NextTarget());
+//	   System.out.println("agent's next target:  " + RobotID + "    " + _targetter.NextTarget());
 
        
        if(_target != _targetter.NextTarget() && !_isChargeRequired) 

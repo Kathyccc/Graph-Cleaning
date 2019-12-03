@@ -3,6 +3,7 @@ package agent.pather;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import agent.AgentActions;
@@ -28,6 +29,7 @@ public class SubgoalPathPlanner implements IPathPlanner
 	double attraction;
 	double rover; //deviation factor
 	double threshold;  //expected value threshold
+	
 	LitterExistingExpectation expectation;
 	PotentialCollection basePotential;
 	PotentialCollection targetPotential;
@@ -35,7 +37,6 @@ public class SubgoalPathPlanner implements IPathPlanner
 	List<Integer> subgoals;
 	int subgoal;
 	int goalIndex;
-	List<Integer> excludeNodes = new ArrayList<>();
 	int farthestDistance;
 	boolean CanArrive;
 	
@@ -95,12 +96,11 @@ public class SubgoalPathPlanner implements IPathPlanner
 		int position = mydata.Position;
 		
 		expectation.Update(status.ObservedData.RobotData, status.ObservedData.Time);
-		
+
 		if(target != status.TargetNode || subgoals == null) 
 		{
 			int consumption = mydata.Spec.BatteryConsumption;
 			int remainingBattery = mydata.BatteryLevel;
-			
 			
 			// change to new target
 			target = status.TargetNode;
@@ -134,6 +134,7 @@ public class SubgoalPathPlanner implements IPathPlanner
 		{
 			subgoal = subgoals.get(goalIndex);
 			goalIndex++;
+//			System.out.println("size   " + subgoals.size() + "     "+ "goalIndex:      " + goalIndex);
 		}
 		
 		pathPlanner.Update(new TargetPathAgentStatus(
@@ -160,6 +161,7 @@ public class SubgoalPathPlanner implements IPathPlanner
 			List<Integer> nexts = new ArrayList<>();
 			
 			for(Integer node : nodes){
+				
 				List<Integer> children = map.getChildrenNodes(node);
 				
 				for(Integer child : children) 
@@ -186,15 +188,16 @@ public class SubgoalPathPlanner implements IPathPlanner
 		if(candidate.size() == 0)
 			return new Pair<Integer, Integer>(target, _battery - stDistance);
 		
-		Map<Pair<Integer, Integer>, Double> sorted = new HashMap<>();
+		Map<Pair<Integer, Integer>, Double> sorted = new LinkedHashMap<>();
 		
 		candidate.entrySet()
 	    	.stream()
 	    	.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
 	    	.forEachOrdered(x -> sorted.put(x.getKey(), x.getValue()));
 		
-		Map.Entry<Pair<Integer,Integer>, Double> entry = sorted.entrySet().iterator().next();
-		Pair<Integer, Integer> pair = entry.getKey();
+		Pair<Integer, Integer> pair = sorted.entrySet().stream().findFirst().get().getKey();
+		
+//		Map.Entry<Pair<Integer,Integer>, Double> entry = sorted.entrySet().iterator().next();
 		
 		return pair;
 	}

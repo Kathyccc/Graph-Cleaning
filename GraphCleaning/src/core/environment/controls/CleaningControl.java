@@ -29,7 +29,6 @@ public class CleaningControl
 		_litter = field.Litter;
 		_robots = field.Robots;
 		_rand = new Random(seed);
-		
 	}
 	
 	

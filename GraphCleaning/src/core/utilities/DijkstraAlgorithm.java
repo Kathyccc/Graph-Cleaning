@@ -23,6 +23,16 @@ public class DijkstraAlgorithm
 	}
 	
 	
+	public PotentialCollection PotentialMap() 
+	{
+		return new PotentialCollection(_distance);
+	}
+	
+	public PotentialCollection Execute(int destination) 
+	{
+		return Execute(destination, destination);
+	}
+	
 	public PotentialCollection Execute(int destination, int source) 
 	{
 		if(!_graph.ContainsNode(destination)) throw new IllegalArgumentException("The node is not in the graph: " + destination);
@@ -38,47 +48,36 @@ public class DijkstraAlgorithm
 		
 		calcs.add(destination);
 		_distance.put(destination, 0);
-		
-		int cpot;
-		
+				
 		while(calcs.size() != 0) 
 		{
 			int node = calcs.get(0);
 			int potential = _distance.get(node);
 			
 			if(node == source && node!= destination) {
-				Potentials = new PotentialCollection(_distance);
-				return Potentials;
+				return PotentialMap();
 			}
 			
 			for(int child : _graph.getParentNodes(node)) 
 			{
-				cpot = potential + _graph.getWeight(node, child);
+				int cpot = potential + _graph.getWeight(node, child);
 				
 				if(_distance.get(child) > cpot) 
 				{
-					if(_distance.get(child) != Integer.MAX_VALUE) calcs.remove(child);
+					if(_distance.get(child) != Integer.MAX_VALUE) 
+						calcs.remove(child);
 					
 					//追加処理
 					int index = calcs.size() - 1;
 					for(; _distance.get(calcs.get(index)) > cpot; index--);
 					calcs.add(index + 1, child);
 					
-					
 					//反映処理
 					_distance.put(child, cpot);
 				}
 			}
 			calcs.remove(0);
-		}
-		Potentials = new PotentialCollection(_distance);
-		
-		return Potentials;
-	}
-	
-	
-	public PotentialCollection Execute(int destination) 
-	{
-		return Execute(destination, destination);
+		}		
+		return PotentialMap();
 	}
 }

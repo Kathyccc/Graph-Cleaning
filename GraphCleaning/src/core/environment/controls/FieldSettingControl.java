@@ -29,7 +29,7 @@ public class FieldSettingControl
 		
 		robot.Activate();
 		
-		return robot.getID();
+		return robot.ID;
 	}
 	
 	

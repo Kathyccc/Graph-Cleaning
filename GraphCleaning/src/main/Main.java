@@ -24,11 +24,11 @@ public class Main
 		
 		for (int robots = 20; robots <= 20; robots += 5)
 		{
-			for (int t = 0; t < 4; t++)
+			for (int t = 0; t < 5; t++)
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 10; s++) // s -> random seed
+					for (int s = 0; s < 5; s++) // s -> random seed
 					{
 						System.out.println(counter);
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -52,11 +52,11 @@ public class Main
 		counter = 0;
 		for (int robots = 20; robots <= 20; robots += 5)
 		{
-			for (int t = 0; t < 4; t++)
+			for (int t = 0; t < 5; t++)
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 10; s++)
+					for (int s = 0; s < 5; s++)
 					{
 						System.out.println(counter);
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -78,11 +78,11 @@ public class Main
 		counter = 0;
 		for (int robots = 20; robots <= 20; robots += 5)
 		{
-			for (int t = 0; t < 4; t++)
+			for (int t = 0; t < 5; t++)
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 10; s++)
+					for (int s = 0; s < 5; s++)
 					{
 						System.out.println(counter);	
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -103,11 +103,11 @@ public class Main
 		counter = 0;
 		for (int robots = 20; robots <= 20; robots += 5)
 		{
-			for (int t = 0; t < 4; t++)
+			for (int t = 0; t < 5; t++)
 			{
 				for (int p = 0; p < 1; p++)
 				{
-					for (int s = 0; s < 10; s++)
+					for (int s = 0; s < 5; s++)
 					{
 						System.out.println(counter);
 //						SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
