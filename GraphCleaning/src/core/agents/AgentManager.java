@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import agent.AgentActions;
 import core.GridGraph;
 import core.IAgentManager;
@@ -26,7 +24,6 @@ public class AgentManager implements IAgentManager
 	Map<String, LogWriter> _logWriters = new HashMap<>();
 	List<Integer> _excludedNodes = new ArrayList<>();
 	PotentialCollection[] _agentPotential = new PotentialCollection[20];
-	
 	String PatternName;
 	List<Integer> agentNumList = new ArrayList<>();
 

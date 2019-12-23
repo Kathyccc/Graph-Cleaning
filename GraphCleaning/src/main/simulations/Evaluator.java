@@ -23,7 +23,8 @@ public class Evaluator
 	public Evaluator(IEnvironment environ, List<Integer> high, List<Integer> middle, List<Integer> low)
 	{
 		_environment = environ;
-		_logger = LogManager.CreateWriter("evaluation-s3600");		
+		_logger = LogManager.CreateWriter("evaluation-s3600");
+		_logger.WriteLine("time,total_sum,high,middle,low");
 
         _high = high;
         _middle = middle;
@@ -39,6 +40,7 @@ public class Evaluator
 		
 		_evaluationSum += litterQuantity;
 
+//		System.out.println(_evaluationSum);
 		for(LitterData litter : litterData._litter) 
 		{
 			if(_high.contains(Integer.valueOf(litter.Position))) 

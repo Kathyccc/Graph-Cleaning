@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import core.LitterSpawnPattern;
+import core.LitterSpawnProbability;
 import core.RobotData;
 import core.RobotDataCollection;
 
 public class LitterExistingExpectation 
 {
 	int _time;
-	LitterSpawnPattern _pattern = new LitterSpawnPattern();
+	LitterSpawnPattern _pattern;
 	Map<Integer, Integer> _visitedTime = new HashMap<>();;
 	boolean _isAccumulated;
 	boolean IncrementEnabled;
@@ -26,16 +27,21 @@ public class LitterExistingExpectation
 		{
 			_visitedTime.put(node, 0);
 		}
-		
+	
 		_isAccumulated = isAccumulated;
 		IncrementEnabled = false;
+		
+//		for(LitterSpawnProbability litterprob : _pattern._patterns.values()) 
+//		{
+//			System.out.println("LitterExisting35   " + litterprob.Probability);
+//		}
 	}
 	
 	public double getExpectation(int node, int time) 
 	{
 		double expectation = 0.0;
 		int interval = time - _visitedTime.get(node);
-		double prob = _pattern._patterns.get(node).Probability;
+		double prob = _pattern.getLitterSpawnProb(node);
 		
 		if(interval > 0) 
 		{
@@ -43,8 +49,7 @@ public class LitterExistingExpectation
 				expectation = prob * interval;
 			else 
 				expectation = 1.0 - Math.pow(1.0 - prob, interval);
-		}
-		
+		}		
 		
 		return IncrementEnabled ? expectation * _pattern._patterns.get(node).Increment : expectation;
 	}

@@ -24,5 +24,6 @@ public class Cleaner {
 	public void Clean(Litter litter) {
 		Litter = litter.Clean();
 		AccumulatedLitter += Litter;
+//		System.out.println("Cleaner...(position, litter):  " + litter.Position + ", " + AccumulatedLitter);
 	}
 }

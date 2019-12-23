@@ -3,7 +3,6 @@ package agent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import agent.common.LitterExistingExpectation;
 import core.GridGraph;
 import core.LitterSpawnPattern;
@@ -20,6 +19,7 @@ public class TargetPathAgentPDALearning implements IAgent
 	Random forOrderbyRnd;
 	LitterExistingExpectation _expectation;
 	LitterSpawnPattern _mySpawnPattern;
+	LitterSpawnPattern _spawnPattern;
 	GridGraph _graph;
 	List<Integer> _nodes;
 	int[] _visitCount;
@@ -49,8 +49,8 @@ public class TargetPathAgentPDALearning implements IAgent
 		_visitCountMemory = new int[3][_graph.getNodes().size()];
 		_visitHistory = new ArrayList<>();
 		
-		
-		InitializeMySpawnPattern();
+		_spawnPattern = SpawnPattern;
+		InitializeMySpawnPattern(SpawnPattern);
 		
 		_expectation = new LitterExistingExpectation(_mySpawnPattern, true);
 		
@@ -63,6 +63,16 @@ public class TargetPathAgentPDALearning implements IAgent
 		for(Integer node : _graph.getNodes()) 
 		{
 			_mySpawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1,  0.00,  1));
+		}
+	}
+	
+	
+	public void InitializeMySpawnPattern(LitterSpawnPattern initialPattern) 
+	{
+		_mySpawnPattern = new LitterSpawnPattern();
+		for(Integer node : _graph.getNodes()) 
+		{
+			_mySpawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1,  initialPattern.getLitterSpawnProb(node),  1));
 		}
 	}
 	
@@ -119,7 +129,7 @@ public class TargetPathAgentPDALearning implements IAgent
 		int position = mydata.Position;
 		int interval = _expectation.getInterval(position, data.Time);
 		int litter = mydata.AccumulatedLitter;
-		
+//		System.out.println("PDA   " + mydata.ID + "litter  " + litter);
 		_visitCount[position]++;
 		_visitHistory.add(position);
 		
@@ -140,7 +150,6 @@ public class TargetPathAgentPDALearning implements IAgent
     		   //finish charging and move
     		   Action = AgentActions.Move;
     		   _isChargeRequired = false;
-    		   
     	   }
        }
        
@@ -156,8 +165,6 @@ public class TargetPathAgentPDALearning implements IAgent
        
        _targetter.Update(status);
        
-//	   System.out.println("agent's next target:  " + RobotID + "    " + _targetter.NextTarget());
-
        
        if(_target != _targetter.NextTarget() && !_isChargeRequired) 
        {
@@ -190,19 +197,3 @@ public class TargetPathAgentPDALearning implements IAgent
        _pather.Update(status);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

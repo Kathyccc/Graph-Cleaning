@@ -87,6 +87,7 @@ public class Litter
 		int quantity = Quantity;
 		Quantity = 0;
 		
+//		System.out.println("Litter:  " + Position);
 		return quantity;
 	}
 	

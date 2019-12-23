@@ -8,6 +8,7 @@ import java.util.Random;
 
 import agent.IPathPlanner;
 import agent.ITargetDecider;
+import agent.TargetPathAgent;
 import agent.TargetPathAgentPDALearning;
 import agent.pather.ShortestGreedyPathPlanner;
 import agent.pather.SubgoalPathPlanner;
@@ -89,6 +90,8 @@ public class AgentSimulationFactory extends SimulationFactory
         
         _isAccumulated = Accumulated;
         patternName = spawnPattern;
+//		System.out.println("the sum:   " + _targetterNumber);
+
     }
     
     
@@ -288,7 +291,6 @@ public class AgentSimulationFactory extends SimulationFactory
 			}
 			
 			_spawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1, prob, 1));
-			
 		}
 	}
 
@@ -322,14 +324,12 @@ public class AgentSimulationFactory extends SimulationFactory
 		
 		for(Map.Entry<Integer, RobotSpec> robot : _robots.entrySet()) 
 		{			
-			TargetPathAgentPDALearning agent = new TargetPathAgentPDALearning(robot.getKey(), _graph, _spawnPattern);
+			TargetPathAgent agent = new TargetPathAgent(robot.getKey(), _spawnPattern);
 			agent.setBaseNode(basePosition);
 
 			ITargetDecider targetter = null;
             IPathPlanner pather;
             
-//          pather = new SubgoalPathPlanner(robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt());
-
 			
             // path planning
             switch (_patherNumber)
@@ -342,7 +342,7 @@ public class AgentSimulationFactory extends SimulationFactory
                     pather = new SubgoalPathPlanner(robot.getKey(), _graph, _spawnPattern, basePosition, _isAccumulated, path_rand.nextInt());
                     break;
             }
-			
+
 			// target decision
             switch (_targetterNumber)
             {

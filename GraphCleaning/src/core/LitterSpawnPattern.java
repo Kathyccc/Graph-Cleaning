@@ -7,8 +7,8 @@ public class LitterSpawnPattern
 {
 	public Map<Integer, LitterSpawnProbability> _patterns = new HashMap<>();
 	
-	public LitterSpawnProbability getLitterSpawnProb(int node) {
-		return _patterns.get(node); //is this[int index] necessary?
+	public double getLitterSpawnProb(int node) {
+		return _patterns.get(Integer.valueOf(node)).Probability; //is this[int index] necessary?
 	}
 	
 	public void setLitterSpawnProb(int node, int litter, int stepInterval) {

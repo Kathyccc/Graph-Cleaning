@@ -17,8 +17,8 @@ public class LitterSpawnProbability {
 	}
 	
 	
-	public double UpdateProbability(int litter, int stepInterval) {
-		
+	public double UpdateProbability(int litter, int stepInterval) 
+	{
 		// convert to double type
 		_litter = litter;
 		_stepInterval = stepInterval;
@@ -35,8 +35,6 @@ public class LitterSpawnProbability {
 			Probability = (1 - tmpalpha) * Probability + tmpalpha * (_litter/stepInterval);
 		}
 		
-//		System.out.println("LitterSpawnProbability38   " + Probability);
-
 		return Probability;
 	}
 }

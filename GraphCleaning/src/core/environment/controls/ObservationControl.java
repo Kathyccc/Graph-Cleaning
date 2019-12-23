@@ -89,7 +89,7 @@ public class ObservationControl {
 		for(Litter litter : _field.Litter._litter.values()) 
 		{
 			quantity += litter.Quantity;
-//			System.out.println("ObservationControl..." + litter.Quantity);
+//			System.out.println("ObservationControl...(node, quantity)  = " + litter.Position + ", " + quantity);
 		}
 		
 		return quantity;

@@ -132,9 +132,10 @@ public class SubgoalPathPlanner implements IPathPlanner
 				
 		if(subgoal == position && status.Action == AgentActions.Move) 
 		{
+			if(goalIndex >= subgoals.size())
+				goalIndex = subgoals.size()-1;
 			subgoal = subgoals.get(goalIndex);
 			goalIndex++;
-//			System.out.println("size   " + subgoals.size() + "     "+ "goalIndex:      " + goalIndex);
 		}
 		
 		pathPlanner.Update(new TargetPathAgentStatus(

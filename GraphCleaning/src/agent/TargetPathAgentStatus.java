@@ -1,6 +1,5 @@
 package agent;
 
-import java.util.ArrayList;
 import java.util.List;
 import agent.common.LitterExistingExpectation;
 import core.ObservedData;
@@ -17,7 +16,6 @@ public class TargetPathAgentStatus
 	public AgentActions Action;
 	public int TargetNode;
 	public ObservedData ObservedData;
-//	public List<Integer> SearchNodes = new ArrayList<>();
 	int[] VisitCounter;
 	List<Integer> VisitHistory;
 	
@@ -30,8 +28,6 @@ public class TargetPathAgentStatus
 		ObservedData = data;
 		VisitCounter = visitCounter;
 		VisitHistory = visitHistory;
-		
-//		SearchNodes = searchNodes;
 	}
 	
 	
@@ -58,14 +54,6 @@ public class TargetPathAgentStatus
 	public ObservedData getObservedData() {
 		return ObservedData;
 	}
-	
-//	public void setSearchNodes(List<Integer> nodes) {
-//		SearchNodes = nodes;
-//	}
-//	
-//	public List<Integer> getSearchNodes(){
-//		return SearchNodes;
-//	}
 	
 	public void setVisitCounter(int[] counter) {
 		VisitCounter = counter;

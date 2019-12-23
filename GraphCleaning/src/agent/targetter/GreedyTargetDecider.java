@@ -54,8 +54,6 @@ public class GreedyTargetDecider implements ITargetDecider
 		return NextTarget;
 	}
 	
-	
-	
 
 	public boolean IsChargeRequired() {
 		return false;
@@ -71,11 +69,13 @@ public class GreedyTargetDecider implements ITargetDecider
 		for(int node : _nodes) 
 		{
 			double exp = _expectation.getExpectation(node);
+
 			if(node != position) 
 			{
 				list.add(i, new Pair<Integer, Double>(node, exp));
 				sum += exp;
 				i++;
+
 			}
 		}
 		_expectationSum = sum;
@@ -100,7 +100,6 @@ public class GreedyTargetDecider implements ITargetDecider
 			int i = 0;
 			double sum = 0.0;
 
-			
 			for(int node : _nodes) 
 			{
 				double exp = _expectation.getExpectation(node);
@@ -127,6 +126,7 @@ public class GreedyTargetDecider implements ITargetDecider
 		}
 	}
 
+	
 	public double DiscountExpectation(ObservedData data, int node) 
 	{
 		return 1.0;
@@ -147,60 +147,3 @@ public class GreedyTargetDecider implements ITargetDecider
 	public void ResetState() {		
 	}
 }
-
-//if(countchecker) 
-//{
-//	if(firstSearch == true && list.get(count).getValue() == list.get((list.size())-2).getValue()) 
-//	{
-//		count = list.size()-1;
-//		firstSearch = false;
-//	}
-//	
-//	else 
-//	{
-//		if((count != list.size()-1) && (list.get(count).getValue() == list.get(count+1).getValue()))
-//		{
-//			double sameValue = list.get(count).getValue();
-//			int same = count;
-//			int small = list.size() - 2;
-//			int check = (same + small)/2;
-//			
-//			do 
-//			{
-//				if(list.get(check).getValue() < sameValue) 
-//				{
-//					small = check;
-//					check = (same+small)/2; 
-//				}
-//				
-//				else 
-//				{
-//					same = check;
-//					check = (same+small)/2;
-//				}
-//			}while(!(check==same || check == small));
-//			
-//			count = same + 1;
-//			
-//		}
-//	}
-//}
-//public double getExpectationSum(int position) 
-//{
-//	List<Pair<Integer, Double>> list = new ArrayList<Pair<Integer, Double>>();
-//	int i = 0;
-//	double sum = 0.0;
-//	
-//	for(int node : _nodes) 
-//	{
-//		double exp = _expectation.getExpectation(node);
-//		
-//		list.add(i, position == node ? (new Pair<Integer, Double>(node, -(Double.MAX_VALUE))) : (new Pair<Integer, Double>(node, exp)));
-//		sum += exp;
-//		i++;
-//	}
-//	
-//	_expectationSum = sum;
-//	
-//	return _expectationSum;
-//}
