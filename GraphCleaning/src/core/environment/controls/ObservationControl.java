@@ -42,7 +42,7 @@ public class ObservationControl {
 				robot.getBatteryLevel(),
 				robot.Position,
 				robot.getAccumulatedLitter(),
-				robot.Litter,
+				robot.getLitter(),
 				robot.Spec);
 	}
 	
@@ -55,8 +55,9 @@ public class ObservationControl {
 		Map<Integer, Robot> robots = new HashMap<>();
 		robots = _field.Robots._robots;
 		
-		for(Robot robot : robots.values()) {
-			RobotData data = new RobotData(robot.ID, robot.getBatteryLevel(), robot.Position, robot.getAccumulatedLitter(), robot.Litter, robot.Spec);
+		for(Robot robot : robots.values()) 
+		{
+			RobotData data = new RobotData(robot.ID, robot.getBatteryLevel(), robot.Position, robot.getAccumulatedLitter(), robot.getLitter(), robot.Spec);
 			rDataCollection.Add(data);
 		} 
 		
@@ -72,10 +73,10 @@ public class ObservationControl {
 		
 		for(Litter litter : litterCollection._litter.values()) 
 		{			
-			//System.out.println("testing..." + litter.Quantity);
 			if(litter.Quantity != 0) {
 				LitterData data = new LitterData(litter.Position, litter.Type, litter.Quantity);
 				LitterDC.AddLitterData(data);
+				System.out.println("ObservationControl:  " +  litter.Quantity);
 			}
 		}
 		return LitterDC;

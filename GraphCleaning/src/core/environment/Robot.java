@@ -14,8 +14,8 @@ public class Robot
 	public Cleaner Cleaner;
 	int BatteryConsum;
 	public int BatteryLevel;
-	public int AccumulatedLitter;
-	public int Litter;
+	int AccumulatedLitter;
+	int Litter;
 	public RobotSpec Spec;
 	RobotStates State;
 	
@@ -26,10 +26,10 @@ public class Robot
 	public Robot(RobotSpec spec, int id) 
 	{
 		setID(id);
-		setBattery(spec);
-		setBatteryConsum(spec.BatteryConsumption);
-		setCleaner();
-		setRobotState();
+		Battery = new Battery(spec.BatteryCapacity);
+		BatteryConsum = spec.BatteryConsumption;
+		Cleaner = new Cleaner();
+		State = RobotStates.Inactive;
 		setRobotSpec(spec);
 		BatteryLevel = Battery.Level;
 	}
@@ -43,7 +43,12 @@ public class Robot
 	}
 	
 	public int getAccumulatedLitter() {
-		return Cleaner.AccumulatedLitter;
+		return Cleaner.getAccumulatedLitter();
+	}
+	
+	public int getLitter() 
+	{
+		return Cleaner.getLitter();
 	}
 	
 	public void setID(int id) {
@@ -54,16 +59,8 @@ public class Robot
 		Position = value;
 	}
 	
-	public void setBattery(RobotSpec spec) {
-		Battery = new Battery(spec.BatteryCapacity);
-	}
-	
 	public Battery getBattery() {
 		return Battery;
-	}
-	
-	public void setCleaner() {
-		Cleaner = new Cleaner();
 	}
 	
 	public void setBatteryConsum(int consumption) {
@@ -76,10 +73,6 @@ public class Robot
 	
 	public void setRobotSpec(RobotSpec spec) {
 		Spec = spec;
-	}
-	
-	public void setRobotState() {
-		State = RobotStates.Inactive;
 	}
 	
 

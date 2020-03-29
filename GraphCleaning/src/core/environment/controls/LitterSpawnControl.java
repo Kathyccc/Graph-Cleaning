@@ -30,18 +30,18 @@ public class LitterSpawnControl
 	
 	public void Update() 
 	{
-		for(Map.Entry<Integer, LitterSpawnProbability> pattern : _patterns._patterns.entrySet()) 
+		for(Map.Entry<Integer, LitterSpawnProbability> pattern : _patterns.getLitterSpawnPatternMap().entrySet()) 
 		{
 			LitterSpawnProbability prob = pattern.getValue();
 			
 			if(_field.Time % prob.Interval == 0) 
 			{
 				double n = _rand.nextFloat();
-//				System.out.println("n = " + n + "      prob = " + prob.Probability);
 
 				if(n < prob.Probability) 
 				{
 					litterCollection.getLitter(pattern.getKey()).Increase(prob.Increment);
+//					System.out.println(litterCollection.getLitter(pattern.getKey()).Position + "   " + litterCollection.getLitter(pattern.getKey()).Quantity);
 				}
 			}
 		}

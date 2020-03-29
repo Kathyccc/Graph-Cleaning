@@ -10,7 +10,7 @@ import core.RobotDataCollection;
 
 public class LitterExistingExpectation 
 {
-	int _time;
+	public int _time;
 	LitterSpawnPattern _pattern;
 	Map<Integer, Integer> _visitedTime = new HashMap<>();;
 	boolean _isAccumulated;
@@ -30,11 +30,6 @@ public class LitterExistingExpectation
 	
 		_isAccumulated = isAccumulated;
 		IncrementEnabled = false;
-		
-//		for(LitterSpawnProbability litterprob : _pattern._patterns.values()) 
-//		{
-//			System.out.println("LitterExisting35   " + litterprob.Probability);
-//		}
 	}
 	
 	public double getExpectation(int node, int time) 
@@ -47,10 +42,9 @@ public class LitterExistingExpectation
 		{
 			if(_isAccumulated) 
 				expectation = prob * interval;
-			else 
-				expectation = 1.0 - Math.pow(1.0 - prob, interval);
-		}		
-		
+//			else 
+//				expectation = 1.0 - Math.pow(1.0 - prob, interval);
+		}
 		return IncrementEnabled ? expectation * _pattern._patterns.get(node).Increment : expectation;
 	}
 	

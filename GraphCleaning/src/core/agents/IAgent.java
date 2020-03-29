@@ -17,9 +17,5 @@ public interface IAgent
 			
 	LitterSpawnPattern getMySpawnPattern();
 	
-//	CommunicationDetails getCommunicateDetails();
-	
-//	void SearchNumberDecrease(int decrease);
-	
 	int[][] getVisitCountMemory();
 }

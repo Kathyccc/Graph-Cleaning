@@ -23,7 +23,9 @@ public class LitterSpawnProbability {
 		_litter = litter;
 		_stepInterval = stepInterval;
 		
-		if(_litter >= 1.0) _litter = 1.0;
+//		System.out.println("LitterSpawnProb  " + _litter);
+		
+		if(_litter >= 1.0) _litter = 1.0;		
 		
 		if(stepInterval != 0)
 		{

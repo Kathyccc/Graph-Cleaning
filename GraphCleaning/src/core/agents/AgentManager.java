@@ -34,7 +34,7 @@ public class AgentManager implements IAgentManager
 		_agentActions = new HashMap<>();
 		_agents = new ArrayList<Pair<IAgent, Integer>>();
 
-		InitializeLogWriter();
+//		InitializeLogWriter();
 	}
 	
 	
@@ -60,7 +60,7 @@ public class AgentManager implements IAgentManager
 //			System.out.println("agent action:  " + agentAction.name());
 		}
 				
-		_logWriters.get("AgentActions").WriteLine(log);
+//		_logWriters.get("AgentActions").WriteLine(log);
 				
 		for(Pair<IAgent, Integer> p : _agents) 
 		{

@@ -9,7 +9,7 @@ public class Cleaner {
 	}
 	
 	public int getAccumulatedLitter() {
-		return AccumulatedLitter;
+		return this.AccumulatedLitter;
 	}
 	
 	public void setLitter(int litter) {
@@ -20,10 +20,8 @@ public class Cleaner {
 		return this.Litter;
 	}
 	
-	
 	public void Clean(Litter litter) {
 		Litter = litter.Clean();
 		AccumulatedLitter += Litter;
-//		System.out.println("Cleaner...(position, litter):  " + litter.Position + ", " + AccumulatedLitter);
 	}
 }

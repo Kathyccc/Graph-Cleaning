@@ -26,7 +26,6 @@ public class Field {
 		Robots = new RobotCollection();
 		Litter = new LitterCollection();
 		RobotBases = new RobotBaseCollection();
-		
 	}
 	
 	
@@ -37,7 +36,7 @@ public class Field {
 	
 	
 	public void AddLitter(Litter litter) {
-		this.Litter.Add(litter);
+		Litter.Add(litter);
 	}
 	
 	

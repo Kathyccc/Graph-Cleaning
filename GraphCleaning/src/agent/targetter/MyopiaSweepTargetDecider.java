@@ -22,6 +22,7 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 	int _robotID;
 	int _myopia;
 	IGraph _map;
+//	ForMyopiaGreedy _decider;
 	GreedyTargetDecider _decider;
 	List<Integer> _possibleNodes;
 	double _threshold;
@@ -31,12 +32,13 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 	double _epsilon = 0.05;
 	int _area;
 	List<Integer> _excludeNodes;
-	int NextTarget;
+	private int NextTarget;
 	
 	public MyopiaSweepTargetDecider(int ID, IGraph map, LitterSpawnPattern pattern, boolean isAccumulated, int seed)
 	{
 		_robotID = ID;
 		_map = map;
+//		_decider = new ForMyopiaGreedy(ID, map, pattern, isAccumulated, seed);
 		_decider = new GreedyTargetDecider(ID, map, pattern, isAccumulated, seed);
 		_possibleNodes = new ArrayList<>(map.getNodes());
 	
@@ -50,7 +52,13 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 		_state = 0;
 	}
 	
+	
+	public void setExpectation(LitterExistingExpectation expectation) 
+	{
+		_decider.setExpectation(expectation);
+	}
 
+	
 	public int NextTarget() 
 	{
 		NextTarget = _decider.NextTarget();
@@ -64,33 +72,33 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 	}
 
 	
-	public List<Integer> getNearbyNodes(int start)
-	{
-		List<Integer> nodes = new ArrayList<>();
-		SortedSet<Integer> investigated = new TreeSet<>();
-		nodes.add(start);
-		investigated.add(start);
-		
-		for(int i = 1; i < _myopia; i++) 
-		{
-			List<Integer> nexts = new ArrayList<>();
-			
-			for(int node : nodes) 
-			{
-				List<Integer> children = _map.getChildrenNodes(node);
-				for(int child : children) 
-				{
-					if(investigated.contains(child)) continue;
-					if(!_excludeNodes.contains(child)) investigated.add(child);
-					nexts.add(child);
-				}
-			}
-			nodes = nexts;
-		}
-		List<Integer> list = new ArrayList<>(investigated);
-		
-		return list;
-	}
+//	public List<Integer> getNearbyNodes(int start)
+//	{
+//		List<Integer> nodes = new ArrayList<>();
+//		SortedSet<Integer> investigated = new TreeSet<>();
+//		nodes.add(start);
+//		investigated.add(start);
+//		
+//		for(int i = 1; i < _myopia; i++) 
+//		{
+//			List<Integer> nexts = new ArrayList<>();
+//			
+//			for(int node : nodes) 
+//			{
+//				List<Integer> children = _map.getChildrenNodes(node);
+//				for(int child : children) 
+//				{
+//					if(investigated.contains(child)) continue;
+//					if(!_excludeNodes.contains(child)) investigated.add(child);
+//					nexts.add(child);
+//				}
+//			}
+//			nodes = nexts;
+//		}
+//		List<Integer> list = new ArrayList<>(investigated);
+//		
+//		return list;
+//	}
 	
 	
 	public List<Integer> getRealNearbyNodes(int start)
@@ -100,7 +108,8 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 		
 		for(Map.Entry<Integer, Integer> node : myopiaPotential._potentials.entrySet()) 
 		{
-			if(node.getValue() < _myopia) realInvestigated.add(node.getKey());
+			if(node.getValue() < _myopia) 
+				realInvestigated.add(node.getKey());
 		}
 		
 		return realInvestigated;
@@ -123,7 +132,8 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 			
 			else if(_state == 1) 
 			{
-				double value = _decider.getExpectationSum(mydata.Position);
+//				double value = _decider.getExpectationSum(mydata.Position);
+				double value = _decider.getExpectationSum();
 				
 				if(_threshold != 0) 
 				{
@@ -140,7 +150,8 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 			
 			else if(_state == 2) 
 			{
-				double exp = _decider.getExpectationSum(mydata.Position) / _area;
+				double exp = _decider.getExpectationSum()  / _area;
+//				double exp = _decider.getExpectationSum(mydata.Position) / _area;
 				if(exp < _threshold || _rand.nextDouble() < _epsilon) 
 				{
 					_decider.setAccessibleNodes(_possibleNodes);
@@ -150,11 +161,4 @@ public class MyopiaSweepTargetDecider implements ITargetDecider
 		}
 		_decider.Update(status);
 	}
-
-	
-	public void setExpectation(LitterExistingExpectation expectation) 
-	{
-		_decider.setExpectation(expectation);
-	}
-
 }

@@ -38,7 +38,7 @@ public class Simulation implements ISimulation
 		for(int i = 0; i < steps ; i++) 
 		{
 			Step();
-			System.out.println("Step: " + i);
+//			System.out.println("Step: " + i);
 		}
 	}
 

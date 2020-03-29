@@ -8,7 +8,7 @@ public class LitterSpawnPattern
 	public Map<Integer, LitterSpawnProbability> _patterns = new HashMap<>();
 	
 	public double getLitterSpawnProb(int node) {
-		return _patterns.get(Integer.valueOf(node)).Probability; //is this[int index] necessary?
+		return _patterns.get(node).Probability; //is this[int index] necessary?
 	}
 	
 	public void setLitterSpawnProb(int node, int litter, int stepInterval) {
@@ -29,17 +29,6 @@ public class LitterSpawnPattern
 		_patterns.remove(node);
 		if(_patterns.containsKey(node)) return false;
 		else return true;
-	}
-	
-	
-	public double getProbAverage() {
-		double sum = 0.0;
-		for(LitterSpawnProbability prob : _patterns.values()) {
-			sum += prob.Probability;
-		}
-		double probAverage = sum / (double)_patterns.size();
-		
-		return probAverage;
 	}
 	
 	

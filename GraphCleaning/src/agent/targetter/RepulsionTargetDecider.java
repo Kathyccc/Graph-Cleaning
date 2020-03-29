@@ -29,6 +29,7 @@ public class RepulsionTargetDecider implements ITargetDecider
 		_robotID = ID;
 		_map = map;
 		_nodes = new ArrayList<Integer>(_map.getNodes());
+		
 		_rate = 0.01;
 		_rand = new Random(seed);
 		
@@ -58,19 +59,19 @@ public class RepulsionTargetDecider implements ITargetDecider
 		_rate = rate;
 	}
 	
-	
 	public Point subtract(Point p1, Point p2) {
 	    return new Point(p1.x - p2.x, p1.y - p2.y);
 	}
 	
 	
-	
 	public void Update(TargetPathAgentStatus status) 
 	{
-		if(status.Action != AgentActions.Move) return;
+		if(status.Action != AgentActions.Move) 
+			return;
 		
 		RobotData mydata = status.ObservedData.RobotData._robots.get(_robotID); 
 		
+		//update target
 		if(mydata.Position == status.getTargetNode()) 
 		{
 			ObservedData data = status.ObservedData;
@@ -98,7 +99,8 @@ public class RepulsionTargetDecider implements ITargetDecider
 				for(RobotData robot : data.RobotData._robots.values()) 
 				{
 					Point vector = subtract(destination, _map.getPoint(robot.Position));
-					sum += Math.hypot(vector.getX(), vector.getY());
+					Double lengthSquare = Math.pow(vector.getX(), 2) + Math.pow(vector.getY(), 2);
+					sum += lengthSquare;
 				}
 				
 				if(maxsum < sum) 

@@ -8,7 +8,7 @@ import java.util.Random;
 
 import agent.IPathPlanner;
 import agent.ITargetDecider;
-import agent.TargetPathAgent;
+//import agent.TargetPathAgent;
 import agent.TargetPathAgentPDALearning;
 import agent.pather.ShortestGreedyPathPlanner;
 import agent.pather.SubgoalPathPlanner;
@@ -90,8 +90,6 @@ public class AgentSimulationFactory extends SimulationFactory
         
         _isAccumulated = Accumulated;
         patternName = spawnPattern;
-//		System.out.println("the sum:   " + _targetterNumber);
-
     }
     
     
@@ -150,13 +148,13 @@ public class AgentSimulationFactory extends SimulationFactory
 
 		CreateEvaluator();
 				
-		NodesProperty = LogManager.CreateWriter("NodesProperty");
-		NodesProperty.WriteLine("id" + "," + "Probability Type" + "," + "Obstacle"+ "," + "Potential" + "," + "X" + "," + "Y");
-		
-		for(NodeProperty node : nodeProperty) 
-		{
-			NodesProperty.WriteLine(node.ID + "," + node.ProbabilityType + "," + node.Obstacle + "," + node.Potential + "," + _graph.getCoordinate(node.ID).X + "," + _graph.getCoordinate(node.ID).Y);
-		}
+//		NodesProperty = LogManager.CreateWriter("NodesProperty");
+//		NodesProperty.WriteLine("id" + "," + "Probability Type" + "," + "Obstacle"+ "," + "Potential" + "," + "X" + "," + "Y");
+//		
+//		for(NodeProperty node : nodeProperty) 
+//		{
+//			NodesProperty.WriteLine(node.ID + "," + node.ProbabilityType + "," + node.Obstacle + "," + node.Potential + "," + _graph.getCoordinate(node.ID).X + "," + _graph.getCoordinate(node.ID).Y);
+//		}
 
 	}
 
@@ -289,7 +287,7 @@ public class AgentSimulationFactory extends SimulationFactory
 			{
 				prob = 0.0;
 			}
-			
+			 
 			_spawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1, prob, 1));
 		}
 	}
@@ -324,12 +322,12 @@ public class AgentSimulationFactory extends SimulationFactory
 		
 		for(Map.Entry<Integer, RobotSpec> robot : _robots.entrySet()) 
 		{			
-			TargetPathAgent agent = new TargetPathAgent(robot.getKey(), _spawnPattern);
+//			TargetPathAgent agent = new TargetPathAgent(robot.getKey(), _spawnPattern);
+			TargetPathAgentPDALearning agent = new TargetPathAgentPDALearning(robot.getKey(), _graph, _spawnPattern);
 			agent.setBaseNode(basePosition);
 
 			ITargetDecider targetter = null;
             IPathPlanner pather;
-            
 			
             // path planning
             switch (_patherNumber)

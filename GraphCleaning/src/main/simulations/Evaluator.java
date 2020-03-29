@@ -40,7 +40,6 @@ public class Evaluator
 		
 		_evaluationSum += litterQuantity;
 
-//		System.out.println(_evaluationSum);
 		for(LitterData litter : litterData._litter) 
 		{
 			if(_high.contains(Integer.valueOf(litter.Position))) 

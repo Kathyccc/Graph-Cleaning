@@ -10,11 +10,9 @@ public class LitterCollection
 	public LitterCollection() {
 		_litter = new HashMap<>();
 	}
-	
 
 	public void Add(Litter litter) {
 		_litter.put(litter.Position, litter);
-//		System.out.println("LitterCollection   " + litter.Position);
 	}
 	
 	public boolean Remove(Litter litter) {
@@ -26,7 +24,6 @@ public class LitterCollection
 	public Litter getLitter(int position) {
 		return _litter.get(position);
 	}	
-	
 	
 	public Map<Integer, Litter> getLitterCollection(){
 		return _litter;

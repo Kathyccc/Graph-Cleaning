@@ -2,6 +2,7 @@ package core.environment.controls;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import core.Pair;
@@ -18,9 +19,9 @@ public class CleaningControl
 	LitterCollection _litter;
 	RobotCollection _robots;
 	
-	List<Pair<Cleaner, Litter>> _tasks = new ArrayList<Pair<Cleaner,Litter>>();
+	List<Pair<Cleaner, Litter>> _tasks;
 	Random _rand;
-	List<Integer> _tasksLog = new ArrayList<>();
+	List<Integer> _tasksLog;
 	
 	
 	public CleaningControl(Field field, int seed) 
@@ -28,23 +29,22 @@ public class CleaningControl
 		_field = field;
 		_litter = field.Litter;
 		_robots = field.Robots;
+		
 		_rand = new Random(seed);
+		_tasks = new ArrayList<Pair<Cleaner,Litter>>();
+		_tasksLog = new ArrayList<>();
 	}
 	
 	
-	public void Clean(int id) {
-		
+	public void Clean(int id)
+	{	
 		Robot robot = _robots.getRobot(id);
-	
-		if(_tasks.size()!=0){
-			_tasks.add(_rand.nextInt(_tasks.size()+1), new Pair<Cleaner, Litter>(
+		
+		_tasks.add(_rand.nextInt(_tasks.size()+1), new Pair<Cleaner, Litter>(
 					robot.Cleaner,
 					_litter.getLitter(robot.Position)));
-		}
-		else{
-			_tasks.add(_rand.nextInt(1), new Pair<Cleaner, Litter>(
-					robot.Cleaner, _litter.getLitter(robot.Position)));
-		}
+		
+//		System.out.println("CleaningControl   " + _litter.getLitter(robot.Position).Quantity);
 	}
 	
 	
@@ -54,7 +54,7 @@ public class CleaningControl
 		for(Pair<Cleaner, Litter> task : _tasks) {
 			Cleaner cleaner = task.getKey();
 			Litter litter = task.getValue();
-			
+
 			if(litter.Quantity != 0) 
 				_tasksLog.add(litter.Position);
 			cleaner.Clean(litter);
@@ -63,3 +63,14 @@ public class CleaningControl
 		return _tasksLog;
 	}	
 }
+
+//if(_tasks.size()!=0){
+//	_tasks.add(_rand.nextInt(_tasks.size()+1), new Pair<Cleaner, Litter>(
+//			robot.Cleaner,
+//			_litter.getLitter(robot.Position)));
+//}
+//
+//else{
+//_tasks.add(_rand.nextInt(1), new Pair<Cleaner, Litter>(
+//		robot.Cleaner, _litter.getLitter(robot.Position)));
+//}

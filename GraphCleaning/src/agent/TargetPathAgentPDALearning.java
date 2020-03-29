@@ -13,13 +13,13 @@ import core.agents.IAgent;
 
 public class TargetPathAgentPDALearning implements IAgent
 {
+	ITargetDecider _targetter;
+	IPathPlanner _pather;
 	int RobotID;
 	AgentActions Action;
-	IPathPlanner _pather;
 	Random forOrderbyRnd;
 	LitterExistingExpectation _expectation;
 	LitterSpawnPattern _mySpawnPattern;
-	LitterSpawnPattern _spawnPattern;
 	GridGraph _graph;
 	List<Integer> _nodes;
 	int[] _visitCount;
@@ -27,7 +27,6 @@ public class TargetPathAgentPDALearning implements IAgent
 	int[][] _visitCountMemory;
 	int _target;
 	boolean _isChargeRequired = false;
-	ITargetDecider _targetter;
 	int _baseNode;
 	
 	
@@ -49,8 +48,7 @@ public class TargetPathAgentPDALearning implements IAgent
 		_visitCountMemory = new int[3][_graph.getNodes().size()];
 		_visitHistory = new ArrayList<>();
 		
-		_spawnPattern = SpawnPattern;
-		InitializeMySpawnPattern(SpawnPattern);
+		InitializeMySpawnPattern();
 		
 		_expectation = new LitterExistingExpectation(_mySpawnPattern, true);
 		
@@ -67,14 +65,14 @@ public class TargetPathAgentPDALearning implements IAgent
 	}
 	
 	
-	public void InitializeMySpawnPattern(LitterSpawnPattern initialPattern) 
-	{
-		_mySpawnPattern = new LitterSpawnPattern();
-		for(Integer node : _graph.getNodes()) 
-		{
-			_mySpawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1,  initialPattern.getLitterSpawnProb(node),  1));
-		}
-	}
+//	public void InitializeMySpawnPattern(LitterSpawnPattern initialPattern) 
+//	{
+//		_mySpawnPattern = new LitterSpawnPattern();
+//		for(Integer node : _graph.getNodes()) 
+//		{
+//			_mySpawnPattern.AddSpawnProbability(node, new LitterSpawnProbability(1,  initialPattern.getLitterSpawnProb(node),  1));
+//		}
+//	}
 	
 	
 	public void setRobotID(int id) { RobotID = id; }
@@ -129,7 +127,7 @@ public class TargetPathAgentPDALearning implements IAgent
 		int position = mydata.Position;
 		int interval = _expectation.getInterval(position, data.Time);
 		int litter = mydata.AccumulatedLitter;
-//		System.out.println("PDA   " + mydata.ID + "litter  " + litter);
+		
 		_visitCount[position]++;
 		_visitHistory.add(position);
 		
@@ -160,7 +158,7 @@ public class TargetPathAgentPDALearning implements IAgent
         
        // Update its own pattern map
        _mySpawnPattern.setLitterSpawnProb(position, litter, interval);
-       
+
        TargetPathAgentStatus status = new TargetPathAgentStatus(Action, _target, data, _visitCount, _visitHistory);
        
        _targetter.Update(status);

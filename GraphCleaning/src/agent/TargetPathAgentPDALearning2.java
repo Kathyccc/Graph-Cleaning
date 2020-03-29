@@ -246,7 +246,7 @@ public class TargetPathAgentPDALearning2 implements IAgent
         _pather.Update(status); 
     }
     
-  */ 
+   */
 //    public void CalculateSearchNode() 
 //    {
 //    	_searchNodes.clear();

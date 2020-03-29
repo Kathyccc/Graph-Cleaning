@@ -27,8 +27,6 @@ public class GreedyTargetDecider implements ITargetDecider
 	boolean _isAccumulated;
 	double _rate;
 	LitterExistingExpectation _expectation;
-	boolean firstSearch = true;
-	LitterExistingExpectation LitterExpectation;
 	double _expectationSum;
 	int NextTarget;
 
@@ -39,7 +37,6 @@ public class GreedyTargetDecider implements ITargetDecider
 		_isAccumulated = isAccumulated;
 		_rate = 0.05;
 		_rand = new Random(seed);
-		_expectation = new LitterExistingExpectation(pattern, isAccumulated);
 		NextTarget = _nodes.get(_rand.nextInt(_nodes.size()));
 	}
 	
@@ -47,103 +44,104 @@ public class GreedyTargetDecider implements ITargetDecider
 	{
 		NextTarget = target;
 	}
-	
-	
+
 	public int NextTarget() 
 	{
 		return NextTarget;
 	}
 	
-
 	public boolean IsChargeRequired() {
 		return false;
 	}
-	
-	
-	public double getExpectationSum(int position) 
-	{
-		List<Pair<Integer, Double>> list = new ArrayList<Pair<Integer, Double>>();
-		int i = 0;
-		double sum = 0.0;
-		
-		for(int node : _nodes) 
-		{
-			double exp = _expectation.getExpectation(node);
 
-			if(node != position) 
-			{
-				list.add(i, new Pair<Integer, Double>(node, exp));
-				sum += exp;
-				i++;
-
-			}
-		}
-		_expectationSum = sum;
-		
-		return _expectationSum;
-	}
 	
 	public void Update(TargetPathAgentStatus status) 
 	{
-		int time = status.ObservedData.Time;
-		RobotDataCollection data = status.ObservedData.RobotData;
-		
-		_expectation.Update(data, time);
-		
-		if(status.Action != AgentActions.Move) return;
-		
+        _expectation.Update(status.ObservedData.RobotData, status.ObservedData.Time);
+
+		if(status.Action != AgentActions.Move) 
+			return;
+
 		RobotData mydata = status.ObservedData.RobotData._robots.get(_robotID);
-		
+						
+		//update target
 		if(mydata.Position == status.getTargetNode()) 
 		{
 			List<Pair<Integer, Double>> list = new ArrayList<Pair<Integer, Double>>();
-			int i = 0;
 			double sum = 0.0;
 
 			for(int node : _nodes) 
 			{
 				double exp = _expectation.getExpectation(node);
-
+				
 				if(node != mydata.Position) 
 				{
-					list.add(i, (new Pair<Integer, Double>(node, exp)));
+					list.add(new Pair<Integer, Double>(node, exp));
 					sum += exp;
-					i++;
 				}
 			}
 			
 			_expectationSum = sum;
-						
+			
+					
 			final Comparator<Pair<Integer, Double>> sortByValue = reverseOrder(comparing(Pair::getValue));
 			final Comparator<Pair<Integer, Double>> sortByKey = reverseOrder(comparing(Pair::getKey));
 			
 			Collections.sort(list, sortByValue.thenComparing(sortByKey));
 			
-			int count = 5;//= (int)(_nodes.Count * _rate);		
+			Boolean countChecker = list.size() > 5;
+			
+			int count = countChecker ? 5 : list.size()-1;		
 			int index = count < 1 ? 0 : _rand.nextInt(count);
 			
 			NextTarget = list.get(index).getKey();
 		}
 	}
-
 	
 	public double DiscountExpectation(ObservedData data, int node) 
 	{
 		return 1.0;
-	}
+	}	
 	
 	
 	public void setExpectation(LitterExistingExpectation expectation) {
 		_expectation = expectation;
 	}
-
 	
 	public void setAccessibleNodes(List<Integer> nodes) 
 	{
 		_nodes = nodes;
 	}
 	
-	
 	public void ResetState() {		
 	}
+
+	public double getExpectationSum() {
+		return _expectationSum;
+	}
 }
+
+
+//public double getExpectationSum(int position) 
+//{
+//	List<Pair<Integer, Double>> list = new ArrayList<Pair<Integer, Double>>();
+//	double sum = 0.0;
+//	
+//	for(int node : _nodes) 
+//	{
+//		double exp = _expectation.getExpectation(node);
+//
+//		if(position == node) 
+//		{
+//			list.add(new Pair<Integer, Double>(node, -Double.MAX_VALUE));
+//		}
+//		else 
+//		{
+//			list.add(new Pair<Integer, Double>(node, exp));
+//		}
+//		sum += exp;
+//	}
+//	_expectationSum = sum;
+//	
+//	return _expectationSum;
+//}

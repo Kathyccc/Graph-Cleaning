@@ -34,12 +34,10 @@ public class VirtualEnvironment implements IEnvironment
 	RobotMoveControl _robotMoveControl;
 	ObservationControl _observer;
 	Random _rand;
-//	LogWriter _AverageRemainingLitterLogger;
 	List<Integer> _high;
 	List<Integer> _middle;
 	List<Integer> _low;
-//	List<Integer>[][] _eachNodeQuantity = new ArrayList[10201][2];
-//	int[][] _eachNodeLitterAmount = new int[10201][2];
+
 	
 	int Initializing;
 	int LitterSpawning = 1;
@@ -56,7 +54,6 @@ public class VirtualEnvironment implements IEnvironment
 	{
 		_rand = new Random(seed);
 		_field = new Field(spatialStructure, spawnPattern);
-//		System.out.println("virtualEnvironment     " + _field.Litter._litter.isEmpty());
 		_fieldSettingControl = new FieldSettingControl(_field);
 		_batteryChargeControl = new BatteryChargeControl(_field);
 		_cleaningControl = new CleaningControl(_field, _rand.nextInt());
@@ -68,20 +65,11 @@ public class VirtualEnvironment implements IEnvironment
 		_low = low;
 		
 		
-//		_AverageRemainingLitterLogger = LogManager.CreateWriter("AverageRemainingLitter");
-//		_AverageRemainingLitterLogger.WriteLine("" + "," + "AverageRL*T" + "," + "AverageRTime" + "," + "WorstRL*T-Node" + "," + "WorstRT-Node");
-		
 		for(int node : spatialStructure.getNodes()) 
 		{
+//			System.out.println("VirtualEvironment(node): " + node);
 			_fieldSettingControl.CreateLitter("non", node, isLitterAccumulated);
 		}
-		
-		
-//		for(int i = 0; i<10201; i++) 
-//		{
-//			_eachNodeQuantity[i][0] = new ArrayList<>();
-//			_eachNodeQuantity[i][1] = new ArrayList<>();
-//		}
 	}
 	
 	

@@ -14,18 +14,6 @@ public class Litter
 		IsAccumulated = isAccumulated;
 	}
 	
-	public Litter(String type, int position) {
-		Type = type;
-		Position = position;
-		IsAccumulated = true;
-	}
-	
-//	public void setQuantity(int quantity) 
-//	{
-//		if(quantity < 0) Quantity = 0;
-//		else Quantity = quantity;
-//	}
-	
 	public int getQuantity() 
 	{
 		return Quantity;
@@ -51,7 +39,6 @@ public class Litter
 		return IsAccumulated;
 	}
 	
-	
 	public void setPosition(int position) {
 		Position = position;
 	}
@@ -65,7 +52,6 @@ public class Litter
 		if(IsAccumulated) 
 		{
 			Quantity =  Quantity + quantity;
-//			System.out.println("it does increase.");
 		}
 		else Quantity = quantity;
 	}
@@ -87,17 +73,8 @@ public class Litter
 		int quantity = Quantity;
 		Quantity = 0;
 		
-//		System.out.println("Litter:  " + Position);
+//		System.out.println("Litter:  " + quantity);
 		return quantity;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
 
